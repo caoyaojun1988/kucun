@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.StockMapper">
+
+	<!-- cache / -->
+
+	<select id="listAllStocks" resultType="Stock">
+		SELECT
+			UID,s.ID,s.NAME,s.CATEGORY,s.NUMBER,s.WORTH,specification,unit
+		FROM 
+			STOCK s
+		WHERE STATUS='normal'
+	</select>
+
+	<select id="queryStockById" parameterType="integer" resultType="Stock">
+		SELECT
+			UID,s.ID,s.NAME,s.CATEGORY,s.NUMBER,s.WORTH,specification,unit
+		FROM 
+			STOCK s
+		WHERE  
+			STATUS='normal' and s.ID = #{id} 
+  	</select>
+
+	<select id="queryStockByUid" parameterType="integer" resultType="Stock">
+		SELECT
+			UID,s.ID,s.NAME,s.CATEGORY,s.NUMBER,s.WORTH,specification,unit
+		FROM 
+			STOCK s
+		WHERE  
+			STATUS='normal' and s.UID = #{uid} 
+  	</select>
+  	
+	<insert id="addStock" parameterType="Stock">
+		INSERT INTO 
+			STOCK(id,name,category,number,worth,specification,unit,status)
+		VALUES (#{id}, #{name}, #{category}, #{number}, #{worth}, #{specification}, #{unit}, #{status}) 
+  	</insert>
+
+
+	<delete id="deleteStockByUid" parameterType="Stock">
+		UPDATE 
+			STOCK
+		SET 
+		    status='deleted'
+		WHERE UID=#{uid}
+  	</delete>
+
+	<update id="modifyStockByUid" parameterType="Stock">
+		UPDATE 
+			STOCK
+		SET 
+			specification=#{specification},
+			unit = #{unit},
+			ID=#{id},
+			NAME = #{name},
+		    CATEGORY=#{category},
+		    NUMBER=#{number},
+		    WORTH=#{worth}
+		WHERE UID=#{uid}
+  	</update>
+
+	<update id="modifyStockById" parameterType="Stock">
+		UPDATE 
+			STOCK
+		SET 
+			specification=#{specification},
+			unit = #{unit},
+			NAME = #{name},
+		    CATEGORY=#{category},
+		    NUMBER=#{number},
+		    WORTH=#{worth}
+		WHERE ID=#{id}
+  	</update>  	
+</mapper>

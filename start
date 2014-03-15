@@ -1,0 +1,14 @@
+mvn clean install -Dmaven.test.skip;
+rm -rf /usr/alibaba/apache-tomcat-7.0.52/webapps/kucun;
+sleep 2s;
+rm -rf /usr/alibaba/apache-tomcat-7.0.52/webapps/kucun.war;
+sleep 2s;
+rm -rf  /usr/alibaba/apache-tomcat-7.0.52/logs/*;
+sleep  2s;
+mv target/kucun.war /usr/alibaba/apache-tomcat-7.0.52/webapps/;
+sleep 2s;
+/usr/alibaba/apache-tomcat-7.0.52/bin/shutdown.sh;
+sleep 2s;
+/usr/alibaba/apache-tomcat-7.0.52/bin/catalina.sh jpda start;
+
+

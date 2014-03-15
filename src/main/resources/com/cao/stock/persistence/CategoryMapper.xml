@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.CategoryMapper">
+
+	<!-- cache / -->
+
+	<select id="listAllCategorys" resultType="Category">
+		SELECT
+			UID,ID,NAME
+		FROM CATEGORY
+	</select>
+
+	<select id="queryCategoryByUid" parameterType="integer" resultType="Category">
+		SELECT
+			UID,ID,NAME
+		FROM 
+			CATEGORY
+		WHERE 
+			UID = #{uid} 
+  	</select>
+
+
+	<insert id="addCategory" parameterType="Category">
+		INSERT INTO 
+			CATEGORY(id,name)
+		VALUES (#{id}, #{name}) 
+  	</insert>
+
+
+	<delete id="deleteCategoryByUid" parameterType="Category">
+		DELETE  FROM 
+			CATEGORY
+		WHERE UID=#{uid} 
+  	</delete>
+
+
+	<update id="modifyCategoryByUid" parameterType="Category">
+		UPDATE 
+			CATEGORY
+		SET 
+			ID=#{id},
+			NAME = #{name}
+		WHERE 
+			UID=#{uid}
+  	</update>
+
+</mapper>

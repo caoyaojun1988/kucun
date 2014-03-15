@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.InStockMapper">
+
+	<!-- cache / -->
+
+	<select id="listAllInStocks" parameterType="integer"  resultType="InStock">
+		SELECT
+			i.ID,i.order_id as orderId, i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.number,
+			i.remainder_number as remainderNumber,i.WORTH,i.status,i.staff
+		FROM 
+			IN_STOCK i  
+		WHERE 
+			i.status!='off'
+	</select>
+
+	<select id="listAllInStocksByStock" parameterType="integer"  resultType="InStock">
+		SELECT
+			i.ID,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.number,
+			i.remainder_number as remainderNumber,i.WORTH,i.status,i.staff
+		FROM 
+			IN_STOCK i
+		WHERE 
+			i.status!='off' and i.stock = #{stockId} 	
+		ORDER BY i.create_date	ASC
+	</select>
+		
+	<select id="queryInStockById" parameterType="integer" resultType="InStock">
+		SELECT
+			i.ID,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.number,
+			i.remainder_number as remainderNumber,i.WORTH,i.status,i.staff
+		FROM 
+			IN_STOCK i 
+		WHERE 
+			i.ID = #{id} 
+  	</select>
+
+
+	<insert id="addInStock" parameterType="InStock">
+		INSERT INTO 
+			IN_STOCK(order_id, create_date,modify_date,stock,number,remainder_number,worth,status,staff)
+		VALUES (#{orderId}, #{createDate}, #{modifyDate},  #{stock}, #{number}, #{remainderNumber}, #{worth},#{status},#{staff}) 
+  	</insert>
+
+
+	<delete id="deleteInStockById" parameterType="InStock">
+		DELETE FROM 
+			IN_STOCK
+		WHERE 
+			ID=#{id} 
+  	</delete>
+	
+	<update id="logicDeleteInStockById" parameterType="InStock">
+		UPDATE 
+			IN_STOCK
+		SET 
+			modify_date = #{modifyDate},
+		    status='off'
+		WHERE 
+			ID=#{id}
+  	</update>
+
+	<update id="modifyInStockById" parameterType="InStock">
+		UPDATE 
+			IN_STOCK
+		SET 
+			order_id=#{orderId},
+			staff=#{staff},
+			modify_date = #{modifyDate},
+			STOCK = #{stock},
+		    NUMBER=#{number},
+		    remainder_number=#{remainderNumber},
+		    WORTH=#{worth},
+		    status=#{status}
+		WHERE 
+			ID=#{id}
+  	</update>
+
+</mapper>

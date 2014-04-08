@@ -6,12 +6,36 @@
 
 	<!-- cache / -->
 
-	<select id="listAllStocks" resultType="Stock">
+	<select id="listAllStocks" parameterType="com.cao.stock.domain.QueryParameter"  resultType="Stock">
 		SELECT
 			UID,s.ID,s.NAME,s.CATEGORY,s.NUMBER,s.WORTH,specification,unit
 		FROM 
 			STOCK s
-		WHERE STATUS='normal'
+		WHERE 
+			STATUS='normal'
+			<if test="minNumber!=null ">
+		 		<![CDATA[  and s.NUMBER<= #{minNumber} ]]>
+		 	</if>
+		 	
+		 	<if test="start>=0 and limit>=0">
+		 		  limit  #{start}, #{limit}
+		 	</if>
+	</select>
+
+	<select id="countAllStocks" parameterType="com.cao.stock.domain.QueryParameter"  resultType="integer">
+		SELECT
+			count(*)
+		FROM 
+			STOCK s
+		WHERE 
+			STATUS='normal'
+			<if test="minNumber!=null ">
+		 		<![CDATA[  and s.NUMBER<= #{minNumber} ]]>
+		 	</if>
+		 	
+		 	<if test="start>=0 and limit>=0">
+		 		  limit  #{start}, #{limit}
+		 	</if>
 	</select>
 
 	<select id="queryStockById" parameterType="integer" resultType="Stock">
@@ -50,27 +74,55 @@
 	<update id="modifyStockByUid" parameterType="Stock">
 		UPDATE 
 			STOCK
-		SET 
-			specification=#{specification},
-			unit = #{unit},
-			ID=#{id},
-			NAME = #{name},
-		    CATEGORY=#{category},
-		    NUMBER=#{number},
-		    WORTH=#{worth}
+		<set>
+			<if test="specification != null ">
+		 		specification=#{specification},
+		 	</if>
+		 	<if test="unit != null ">
+		 		 unit = #{unit},
+		 	</if>
+		 	<if test="name != null ">
+		 		NAME = #{name},
+		 	</if>
+		 	<if test="id != null ">
+		 		ID=#{id},
+		 	</if>
+		 	<if test="category != null ">
+		 		CATEGORY=#{category},
+		 	</if>
+		 	<if test="number != null ">
+		 		 NUMBER=#{number},
+		 	</if>
+		 	<if test="worth != null ">
+		 		WORTH=#{worth}
+		 	</if>
+		</set>    
 		WHERE UID=#{uid}
   	</update>
 
 	<update id="modifyStockById" parameterType="Stock">
 		UPDATE 
 			STOCK
-		SET 
-			specification=#{specification},
-			unit = #{unit},
-			NAME = #{name},
-		    CATEGORY=#{category},
-		    NUMBER=#{number},
-		    WORTH=#{worth}
+		<set>
+			<if test="specification != null ">
+		 		specification=#{specification},
+		 	</if>
+		 	<if test="unit != null ">
+		 		 unit = #{unit},
+		 	</if>
+		 	<if test="name != null ">
+		 		NAME = #{name},
+		 	</if>
+		 	<if test="category != null ">
+		 		CATEGORY=#{category},
+		 	</if>
+		 	<if test="number != null ">
+		 		 NUMBER=#{number},
+		 	</if>
+		 	<if test="worth != null ">
+		 		WORTH=#{worth}
+		 	</if>
+		</set>   
 		WHERE ID=#{id}
-  	</update>  	
+  	</update>
 </mapper>

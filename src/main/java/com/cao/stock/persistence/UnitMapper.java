@@ -13,11 +13,11 @@ public interface UnitMapper {
 
     public List<Unit> listAllUnits();
 
-    public Unit queryUnitByUid(Integer uId);
-
     public void addUnit(Unit unit);
 
-    public void deleteUnitByUid(Integer uId);
+    public Unit queryUnitById(Integer id);
 
-    public void modifyUnitByUid(Unit unit);
+    public void deleteUnitById(Integer id);
+
+    public void modifyUnitById(Unit unit);
 }

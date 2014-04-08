@@ -2,7 +2,6 @@ package com.cao.stock.service;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,24 +24,24 @@ public class UnitService {
         return unitMapper.listAllUnits();
     }
 
-    public Unit queryUnitByUid(Integer Uid) {
-        return unitMapper.queryUnitByUid(Uid);
+    public Unit queryUnitByUid(Integer id) {
+        return unitMapper.queryUnitById(id);
     }
 
     @Transactional
     public Unit addOrModifyUnit(Unit unit) {
-        Unit addUnit = unitMapper.queryUnitByUid(unit.getUid());
-        if (addUnit == null || StringUtils.isBlank(addUnit.getId())) {
+        Unit addUnit = unitMapper.queryUnitById(unit.getId());
+        if (addUnit == null || addUnit.getId() == null) {
             unitMapper.addUnit(unit);
         } else {
-            unitMapper.modifyUnitByUid(unit);
+            unitMapper.modifyUnitById(unit);
         }
-        return unitMapper.queryUnitByUid(unit.getUid());
+        return unitMapper.queryUnitById(unit.getId());
     }
 
     @Transactional
-    public void deleteUnitByUid(Integer Uid) {
-        unitMapper.deleteUnitByUid(Uid);
+    public void deleteUnitById(Integer id) {
+        unitMapper.deleteUnitById(id);
 
     }
 }

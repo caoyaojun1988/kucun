@@ -32,6 +32,31 @@ Ext.define('MyApp.view.MyInStock', {
                     scope: this,
                     handler: this.onDeleteClick
                 },{
+                    xtype: 'label',
+                    text: '从'
+                },
+                {
+                    xtype: 'datefield',
+                    id: 'btnInCreateTimeBegin',
+                },
+                {
+                    xtype: 'label',
+                    text: '到'
+                },
+                {
+                    xtype: 'datefield',
+                    id: 'btnInCreateTimeEnd',
+                },{
+                    xtype: 'label',
+                    text: '物品'
+                },
+                {
+                	id: 'btnInStock',
+                	xtype: 'combo',
+                    store:'MyStockStore',
+                    valueField: 'id',
+                    displayField: 'name',
+                },{
                 	iconCls: 'icon-query',
                 	text: '查询',
                 	disabled: false,
@@ -72,6 +97,11 @@ Ext.define('MyApp.view.MyInStock', {
                     }
                 }]
             }, {
+                xtype: 'pagingtoolbar',
+                dock: 'bottom',
+                store: 'MyStockStore',
+                displayInfo: true
+            },{
                 weight: 1,
                 xtype: 'toolbar',
                 dock: 'bottom',
@@ -96,10 +126,6 @@ Ext.define('MyApp.view.MyInStock', {
 		             text: '创建时间',
 		             sortable: true,
 		             renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s')
-//		             editor : {
-//		                 xtype : 'datefield',
-//		                 format: 'Y-m-d H:i:s'
-//		             }
 		        },{
 			       	 xtype: 'datecolumn',
 			         width: 100,
@@ -107,10 +133,6 @@ Ext.define('MyApp.view.MyInStock', {
 			         text: '修改时间',
 			         sortable: true,
 			         renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s')
-//			         editor : {
-//			             xtype : 'datefield',
-//			             format: 'Y-m-d H:i:s'
-//			         }
 		        }, {
 		            header: "物品",
 		            dataIndex: 'stock',
@@ -122,15 +144,6 @@ Ext.define('MyApp.view.MyInStock', {
 		            	var record = kvstore.getAt(index).get('name');
 		            	return record; 
 		            }
-//		            editor: new Ext.form.ComboBox({
-//		                store: 'MyStockStore',
-//		                triggerAction: 'all',
-//		                displayField: 'name',
-//		                valueField: 'id',
-//		                allowBlank: false,
-//		                editable: false,
-//		                mode: 'local'
-//		            })
 			     },{
 			       	 xtype: 'gridcolumn',
 			         width: 100,
@@ -148,11 +161,6 @@ Ext.define('MyApp.view.MyInStock', {
 				     dataIndex: 'worth',
 				     text: '单价',
 				     sortable: true
-//				     field: {
-//	                     type: 'numberfield',
-//	                     allowBlank:false, 
-//	                     blankText:'该项不能为空!',
-//	                 }
 				},{
 			       	 xtype: 'gridcolumn',
 			         width: 100,
@@ -202,7 +210,7 @@ Ext.define('MyApp.view.MyInStock', {
     onDeleteClick: function(){
         var selection = this.getView().getSelectionModel().getSelection()[0];
         if (selection) {
-        	if(selection.data.status=='in'){
+        	if(selection.data.number == selection.data.remainderNumber){
         		this.store.remove(selection);
         	}else{
         		Ext.Msg.alert("错误", "已经出库不能删除");
@@ -211,6 +219,20 @@ Ext.define('MyApp.view.MyInStock', {
     },
 
     onQueryClick:function(){
+    	var kvstore =  Ext.data.StoreManager.get('MyStockStore');
+    	kvstore.load();
+    	
+    	var btnCreateTimeBegin = Ext.getCmp('btnInCreateTimeBegin').getValue();
+    	var btnCreateTimeEnd = Ext.getCmp('btnInCreateTimeEnd').getValue();
+
+    	var btnOutStock = Ext.getCmp('btnInStock').getValue();
+    	
+    	
+    	var proxy = this.store.getProxy(); 
+        proxy.extraParams['beginTimeStr'] = Ext.Date.format(btnCreateTimeBegin, 'Y-m-d'); 
+        proxy.extraParams['endTimeStr'] = Ext.Date.format(btnCreateTimeEnd, 'Y-m-d');
+        proxy.extraParams['stock'] = btnOutStock; 
+        
     	this.store.load();
     }
 });

@@ -167,4 +167,31 @@ public class InOutStockService {
             throw new RuntimeException("addOutStock old out stock detail exist");
         }
     }
+
+    /**
+     * 添加及入及出出庫明細
+     * 
+     * @param outStock
+     * @return
+     */
+    @Transactional
+    public void addInOutStock(OutStock outStock, InStock inStock) {
+        List<InOutStock> oldInOutStocks = inOutStockMapper.queryInOutStockByOutStockId(outStock.getId());
+        if (oldInOutStocks == null || oldInOutStocks.isEmpty()) {
+            int rnumber = outStock.getNumber();
+            InOutStock inOutStock = new InOutStock();
+            inOutStock.setInStock(inStock.getId());
+            inOutStock.setNumber(rnumber);
+            inOutStock.setOutStock(outStock.getId());
+            inOutStock.setWorth(rnumber * inStock.getWorth());
+            inOutStockMapper.addInOutStock(inOutStock);
+
+            inStock.setModifyDate(new Date());
+            inStock.setRemainderNumber(0);
+            inStock.setStatus("out");
+            inStockMapper.modifyInStockById(inStock);
+        } else {
+            throw new RuntimeException("addOutStock old out stock detail exist");
+        }
+    }
 }

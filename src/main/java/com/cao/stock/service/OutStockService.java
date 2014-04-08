@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cao.stock.domain.InStock;
 import com.cao.stock.domain.OutStock;
+import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.Stock;
 import com.cao.stock.persistence.OutStockMapper;
 
@@ -55,6 +57,25 @@ public class OutStockService {
     }
 
     /**
+     * 出库
+     * 
+     * @param OutStock
+     */
+    @Transactional
+    public void addInOutStock(OutStock outStock, InStock inStock) {
+        OutStock oldOutStock = OutStockMapper.queryOutStockById(outStock.getId());
+        outStock.setModifyDate(new Date());
+        if (oldOutStock == null || oldOutStock.getId() == null) {
+            // 订单表 先要拿到id
+            OutStockMapper.addOutStock(outStock);
+            // 添加明细
+            inOutStockService.addInOutStock(outStock, inStock);
+        } else {
+            throw new RuntimeException("addOutStock is exist");
+        }
+    }
+
+    /**
      * 修改出庫單
      * 
      * @param OutStock
@@ -73,7 +94,7 @@ public class OutStockService {
             diffOutStock.setId(newOutStock.getId());
             diffOutStock.setNumber(oldOutStock.getNumber() - newOutStock.getNumber());
             // delete 明细
-            double worth = (-1) * inOutStockService.deleteOutStock(diffOutStock);
+            double worth = inOutStockService.deleteOutStock(diffOutStock);
             // 修改库存
             Stock stock = new Stock();
             stock.setId(newOutStock.getStock());
@@ -81,7 +102,7 @@ public class OutStockService {
             stock.setWorth(worth);
             stockService.inStock(stock);
             // 订单表
-            newOutStock.setWorth(oldOutStock.getWorth() + worth);
+            newOutStock.setWorth(oldOutStock.getWorth() - worth);
             newOutStock.setModifyDate(new Date());
             OutStockMapper.modifyOutStockById(newOutStock);
         } else if (oldOutStock.getNumber() < newOutStock.getNumber()) {// 增加
@@ -97,8 +118,12 @@ public class OutStockService {
         }
     }
 
-    public List<OutStock> listAllOutStocks() {
-        return OutStockMapper.listAllOutStocks();
+    public List<OutStock> listAllOutStocks(QueryParameter queryParameter) {
+        return OutStockMapper.listAllOutStocks(queryParameter);
+    }
+
+    public Integer countAllOutStocks(QueryParameter queryParameter) {
+        return OutStockMapper.countAllOutStocks(queryParameter);
     }
 
     public OutStock queryOutStockById(Integer id) {

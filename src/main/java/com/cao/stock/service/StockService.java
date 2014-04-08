@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.Stock;
 import com.cao.stock.persistence.StockMapper;
 
@@ -20,8 +21,12 @@ public class StockService {
     @Autowired
     private StockMapper stockMapper;
 
-    public List<Stock> listAllStocks() {
-        return stockMapper.listAllStocks();
+    public List<Stock> listAllStocks(QueryParameter queryParameter) {
+        return stockMapper.listAllStocks(queryParameter);
+    }
+
+    public Integer countAllStocks(QueryParameter queryParameter) {
+        return stockMapper.countAllStocks(queryParameter);
     }
 
     public Stock queryStockByUid(Integer uid) {
@@ -48,7 +53,7 @@ public class StockService {
             stockMapper.addStock(stock);
         } else {
             oldStock.setNumber(oldStock.getNumber() + stock.getNumber());
-            oldStock.setWorth(oldStock.getWorth()+stock.getWorth());
+            oldStock.setWorth(oldStock.getWorth() + stock.getWorth());
             stockMapper.modifyStockByUid(oldStock);
         }
         return stockMapper.queryStockByUid(stock.getUid());
@@ -70,8 +75,9 @@ public class StockService {
     @Transactional
     public void deleteStockByUid(Integer uid) {
         Stock oldStock = stockMapper.queryStockByUid(uid);
-        if(oldStock!=null && oldStock.getNumber()==0){
+        if (oldStock != null && oldStock.getNumber() == 0) {
             stockMapper.deleteStockByUid(uid);
         }
     }
+
 }

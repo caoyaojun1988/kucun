@@ -18,9 +18,6 @@ Ext.define('MyApp.model.UnitData', {
     alias: 'model.UnitData',
 
     fields: [
-		{
-			name: 'uid'
-		},
         {
             name: 'id'
         },

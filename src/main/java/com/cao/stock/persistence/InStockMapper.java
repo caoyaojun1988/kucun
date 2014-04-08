@@ -3,6 +3,7 @@ package com.cao.stock.persistence;
 import java.util.List;
 
 import com.cao.stock.domain.InStock;
+import com.cao.stock.domain.QueryParameter;
 
 /**
  * TODO Comment of StockMapper
@@ -11,7 +12,9 @@ import com.cao.stock.domain.InStock;
  */
 public interface InStockMapper {
 
-    public List<InStock> listAllInStocks();
+    public List<InStock> listAllInStocks(QueryParameter queryParameter);
+
+    public Integer countAllInStocks(QueryParameter queryParameter);
 
     public List<InStock> listAllInStocksByStock(Integer stockId);
 

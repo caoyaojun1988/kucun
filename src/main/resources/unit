@@ -1,0 +1,40 @@
+delete from account;
+delete from unit;
+delete from department;
+delete from staff;
+delete from category;
+delete from STOCK;
+delete from in_stock;
+delete from out_stock;
+delete from in_out_stock;
+
+insert into account(username,password) values("10001"，"lanxinyao");
+
+insert into unit (id,name) values (1 ,'支');
+insert into unit (id,name) values (2 ,'个');
+insert into unit (id,name) values (3 ,'只');
+insert into unit (id,name) values (4 ,'刀');
+insert into unit (id,name) values (5 ,'本');
+insert into unit (id,name) values (6 ,'把');
+insert into unit (id,name) values (7 ,'节');
+insert into unit (id,name) values (8 ,'盒');
+insert into unit (id,name) values (9 ,'卷');
+insert into unit (id,name) values (10,'包');
+insert into unit (id,name) values (11,'付');
+insert into unit (id,name) values (12,'条');
+insert into unit (id,name) values (13,'套');
+insert into unit (id,name) values (14,'枚');
+
+
+
+insert into department(id,name) values(1,D1);
+insert into department(id,name) values(2,D2);
+insert into department(id,name) values(3,D3);
+
+
+insert into staff(id,name,department) values();
+
+insert into category(uid,id ,name) values();
+
+
+insert into STOCK(UID,ID,NAME,CATEGORY,specification, unit ,NUMBER ,WORTH ,status) values("normal");

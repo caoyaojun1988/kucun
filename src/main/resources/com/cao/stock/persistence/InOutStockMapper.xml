@@ -50,10 +50,21 @@
 	<update id="modifyInOutStockById" parameterType="InOutStock">
 		UPDATE 
 			IN_OUT_STOCK
-		SET OUT_STOCK = #{outStock},
-		    IN_STOCK=#{inStock},
-		    NUMBER=#{number},
-		    WORTH=#{worth}
-		WHERE ID=#{id}
+		<set>
+			<if test="outStock != null ">
+		 		OUT_STOCK = #{outStock},
+		 	</if>
+		 	<if test="inStock != null ">
+		 		 IN_STOCK=#{inStock},
+		 	</if>
+		 	<if test="number != null ">
+		 		NUMBER=#{number},
+		 	</if>
+		 	<if test="worth != null ">
+		 		WORTH=#{worth}
+		 	</if>
+		</set>  
+		WHERE 
+			ID=#{id}
   	</update>
 </mapper>

@@ -16,22 +16,7 @@ Ext.define('MyApp.view.MyOutStock', {
     
     initComponent: function(){
 
-        this.editing = Ext.create('Ext.grid.plugin.CellEditing',{
-        	 clicksToEdit: 1,
-        	 	listeners: {
-        	 		beforeEdit: function (editor, e) {
-        	 			if (e.field == "staff") {
-        	 				//编辑之前，过滤下市的数据源
-        	 				var department = e.record.get("department");
-        	 				var myStaffStore =  Ext.data.StoreManager.get('MyStaffStore');
-        	 				myStaffStore.clearFilter();
-        	 				myStaffStore.filterBy(function (item) {
-        	 					return item.get("department") == department;
-        	 				});
-        	 			}
-        	 		}
-        	 	} 
-        });
+        this.editing = Ext.create('Ext.grid.plugin.CellEditing');
 
         Ext.apply(this, {
             iconCls: 'icon-grid',
@@ -48,6 +33,40 @@ Ext.define('MyApp.view.MyOutStock', {
                     scope: this,
                     handler: this.onDeleteClick
                 },{
+                    xtype: 'label',
+                    text: '从'
+                },
+                {
+                    xtype: 'datefield',
+                    id: 'btnCreateTimeBegin',
+                },{
+                    xtype: 'label',
+                    text: '到'
+                },
+                {
+                    xtype: 'datefield',
+                    id: 'btnCreateTimeEnd',
+                },{
+                    xtype: 'label',
+                    text: '物品'
+                },
+                {
+                	id: 'btnOutStock',
+                	xtype: 'combo',
+                    store:'MyStockStore',
+                    valueField: 'id',
+                    displayField: 'name',
+                },{
+                    xtype: 'label',
+                    text: '部门'
+                },
+                {
+                	id: 'btnOutDepartment',
+                	xtype: 'combo',
+                    store:'MyDepartmentStore',
+                    valueField: 'id',
+                    displayField: 'name',
+                },{
                 	iconCls: 'icon-query',
                 	text: '查询',
                 	disabled: false,
@@ -55,7 +74,12 @@ Ext.define('MyApp.view.MyOutStock', {
                 	scope: this,
                     handler: this.onQueryClick
                 }]
-            }, {
+            },{
+                xtype: 'pagingtoolbar',
+                dock: 'bottom',
+                store: 'MyStockStore',
+                displayInfo: true
+            },{
                 weight: 2,
                 xtype: 'toolbar',
                 dock: 'bottom',
@@ -116,15 +140,6 @@ Ext.define('MyApp.view.MyOutStock', {
 	            	var record = kvstore.getAt(index).get('name');
 	            	return record; 
 	            }
-//	            editor: new Ext.form.ComboBox({
-//	                store: 'MyStockStore',
-//	                triggerAction: 'all',
-//	                displayField: 'name',
-//	                valueField: 'id',
-//	                allowBlank: false,
-//	                editable: false,
-//	                mode: 'local'
-//	            })
 		     }, {
 	            header: "出库部门",
 	            dataIndex: 'department',
@@ -144,6 +159,8 @@ Ext.define('MyApp.view.MyOutStock', {
 	                allowBlank: false,
 	                editable: false,
 	                mode: 'local',
+	                triggerAction: 'all',
+		            lastQuery: '',
 	                listeners: {
 	                	change: function (filed, newValue, oldValue, op) {
 	                		if (newValue != oldValue) {
@@ -199,7 +216,7 @@ Ext.define('MyApp.view.MyOutStock', {
 			   	 xtype: 'gridcolumn',
 			     width: 100,
 			     dataIndex: 'worth',
-			     text: '总价格',
+			     text: '总金额',
 			     sortable: true
 			}]
         });
@@ -261,6 +278,24 @@ Ext.define('MyApp.view.MyOutStock', {
     },
     
     onQueryClick:function(){
+    	var myStaffStore =  Ext.data.StoreManager.get('MyStaffStore');
+    	myStaffStore.load();
+    	var myDepartmentStore =  Ext.data.StoreManager.get('MyDepartmentStore');
+    	myDepartmentStore.load();
+    	
+    	var btnCreateTimeBegin = Ext.getCmp('btnCreateTimeBegin').getValue();
+    	var btnCreateTimeEnd = Ext.getCmp('btnCreateTimeEnd').getValue();
+
+    	var btnOutDepartment = Ext.getCmp('btnOutDepartment').getValue();
+    	var btnOutStock = Ext.getCmp('btnOutStock').getValue();
+    	
+    	
+    	var proxy = this.store.getProxy(); 
+        proxy.extraParams['beginTimeStr'] = Ext.Date.format(btnCreateTimeBegin, 'Y-m-d'); 
+        proxy.extraParams['endTimeStr'] = Ext.Date.format(btnCreateTimeEnd, 'Y-m-d');
+        proxy.extraParams['department'] = btnOutDepartment; 
+        proxy.extraParams['stock'] = btnOutStock; 
+        
     	this.store.load();
     }
 });

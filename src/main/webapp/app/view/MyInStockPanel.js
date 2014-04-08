@@ -48,8 +48,24 @@ Ext.define('MyApp.view.MyInStockPanel', {
 			return false;
 		}
 		
+		var instockWay = this.form.findField('instockWay').value;
 		var createDate = this.form.findField('createDate').value;
 		var staff = this.form.findField('staff').value;
+		
+		var inOutDepartment =  this.form.findField('inOutDepartment').value;
+		var inOutStockStaff =  this.form.findField('inOutStockStaff').value;
+		
+		if(instockWay=="2"){
+			if(isNaN(inOutDepartment) || inOutDepartment<=0){
+				Ext.Msg.alert('提示信息', "请选择出库部门");
+				return false;
+			}
+			
+			if(isNaN(inOutStockStaff) || inOutStockStaff<=0){
+				Ext.Msg.alert('提示信息', "请选择出库经办人");
+				return false;
+			}		
+		}
 		
 		var girdStore=this.items.items[1].store;
 
@@ -74,6 +90,10 @@ Ext.define('MyApp.view.MyInStockPanel', {
 			record.set('createDate',createDate);
 			record.set('staff',staff);
 	    });  
+		
+		girdStore.getProxy().extraParams.instockWay = instockWay;   
+		girdStore.getProxy().extraParams.inOutDepartment = inOutDepartment;   
+		girdStore.getProxy().extraParams.inOutStockStaff = inOutStockStaff;   
 		
 		girdStore.sync({
             success: function(e, opt) {

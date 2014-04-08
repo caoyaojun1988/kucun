@@ -31,12 +31,6 @@ Ext.define('MyApp.store.MyUnitStore', {
         	create: '/kucun/unit/add.do?xwl=23PSMZ8URAMI',
         	destroy: '/kucun/unit/delete.do?xwl=23PSMZ8URAMK'
         	},
-        	 
-//        listeners:{
-//    		exception:function(proxy,response,operation,options){
-//    			Wb.except(response.responseText);
-//    		}
-//        }，
 
         reader: {
             type: 'json',

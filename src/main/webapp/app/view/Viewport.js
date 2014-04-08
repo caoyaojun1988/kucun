@@ -32,6 +32,9 @@ Ext.define('MyApp.view.Viewport', {
         'MyApp.view.MyCategory',
         'MyApp.view.MyStock',
         'MyApp.view.MyInStock',
-        'MyApp.view.MyOutStock'
+        'MyApp.view.MyInStockTotal',
+        'MyApp.view.MyOutStock',
+        'MyApp.view.MyOutStockTotal',
+        'MyApp.view.MyDepartmentOutStock'
     ]
 });

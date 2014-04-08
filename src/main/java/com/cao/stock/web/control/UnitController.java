@@ -39,7 +39,7 @@ public class UnitController {
             String parameter = request.getReader().readLine();
             List<Unit> units = parseJson.parse(parameter, Unit.class);
             for (Unit unit : units) {
-                if (unit == null || StringUtils.isBlank(unit.getId()) || StringUtils.isBlank(unit.getName())) {
+                if (unit == null || StringUtils.isBlank(unit.getName())) {
                     continue;
                 }
                 unitService.addOrModifyUnit(unit);
@@ -58,10 +58,10 @@ public class UnitController {
             String parameter = request.getReader().readLine();
             List<Unit> units = parseJson.parse(parameter, Unit.class);
             for (Unit unit : units) {
-                if (unit == null || StringUtils.isBlank(unit.getId())) {
+                if (unit == null || unit.getId() == null) {
                     continue;
                 }
-                unitService.deleteUnitByUid(unit.getUid());
+                unitService.deleteUnitById(unit.getId());
             }
             return Result.successResult();
         } catch (IOException e) {
@@ -78,7 +78,7 @@ public class UnitController {
             List<Unit> units = parseJson.parse(parameter, Unit.class);
 
             for (Unit unit : units) {
-                if (unit == null || StringUtils.isBlank(unit.getId()) || StringUtils.isBlank(unit.getName())) {
+                if (unit == null || unit.getId() == null || StringUtils.isBlank(unit.getName())) {
                     continue;
                 }
                 unitService.addOrModifyUnit(unit);

@@ -91,30 +91,11 @@ Ext.define('MyApp.view.MyUnit', {
             }],
             columns: [{
 	           	 xtype: 'gridcolumn',
-	             width: 10,
-	             dataIndex: 'uid',
-	             hidden:true
-	        },{
-            	 xtype: 'gridcolumn',
-                 width: 208,
-                 dataIndex: 'id',
-                 text: '编号',
-                 sortable: true,
-                 field: {
-                     type: 'numberfield',
-                     allowBlank:false, 
-                     blankText:'该项不能为空!',
-                     validator:function(value){
-                    	var kvstore =  Ext.data.StoreManager.get('MyUnitStore');
-                     	var index = kvstore.findExact('id',value);
-                    	if(index >= 0){
-                    		return 'ID 重复';
-                    	}else{
-                    		return true; 
-                    	}
-                    }
-                  }
-            }, {
+	             width: 40,
+	             dataIndex: 'id',
+	             text: '编号',
+	             hidden:false
+	        }, {
             	 xtype: 'gridcolumn',
                  width: 235,
                  dataIndex: 'name',
@@ -149,11 +130,6 @@ Ext.define('MyApp.view.MyUnit', {
     	var isNeedSync=true;
 
     	me.store.each(function(record) {
-    		if(isNaN(this.data.id) || this.data.id<=0){
-    			Ext.Msg.alert('提示信息', "请check ID");
-    			isNeedSync=false;
-    			return false;
-    		}
     		if(Ext.isEmpty(this.data.name)){
     			Ext.Msg.alert('提示信息', "请填写名称");
     			isNeedSync=false;
@@ -193,8 +169,7 @@ Ext.define('MyApp.view.MyUnit', {
 
     onAddClick: function(){
         var rec = new MyApp.model.UnitData({
-        	  'uid':'',
-        	  'id':'请输入ID',
+        	  'id':'',
         	  'name':'请输入name'  
         	 }), edit = this.editing;
 
@@ -202,7 +177,7 @@ Ext.define('MyApp.view.MyUnit', {
         this.store.insert(0, rec);
         edit.startEditByPosition({
             row: 0,
-            column: 0
+            column: 1
         });
     },
     

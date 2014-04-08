@@ -91,13 +91,13 @@ Ext.define('MyApp.view.MyCategory', {
             }],
             columns: [{
 	           	 xtype: 'gridcolumn',
-	             width: 208,
+	             width: 40,
 	             dataIndex: 'uid',
 	             text: '编号',
 	             hidden:true
 	        },{
             	 xtype: 'gridcolumn',
-                 width: 208,
+                 width: 40,
                  dataIndex: 'id',
                  text: '编号',
                  sortable: true,

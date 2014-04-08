@@ -21,7 +21,8 @@ Ext.define('MyApp.store.MyStockStore', {
     ],
     model: 'MyApp.model.StockData',
     
-    autoLoad: true,
+    autoLoad: {start: 0, limit: 25},
+    pageSize: 25,
  	proxy: {
         type: 'ajax',
         
@@ -34,7 +35,9 @@ Ext.define('MyApp.store.MyStockStore', {
         	
         reader: {
             type: 'json',
-            successProperty: 'success'
+            successProperty: 'success',
+            root: 'rows', 
+            totalProperty: 'total'
         }
     } 
 });

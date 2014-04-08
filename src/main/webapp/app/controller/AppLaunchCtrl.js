@@ -54,8 +54,20 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
             selector: '#inStockQuery'
         },
         {
+            ref: 'inStockTotalQuery',
+            selector: '#inStockTotalQuery'
+        },
+        {
+            ref: 'outStockTotalQuery',
+            selector: '#outStockTotalQuery'
+        },
+        {
             ref: 'outStockQuery',
             selector: '#outStockQuery'
+        },
+        {
+        	ref:'departmentOutQuery',
+        	selector: '#departmentOutQuery'
         },
         {
             ref: 'trendChart',
@@ -124,6 +136,24 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
         this.application.widget(this.getTabPanel(), 'OutStockCtrl', 'MyOutStock', '10');
         //this.getTabPanel().setActiveTab(this.getTrendChart());
     },
+
+    onButtonInStockTotalQueryClick: function(button, e, options) {
+        this.unpressOtherBtns(button);
+        this.application.widget(this.getTabPanel(), 'InStockTotalCtrl', 'MyInStockTotal', '11');
+        //this.getTabPanel().setActiveTab(this.getTrendChart());
+    },
+ 
+    onButtonOutStockTotalQueryClick: function(button, e, options) {
+        this.unpressOtherBtns(button);
+        this.application.widget(this.getTabPanel(), 'OutStockTotalCtrl', 'MyOutStockTotal', '12');
+        //this.getTabPanel().setActiveTab(this.getTrendChart());
+    },
+    
+    onButtonDepartmentOutQueryClick: function(button, e, options) {
+        this.unpressOtherBtns(button);
+        this.application.widget(this.getTabPanel(), 'DepartmentOutCtrl', 'MyDepartmentOutStock', '13');
+        //this.getTabPanel().setActiveTab(this.getTrendChart());
+    },
     
     unpressOtherBtns: function(exceptBtn) {
         var nextBtn = this.getBtns();
@@ -172,10 +202,16 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
             },
             "#btnOutStockQuery":{
             	click: this.onButtonOutStockQueryClick
+            },
+            "#btnInStockTotalQuery":{
+            	click: this.onButtonInStockTotalQueryClick
+            },
+            "#btnOutStockTotalQuery":{
+            	click: this.onButtonOutStockTotalQueryClick
+            },
+            "#btnDeparmentOutQuery":{
+            	click: this.onButtonDepartmentOutQueryClick
             }
-            
         });
-
     }
-
 });

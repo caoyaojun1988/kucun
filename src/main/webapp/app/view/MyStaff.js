@@ -92,7 +92,7 @@ Ext.define('MyApp.view.MyStaff', {
             }],
             columns: [{
             	 xtype: 'gridcolumn',
-                 width: 208,
+                 width: 40,
                  dataIndex: 'id',
                  text: '编号',
                  hidden: false
@@ -101,10 +101,13 @@ Ext.define('MyApp.view.MyStaff', {
 	             dataIndex: 'department',
 	             hidden: false,
 	             renderer:function(value,metadata,record,store){
-		            	var kvstore =  Ext.data.StoreManager.get('MyDepartmentStore');
-		            	var index = kvstore.find('id',value);
-		            	var record = kvstore.getAt(index).get('name');
-		            	return record; 
+	            	if(value==0){
+		            	return "请选择";
+		            }
+	            	var kvstore =  Ext.data.StoreManager.get('MyDepartmentStore');
+	            	var index = kvstore.find('id',value);
+	            	var record = kvstore.getAt(index).get('name');
+	            	return record; 
 		         },
 	             editor: new Ext.form.ComboBox({
 	                 store: 'MyDepartmentStore',
@@ -186,8 +189,8 @@ Ext.define('MyApp.view.MyStaff', {
     onAddClick: function(){
         var rec = new MyApp.model.StaffData({
         	  'id':'',
-        	  'name':'请输入姓名',
-        	  'department':'1'
+        	  'department':'0',
+        	  'name':'请输入姓名'
         	 }), edit = this.editing;
 
         edit.cancelEdit();

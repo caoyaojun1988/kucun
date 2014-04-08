@@ -18,22 +18,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
     
     initComponent: function(){
     	Ext.QuickTips.init();
-        this.editing = Ext.create('Ext.grid.plugin.CellEditing',{
-       	 clicksToEdit: 1,
-       	 listeners: {
- 	 		beforeEdit: function (editor, e) {
- 	 			if (e.field == "stock") {
- 	 				//编辑之前，过滤下市的数据源
- 	 				var category = Ext.getCmp('inStockPanelId').form.findField('category').value;
- 	 				var myStockStore =  Ext.data.StoreManager.get('MyStockStore');
- 	 				myStockStore.clearFilter();
- 	 				myStockStore.filterBy(function (item) {
- 	 					return item.get("category") == category;
- 	 				});
- 	 			}
- 	 		}
-       	 } 
-        });
+        this.editing = Ext.create('Ext.grid.plugin.CellEditing');
 
         Ext.apply(this, {
             iconCls: 'icon-grid',
@@ -83,6 +68,8 @@ Ext.define('MyApp.view.MyInStockGrid', {
 		                allowBlank: false,
 		                editable: false,
 		                mode: 'local',
+		                triggerAction: 'all',
+   		                lastQuery: '',
 		                listeners: {
 		                	expand: function (combo ,record,value) {
 	         	 				//编辑之前，过滤下市的数据源

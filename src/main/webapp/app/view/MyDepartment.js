@@ -91,9 +91,9 @@ Ext.define('MyApp.view.MyDepartment', {
             }],
             columns: [{
             	 xtype: 'gridcolumn',
-                 width: 208,
+                 width: 40,
                  dataIndex: 'id',
-                 text: 'ID',
+                 text: '编号',
                  hidden:false
             }, {
             	 xtype: 'gridcolumn',
@@ -177,7 +177,7 @@ Ext.define('MyApp.view.MyDepartment', {
         this.store.insert(0, rec);
         edit.startEditByPosition({
             row: 0,
-            column: 0,
+            column: 1,
         });
     },
     

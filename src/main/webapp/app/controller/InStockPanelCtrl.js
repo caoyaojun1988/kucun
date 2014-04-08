@@ -6,7 +6,9 @@ Ext.define('MyApp.controller.InStockPanelCtrl', {
              'MyInStockAddStore',
              'MyCategoryStore',
              'MyStaffStore',
-             'MyUnitStore'
+             'MyUnitStore',
+             'MyInstockWayStore',
+             'MyDepartmentStore'
          ],
          
     views: ['MyApp.view.MyInStockGrid','MyApp.view.MyInStockForm','MyApp.view.MyInStockPanel'],

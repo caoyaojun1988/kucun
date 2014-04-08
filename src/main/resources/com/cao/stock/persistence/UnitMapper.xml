@@ -8,42 +8,45 @@
 
 	<select id="listAllUnits" resultType="Unit">
 		SELECT
-			UID,ID,NAME
+			ID,NAME
 		FROM 
 			UNIT
 	</select>
 
-	<select id="queryUnitByUid" parameterType="integer" resultType="Unit">
+	<select id="queryUnitById" parameterType="integer" resultType="Unit">
 		SELECT
-			UID,ID,NAME
+			ID,NAME
 		FROM 
 			UNIT
 		WHERE 
-			UID=#{uid}
+			ID=#{id}
   	</select>
 
 
 	<insert id="addUnit" parameterType="Unit">
-		INSERT INTO UNIT (id,name)
-		VALUES (#{id}, #{name}) 
+		INSERT INTO UNIT (name)
+		VALUES (#{name}) 
   	</insert>
 
 
-	<delete id="deleteUnitByUid" parameterType="Unit">
+	<delete id="deleteUnitById" parameterType="integer">
 		DELETE FROM
 			UNIT
 		WHERE 	
-			UID=#{uid} 
+			ID=#{id} 
   	</delete>
 
 
-	<update id="modifyUnitByUid" parameterType="Unit">
+	<update id="modifyUnitById" parameterType="Unit">
 		UPDATE 
 			UNIT
-		SET
-			ID = #{id},
-			NAME = #{name}
-			WHERE UID=#{uid}
+		<set>
+			<if test="name!=null ">
+		 		NAME = #{name}
+		 	</if>
+		</set>
+		WHERE 
+			ID=#{id}
   	</update>
 
 </mapper>

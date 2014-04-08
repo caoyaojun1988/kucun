@@ -17,23 +17,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
     
     initComponent: function(){
     	Ext.QuickTips.init();
-        this.editing = Ext.create('Ext.grid.plugin.CellEditing',{
-          	 clicksToEdit: 1,
-          	 listeners: {
-    	 		beforeEdit: function (editor, e) {
-    	 			if (e.field == "stock") {
-    	 				//编辑之前，过滤下市的数据源
-    	 				var category = Ext.getCmp('outStockPanelId').form.findField('outStockCategory').value;
-    	 				var myStockStore =  Ext.data.StoreManager.get('MyStockStore');
-    	 				myStockStore.clearFilter();
-    	 				myStockStore.filterBy(function (item) {
-    	 					return item.get("category") == category;
-    	 				});
-    	 			}
-    	 		}
-          	 } 
-           
-        });
+        this.editing = Ext.create('Ext.grid.plugin.CellEditing');
 
         Ext.apply(this, {
             iconCls: 'icon-grid',
@@ -82,9 +66,28 @@ Ext.define('MyApp.view.MyOutStockGrid', {
 	                displayField: 'name',
 	                valueField: 'id',
 	                allowBlank: false,
-	                editable: false,
+	                editable: true,
 	                mode: 'local',
+	                triggerAction: 'all',
+		            lastQuery: '',
 	                listeners: {
+	                	beforequery:function(e){
+	                        var combo = e.combo;
+	                        if(!e.forceAll){
+	                            var input = e.query;
+	                            // 检索的正则
+	                            var regExp = new RegExp(".*" + input + ".*");
+	                            // 执行检索
+	                            combo.store.filterBy(function(record,id){
+	                                // 得到每个record的项目名称值
+	                                var text = record.get(combo.displayField);
+	                                return regExp.test(text);
+	                            });
+	                            combo.expand();
+	                            return false;
+	                        }
+	                	},
+	                        
 	                	expand: function (combo ,record,value) {
          	 				//编辑之前，过滤下市的数据源
          	 				var category = Ext.getCmp("outStockPanelId").form.findField('outStockCategory').value;

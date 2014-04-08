@@ -11,32 +11,23 @@ public class Unit implements Serializable {
 
     private static final long serialVersionUID = 8751282105532159742L;
 
-    private Integer           uid;
-    private String            id;
+    private Integer           id;
     private String            name;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public Integer getUid() {
-        return uid;
     }
 
 }

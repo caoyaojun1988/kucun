@@ -1,32 +1,22 @@
-create table account(USERNAME,PASSWORD);
-insert into account values('12','12');
+drop table account;
+drop table unit;
+drop table department;
+drop table staff;
+drop table CATEGORY;
+drop table STOCK;
+drop table in_stock;
+drop table out_stock;
+drop table in_out_stock;
 
-create table unit (uid integer primary key autoincrement, id integer UNIQUE NOT NULL,name text NOT NULL);
-insert into unit (id,name)  values('1','个');
-
-create table department (id integer primary key autoincrement,name text NOT NULL);
-insert into department values('1','财务');
-insert into department values('2','陈列');
-
-
-create table staff (id integer primary key autoincrement,name text NOT NULL,department integer NOT NULL);
-insert into staff values('1','蓝心遥','1');
-insert into staff values('2','馆长','2');
-
-
-create table CATEGORY (uid integer primary key autoincrement, id integer  NOT NULL,name text  NOT NULL);
-insert into CATEGORY values('1','办公');
-insert into CATEGORY values('2','消耗');
-
-
+create table account(USERNAME,PASSWORD); 
+create table unit (id integer primary key autoincrement,name text NOT NULL); 
+create table department (id integer primary key autoincrement,name text NOT NULL); 
+create table staff (id integer primary key autoincrement,name text NOT NULL,department integer NOT NULL); 
+create table CATEGORY (uid integer primary key autoincrement, id integer  NOT NULL,name text  NOT NULL); 
 create table STOCK (UID integer primary key autoincrement,ID integer NOT NULL UNIQUE,NAME text NOT NULL,CATEGORY integer NOT NULL,specification text, unit integer NOT NULL,NUMBER integer NOT NULL,WORTH REAL NOT NULL,status text not null);
- 
-
 create table in_stock (ID integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,number integer NOT NULL,remainder_number integer NOT NULL,worth REAL NOT NULL,staff integer NOT NULL,status text NOT NULL);
- 
-
 create table out_stock (ID  integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,department integer NOT NULL,staff integer NOT NULL,number integer NOT NULL,worth  REAL );
-
-
 create table in_out_stock (ID integer primary key autoincrement,out_stock integer NOT NULL,in_stock integer NOT NULL,number integer NOT NULL,worth  REAL NOT NULL);
+
+
  

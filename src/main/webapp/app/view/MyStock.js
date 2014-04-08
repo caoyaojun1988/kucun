@@ -5,7 +5,8 @@ Ext.define('MyApp.view.MyStock', {
     requires: [
         'Ext.grid.plugin.CellEditing',
         'Ext.form.field.Text',
-        'Ext.toolbar.TextItem'
+        'Ext.toolbar.TextItem',
+        'Ext.Ajax.request'
     ],
 
     itemId: 'stockQuery',
@@ -16,22 +17,7 @@ Ext.define('MyApp.view.MyStock', {
     
     initComponent: function(){
     	Ext.QuickTips.init();
-        this.editing = Ext.create('Ext.grid.plugin.CellEditing',{
-          	 clicksToEdit: 1,
-          	 listeners: {
-    	 		beforeEdit: function (editor, e) {
-    	 			if (e.field == "stock") {
-    	 				//编辑之前，过滤下市的数据源
-    	 				var category = Ext.getCmp('inStockPanelId').form.findField('category').value;
-    	 				var myStockStore =  Ext.data.StoreManager.get('MyStockStore');
-    	 				myStockStore.clearFilter();
-    	 				myStockStore.filterBy(function (item) {
-    	 					return item.get("category") == category;
-    	 				});
-    	 			}
-    	 		}
-          	 } 
-        });
+        this.editing = Ext.create('Ext.grid.plugin.CellEditing');
 
         Ext.apply(this, {
             iconCls: 'icon-grid',
@@ -53,14 +39,40 @@ Ext.define('MyApp.view.MyStock', {
                     scope: this,
                     handler: this.onDeleteClick
                 },{
+                    xtype: 'label',
+                    text: '数量小于'
+                },
+                {
+                    xtype: 'numberfield',
+                    id: 'btnNumber',
+                },{
                 	iconCls: 'icon-query',
                 	text: '查询',
                 	disabled: false,
                 	itemId: 'btnQry',
                 	scope: this,
                     handler: this.onQueryClick
+                },{
+                	iconCls: 'icon-export',
+                	text: '导出当前条件',
+                	disabled: false,
+                	itemId: 'btnCurrentExport',
+                	scope: this,
+                    handler: this.onCurrentExportClick
+                },{
+                	iconCls: 'icon-export',
+                	text: '导出全部',
+                	disabled: false,
+                	itemId: 'btnExport',
+                	scope: this,
+                    handler: this.onExportClick
                 }]
             }, {
+                xtype: 'pagingtoolbar',
+                dock: 'bottom',
+                store: 'MyStockStore',
+                displayInfo: true
+            },{
                 weight: 2,
                 xtype: 'toolbar',
                 dock: 'bottom',
@@ -213,7 +225,7 @@ Ext.define('MyApp.view.MyStock', {
 			   	 xtype: 'gridcolumn',
 			     width: 135,
 			     dataIndex: 'worth',
-			     text: '总价格',
+			     text: '总金额',
 			     sortable: true
 			}]
         });
@@ -251,23 +263,7 @@ Ext.define('MyApp.view.MyStock', {
     			isNeedSync=false;
     			return false;
     		}
-    		
-//    		var kvstore =  Ext.data.StoreManager.get('MyStockStore');
-//         	var index = kvstore.findExact('id',this.data.id);
-//        	if(index >= 0){
-//        		Ext.Msg.alert('提示信息', "id 重复");
-//        		isNeedSync=false;
-//    			return false;
-//        	} 
-//    		
-//        	var kvstore =  Ext.data.StoreManager.get('MyStockStore');
-//         	var index = kvstore.findExact('name',this.data.name);
-//        	if(index >= 0){
-//        		Ext.Msg.alert('提示信息', "name 重复");
-//        		isNeedSync=false;
-//    			return false;
-//        	}
-    		
+    		    		
 	    }); 
     	
     	if(isNeedSync){
@@ -323,6 +319,26 @@ Ext.define('MyApp.view.MyStock', {
     },
     
     onQueryClick:function(){
-    	this.store.load();
+    	var btnNumber = Ext.getCmp('btnNumber').getValue();
+    	
+    	var proxy = this.store.getProxy(); 
+        proxy.extraParams['minNumber'] = btnNumber; 
+    	
+    	this.store.load({
+    		params: {
+    	        start: 0,          
+    	        limit: 25
+    	    }
+    	});
+    },
+    
+    onCurrentExportClick: function (){
+    	var btnNumber = Ext.getCmp('btnNumber').getValue();
+    	window.location.href = '/kucun/stock/export.do?minNumber='+btnNumber+'&xwl=23PSMZ8URAE8';
+    },
+    
+    onExportClick: function(){
+    	
+    	window.location.href = '/kucun/stock/export.do?xwl=23PSMZ8URAE8';  
     }
 });

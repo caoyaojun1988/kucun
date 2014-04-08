@@ -69,14 +69,6 @@ Ext.define('MyApp.view.MyOutStockForm', {
 	                			//清空原来的下拉框
 	                			var staff = Ext.getCmp('outStockStaff')
 	                			staff.clearValue();
-	                			//过滤控件的数据源
-	                			var myStaffStore =  Ext.data.StoreManager.get('MyStaffStore');
-	                			myStaffStore.clearFilter();
-	                			myStaffStore.filterBy(function (item) {
-	                				return item.get("department") == newValue;
-	                			});
-	                			//绑定数据源
-	                			staff.bindStore(myStaffStore);
 	                		}
 	                	}
 	                }
@@ -94,9 +86,10 @@ Ext.define('MyApp.view.MyOutStockForm', {
    		                allowBlank: false,
    		                valueField: 'id',
    		                displayField: 'name',
+   		                triggerAction: 'all',
+   		                lastQuery: '',
    		                listeners: {
    		                	expand: function(combo ,record,value) {
- 	                			//清空原来的下拉框
  	                			var department = Ext.getCmp('outDepartment').getValue()
  	                			//过滤控件的数据源
  	                			var myStaffStore =  Ext.data.StoreManager.get('MyStaffStore');

@@ -41,9 +41,14 @@
 	<update id="modifyStaffById" parameterType="Staff">
 		UPDATE 
 			STAFF
-		SET 
-			NAME = #{name},
-		    DEPARTMENT=#{department}
+		<set>
+			<if test="name != null ">
+		 		NAME = #{name},
+		 	</if>
+			<if test="department != null ">
+		 		DEPARTMENT=#{department}
+		 	</if>
+		</set> 
 		WHERE ID=#{id}
   	</update>
 

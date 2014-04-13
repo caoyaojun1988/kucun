@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.InOutStockMapper">
+
+	<!-- cache / -->
+
+	<select id="listAllInOutStocks" parameterType="integer"  resultType="InOutStock">
+		SELECT
+			i.ID,i.out_stock as outStock,i.in_stock as inStock,i.number,i.worth
+		FROM 
+			IN_OUT_STOCK i 
+	</select>
+	
+	<select id="queryInOutStockById" parameterType="integer" resultType="InOutStock">
+		SELECT
+			i.ID,i.out_stock as outStock,i.in_stock as inStock,i.number,i.worth
+		FROM 
+			IN_OUT_STOCK i
+		WHERE  
+			i.id = #{id} 
+  	</select>
+  	
+	<select id="queryInOutStockByOutStockId" parameterType="integer" resultType="InOutStock">
+		SELECT
+			i.ID,i.out_stock as outStock,i.in_stock as inStock,i.number,i.worth
+		FROM 
+			IN_OUT_STOCK i
+		WHERE  
+			i.out_stock = #{outStock} 
+  	</select>
+
+
+	<insert id="addInOutStock" parameterType="InOutStock">
+		INSERT INTO 
+			IN_OUT_STOCK(out_stock,in_stock,number,worth)
+		VALUES (#{outStock}, #{inStock}, #{number}, #{worth} ) 
+  	</insert>
+
+
+	<delete id="deleteInOutStockById" parameterType="InOutStock">
+		DELETE  FROM 
+			IN_OUT_STOCK
+		WHERE 
+			ID=#{id} 
+  	</delete>
+
+
+	<update id="modifyInOutStockById" parameterType="InOutStock">
+		UPDATE 
+			IN_OUT_STOCK
+		<set>
+			<if test="outStock != null ">
+		 		OUT_STOCK = #{outStock},
+		 	</if>
+		 	<if test="inStock != null ">
+		 		 IN_STOCK=#{inStock},
+		 	</if>
+		 	<if test="number != null ">
+		 		NUMBER=#{number},
+		 	</if>
+		 	<if test="worth != null ">
+		 		WORTH=#{worth}
+		 	</if>
+		</set>  
+		WHERE 
+			ID=#{id}
+  	</update>
+</mapper>

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.Stock;
 import com.cao.stock.persistence.StockMapper;
+import com.cao.stock.service.util.PinYinHelper;
 
 /**
  * TODO Comment of StockService
@@ -35,6 +36,8 @@ public class StockService {
 
     @Transactional
     public Stock addOrModifyStock(Stock stock) {
+        stock.setPinyinForName(PinYinHelper.convert(stock.getName()));
+
         Stock addStock = stockMapper.queryStockByUid(stock.getUid());
         if (addStock == null || addStock.getId() == null) {
             stock.setStatus("normal");

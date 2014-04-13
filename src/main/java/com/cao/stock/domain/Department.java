@@ -13,6 +13,7 @@ public class Department implements Serializable {
 
     private Integer           id;
     private String            name;
+    private String            pinyinForName;
 
     public String getName() {
         return name;
@@ -28,6 +29,14 @@ public class Department implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setPinyinForName(String pinyinForName) {
+        this.pinyinForName = pinyinForName;
+    }
+
+    public String getPinyinForName() {
+        return pinyinForName;
     }
 
 }

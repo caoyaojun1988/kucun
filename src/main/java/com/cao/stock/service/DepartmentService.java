@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cao.stock.domain.Department;
 import com.cao.stock.persistence.DepartmentMapper;
+import com.cao.stock.service.util.PinYinHelper;
 
 /**
  * TODO Comment of DepartmentService
@@ -30,6 +31,8 @@ public class DepartmentService {
 
     @Transactional
     public Department addOrModifyDepartment(Department department) {
+        department.setPinyinForName(PinYinHelper.convert(department.getName()));
+        
         Department addDepartment = departmentMapper.queryDepartmentById(department.getId());
         if (addDepartment == null || addDepartment.getId() == null) {
             departmentMapper.addDepartment(department);

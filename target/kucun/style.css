@@ -1,0 +1,9 @@
+.x-btn-default-large .add {
+    background-image: url(images/notepadLarge.png) !important;
+}
+.x-btn-default-large .historyQuery {
+    background-image: url(images/gridLarge.png) !important;
+}
+.x-btn-default-large .trendChart {
+    background-image: url(images/statusLarge.png) !important;
+}

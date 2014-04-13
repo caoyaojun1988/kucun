@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cao.stock.domain.Staff;
 import com.cao.stock.persistence.StaffMapper;
+import com.cao.stock.service.util.PinYinHelper;
 
 /**
  * TODO Comment of StaffService
@@ -30,6 +31,8 @@ public class StaffService {
 
     @Transactional
     public Staff addOrModifyStaff(Staff staff) {
+        staff.setPinyinForName(PinYinHelper.convert(staff.getName()));
+
         Staff addStaff = staffMapper.queryStaffById(staff.getId());
         if (addStaff == null || addStaff.getId() == null) {
             staffMapper.addStaff(staff);

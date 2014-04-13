@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cao.stock.domain.Category;
 import com.cao.stock.persistence.CategoryMapper;
+import com.cao.stock.service.util.PinYinHelper;
 
 /**
  * TODO Comment of CategoryService
@@ -30,6 +31,8 @@ public class CategoryService {
 
     @Transactional
     public Category addOrModifyCategory(Category category) {
+        category.setPinyinForName(PinYinHelper.convert(category.getName()));
+
         Category addCategory = categoryMapper.queryCategoryByUid(category.getUid());
         if (addCategory == null || addCategory.getId() == null) {
             categoryMapper.addCategory(category);

@@ -47,7 +47,7 @@ public class InStockService {
         inStock = insertInStock(inStock);
 
         OutStock outStock = new OutStock();
-        outStock.setCreateDate(new Date());
+        outStock.setCreateDate(inStock.getCreateDate());
         outStock.setDepartment(inOutDepartment);
         outStock.setModifyDate(new Date());
         outStock.setNumber(inStock.getNumber());

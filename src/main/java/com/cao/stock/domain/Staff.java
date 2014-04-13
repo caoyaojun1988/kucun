@@ -13,6 +13,7 @@ public class Staff implements Serializable {
 
     private Integer           id;
     private String            name;
+    private String            pinyinForName;
     private Integer           department;
 
     public Integer getId() {
@@ -37,6 +38,14 @@ public class Staff implements Serializable {
 
     public void setDepartment(Integer department) {
         this.department = department;
+    }
+
+    public void setPinyinForName(String pinyinForName) {
+        this.pinyinForName = pinyinForName;
+    }
+
+    public String getPinyinForName() {
+        return pinyinForName;
     }
 
 }

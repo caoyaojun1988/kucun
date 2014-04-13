@@ -14,6 +14,7 @@ public class Category implements Serializable {
     private Integer           uid;
     private Integer           id;
     private String            name;
+    private String            pinyinForName;
 
     public Integer getId() {
         return id;
@@ -37,6 +38,14 @@ public class Category implements Serializable {
 
     public Integer getUid() {
         return uid;
+    }
+
+    public void setPinyinForName(String pinyinForName) {
+        this.pinyinForName = pinyinForName;
+    }
+
+    public String getPinyinForName() {
+        return pinyinForName;
     }
 
 }

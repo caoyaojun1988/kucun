@@ -15,6 +15,7 @@ public class Stock implements Serializable {
     private Integer           id;
     private Integer           category;
     private String            name;
+    private String            pinyinForName;
     private String            specification;
     private Integer           unit;
     private Integer           number;
@@ -91,6 +92,14 @@ public class Stock implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setPinyinForName(String pinyinForName) {
+        this.pinyinForName = pinyinForName;
+    }
+
+    public String getPinyinForName() {
+        return pinyinForName;
     }
 
 }

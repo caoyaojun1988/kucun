@@ -16,6 +16,9 @@
 			<if test="minNumber!=null ">
 		 		<![CDATA[  and s.NUMBER<= #{minNumber} ]]>
 		 	</if>
+		 	<if test="stock!=null ">
+		 		<![CDATA[  and s.id = #{stock} ]]>
+		 	</if>
 		 	order by s.CATEGORY,s.ID
 	</select>
 
@@ -28,6 +31,9 @@
 			STATUS='normal'
 			<if test="minNumber!=null ">
 		 		<![CDATA[  and s.NUMBER<= #{minNumber} ]]>
+		 	</if>
+		 	<if test="stock!=null ">
+		 		<![CDATA[  and s.id = #{stock} ]]>
 		 	</if>
 	</select>
 

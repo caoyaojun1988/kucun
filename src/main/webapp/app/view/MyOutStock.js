@@ -15,9 +15,14 @@ Ext.define('MyApp.view.MyOutStock', {
     title: '出库明细',
     
     features: [{
-        ftype: 'summary'
+        ftype: 'summary',
+        dock: 'bottom'
     }],
     
+    stockStore:Ext.create('MyApp.store.MyStockStore'),
+    departmentStore:Ext.create('MyApp.store.MyDepartmentStore'),
+    staffStore:Ext.create('MyApp.store.MyStaffStore'),  
+    	
     initComponent: function(){
 
         this.editing = Ext.create('Ext.grid.plugin.CellEditing');
@@ -182,7 +187,7 @@ Ext.define('MyApp.view.MyOutStock', {
 	            width:100,
 	            hidden: false,
 	            renderer:function(value,metadata,record,store){
-	            	var kvstore =  Ext.data.StoreManager.get('MyStockStore');
+	            	var kvstore =  this.stockStore;
 	            	var index = kvstore.find('id',value);
 	            	var record = kvstore.getAt(index).get('name');
 	            	return record; 
@@ -194,7 +199,7 @@ Ext.define('MyApp.view.MyOutStock', {
 	            hidden: false,
 	            width:100,
 	            renderer:function(value,metadata,record,store){
-	            	var kvstore =  Ext.data.StoreManager.get('MyDepartmentStore');
+	            	var kvstore =  this.departmentStore;
 	            	var index = kvstore.find('id',value);
 	            	var record = kvstore.getAt(index).get('name');
 	            	return record; 
@@ -247,7 +252,7 @@ Ext.define('MyApp.view.MyOutStock', {
 	            width:100,
 	            hidden: false,
 	            renderer:function(value,metadata,record,store){
-	            	var kvstore =  Ext.data.StoreManager.get('MyStaffStore');
+	            	var kvstore =  this.staffStore;
 	            	var index = kvstore.find('id',value);
 	            	var record = kvstore.getAt(index).get('name');
 	            	return record; 
@@ -310,7 +315,7 @@ Ext.define('MyApp.view.MyOutStock', {
 
     onSync: function(){
     	var me = this;
-    	 
+    	me.store.getProxy().extraParams.method = 'update';
     	me.store.sync({
             success: function(e, opt) {
             	if(opt.batch.proxy.reader.jsonData.success==true){
@@ -358,10 +363,6 @@ Ext.define('MyApp.view.MyOutStock', {
     },
     
     onQueryClick:function(){
-    	var myStaffStore =  Ext.data.StoreManager.get('MyStaffStore');
-    	myStaffStore.load();
-    	var myDepartmentStore =  Ext.data.StoreManager.get('MyDepartmentStore');
-    	myDepartmentStore.load();
     	
     	var btnCreateTimeBegin = Ext.getCmp('btnCreateTimeBegin').getValue();
     	var btnCreateTimeEnd = Ext.getCmp('btnCreateTimeEnd').getValue();

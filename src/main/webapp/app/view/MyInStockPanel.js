@@ -29,12 +29,7 @@ Ext.define('MyApp.view.MyInStockPanel', {
     	        xtype: 'toolbar',
     	        dock: 'bottom',
     	        ui: 'footer',
-    	        items: ['->',{
-    	        	xtype: 'textfield',
-    	        	id:'inStocktotalM',
-    	        	width: 600,
-    	            value: '总入库量：0                                 总金额：0                             ',
-    	        }, {
+    	        items: ['->', {
     	            iconCls: 'icon-save',
     	            text: 'Sync',
     	            scope: this,
@@ -56,22 +51,8 @@ Ext.define('MyApp.view.MyInStockPanel', {
 		
 		var instockWay = this.form.findField('instockWay').value;
 		var createDate = this.form.findField('createDate').value;
+		var inStockMark =  this.form.findField('inStockMark').value;
 		var staff = this.form.findField('staff').value;
-		
-		var inOutDepartment =  this.form.findField('inOutDepartment').value;
-		var inOutStockStaff =  this.form.findField('inOutStockStaff').value;
-		
-		if(instockWay=="2"){
-			if(!Ext.isNumeric(inOutDepartment) || inOutDepartment<=0){
-				Ext.Msg.alert('提示信息', "请选择出库部门");
-				return false;
-			}
-			
-			if(!Ext.isNumeric(inOutStockStaff) || inOutStockStaff<=0){
-				Ext.Msg.alert('提示信息', "请选择出库经办人");
-				return false;
-			}		
-		}
 		
 		var girdStore=this.items.items[1].store;
 
@@ -97,16 +78,16 @@ Ext.define('MyApp.view.MyInStockPanel', {
 			record.set('staff',staff);
 	    });  
 		
-		girdStore.getProxy().extraParams.instockWay = instockWay;   
-		girdStore.getProxy().extraParams.inOutDepartment = inOutDepartment;   
-		girdStore.getProxy().extraParams.inOutStockStaff = inOutStockStaff;   
+		girdStore.getProxy().extraParams.instockWay = instockWay;
+		girdStore.getProxy().extraParams.inStockMark = inStockMark;
+		girdStore.getProxy().extraParams.createDate = Ext.Date.format(new Date(createDate),'Y-m-d H:i:s');
+		girdStore.getProxy().extraParams.staff = staff;
+		girdStore.getProxy().extraParams.method = 'add';
 		
 		if(isNeedSync){
 			girdStore.sync({
 	            success: function(e, opt) {
 	            	if(opt.batch.proxy.reader.jsonData.success==true){
-	                //	me.store.commitChanges(); //commit 承诺。提交  
-	                //	me.store.load();  
 	                    Ext.Msg.alert('提示信息', "保存成功"); 
 	                    this.form.reset();
 	                    this.items.items[1].store.removeAll();
@@ -117,7 +98,6 @@ Ext.define('MyApp.view.MyInStockPanel', {
 	            },  
 	            failure: function(e, opt) {
 	            	var me = this, msg = "";
-	            	//this.store.rejectChanges();  
 	            	 Ext.Msg.alert("错误", e.exceptions[0].error.statusText);
 	            },
 	            scope: me

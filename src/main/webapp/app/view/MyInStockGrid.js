@@ -16,6 +16,9 @@ Ext.define('MyApp.view.MyInStockGrid', {
     id:'inStockGridId',
     title: '入库明细',
     
+    stockStore:Ext.create('MyApp.store.MyStockStore'),
+    unitStore:Ext.create('MyApp.store.MyUnitStore'),
+    
     initComponent: function(){
     	Ext.QuickTips.init();
         this.editing = Ext.create('Ext.grid.plugin.CellEditing');
@@ -43,6 +46,25 @@ Ext.define('MyApp.view.MyInStockGrid', {
                     scope: this,
                     handler: this.onDeleteClick
                 }]
+            },{
+                weight: 2,
+                xtype: 'toolbar',
+                dock: 'bottom',
+                items: [{
+	    	        	width: 400
+	                }, {
+	                	xtype: 'label',
+	    	        	id:'inStocktotalC',
+	    	        	width: 100,
+	    	            text: '0'
+	                },{
+	                	width: 110
+	                },{
+	                	xtype: 'label',
+	    	        	id:'inStocktotalM',
+	    	        	width: 100,
+	    	            text: '0'
+	                }]
             }],
             columns: [new Ext.grid.RowNumberer({width: 50}),{
 	            	 xtype: 'gridcolumn',
@@ -51,7 +73,13 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	                 dataIndex: 'id',
 	                 text: '编号',
 	                 sortable: true
-	            }, {
+	            },{
+		            header: "物品编号",
+		            itemId:'inStock_stock_id',
+		            dataIndex: 'stock',
+		            hidden: false,
+		            width: 108,
+	            },{
 		            header: "物品",
 		            itemId:'inStock_stock',
 		            dataIndex: 'stock',
@@ -61,7 +89,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
 		            	if(value==0){
 		            		return "请选择";
 		            	}
-		            	var kvstore =  Ext.data.StoreManager.get('MyStockStore');
+		            	var kvstore = this.stockStore;
 		            	var index = kvstore.find('id',value);
 		            	var record = kvstore.getAt(index).get('name');
 		            	return record; 
@@ -101,7 +129,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
 		                	},
 		                    select: function(field, value) {
 		                    	//过滤控件的数据源
-	                			var myStockStore =  Ext.data.StoreManager.get('MyStockStore');
+	                			var myStockStore = this.store;
 	                			var index = myStockStore.find('id',field.getValue());
 	    		            	var unit = myStockStore.getAt(index).get('unit');
 	    		            	var number = myStockStore.getAt(index).get('number');
@@ -112,7 +140,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	    		            		selection.set('totalNumber',number);
 	    		            	};
 	    		            	
-	    		            	Ext.getCmp("inStockGridId").editing.startEdit(selection,5);
+	    		            	Ext.getCmp("inStockGridId").editing.startEdit(selection,6);
 		                    }
 		                }
 		            })
@@ -127,7 +155,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
 			        	 	if(value==0){
 			            		return "请选择";
 			            	}
-			            	var kvstore =  Ext.data.StoreManager.get('MyUnitStore');
+			            	var kvstore = this.unitStore;
 			            	var index = kvstore.find('id',value);
 			            	var record = kvstore.getAt(index).get('name');
 			            	return record; 
@@ -150,23 +178,46 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	                     allowBlank:false, 
 	                     blankText:'该项不能为空!',
 	                     listeners : {
-	                    	    change : function(field, newValue,o ,e) {
-	                    	    	var selectedModel = Ext.getCmp("inStockGridId").getView().getSelectionModel().getSelection()[0];
-	                    	        var text = field.value*selectedModel.get('worth');
-                    	            selectedModel.set('totalworth', text);
-                    	            
-                    	            var  MyInStockAddStore   =  Ext.data.StoreManager.get('MyInStockAddStore');
-                    	            var totalM= 0;
-                    	            var totalC= 0;
-                    	            MyInStockAddStore.each(function(record) {
-                    	            	if(Ext.isNumeric(this.data.totalworth)){
-                    	            		totalM = totalM+parseInt(this.data.totalworth);
-                    	            	}
-                    	            	if(Ext.isNumeric(this.data.number)){
-                    	            		totalC = totalC+parseInt(this.data.number);
-                    	            	}
-                    	    	    });
-                    	            Ext.getCmp('inStocktotalM').setValue("总入库量："+totalC+"                                总金额："+totalM+"                    ");
+	                    	    change : function(field, newValue,oldValue ,e) {
+		                    	    	var selectedModel = Ext.getCmp("inStockGridId").getView().getSelectionModel().getSelection()[0];
+		                    	        var text =  Ext.util.Format.round(field.value*selectedModel.get('worth'),2);
+		                    	        var totalworth = selectedModel.get('totalworth');
+	                    	            selectedModel.set('totalworth', text);
+	                    	            
+	                    	            var  inStocktotalCF   = Ext.getCmp('inStocktotalC');
+	                    	          
+	                    	            var totalC=0;
+	                    	            if(Ext.isNumeric(inStocktotalCF.text)){
+	                    	            	totalC = totalC+parseInt(inStocktotalCF.text);
+	                    	            }
+	                    	            
+	                    	            if(Ext.isNumeric(oldValue)){
+	                    	            	totalC = totalC-parseInt(oldValue);
+	                    	            }
+	                    	            
+	                    	            if(Ext.isNumeric(newValue)){
+	                    	            	totalC = totalC+parseInt(newValue);
+	                    	            }
+	                    	            
+	                    	            inStocktotalCF.setText(totalC);
+	                    	            
+	                    	            
+	                    	            var  inStocktotalMF   = Ext.getCmp('inStocktotalM');
+		                      	          
+	                    	            var totalM=0;
+	                    	            if(Ext.isNumeric(inStocktotalMF.text)){
+	                    	            	totalM = totalM+parseInt(inStocktotalMF.text);
+	                    	            }
+	                    	            
+	                    	            if(Ext.isNumeric(totalworth)){
+	                    	            	totalM = totalM-parseInt(totalworth);
+	                    	            }
+	                    	            
+	                    	            if(Ext.isNumeric(text)){
+	                    	            	totalM = totalM+parseInt(text);
+	                    	            }
+	                    	            
+	                    	            inStocktotalMF.setText(totalM);
 	                    	    }
 	                    	}
 	                 }
@@ -179,15 +230,33 @@ Ext.define('MyApp.view.MyInStockGrid', {
 				     sortable: true,
 				     field: {
 	                     type: 'NumberField',
-	                     allowBlank:false, 
+	                 //    allowBlank:false, 
 	                     blankText:'该项不能为空!',
 	                     listeners : {
-	                    	 blur : function(field) {
+	                    	 change : function(field, newValue,oldValue ,e) {
 	                    	    	var selectedModel = Ext.getCmp("inStockGridId").getView().getSelectionModel().getSelection()[0];
-	                    	        var text = field.value*selectedModel.get('number');
-                    	            selectedModel.set('totalworth', text);
+	                    	        var text = Ext.util.Format.round(field.value*selectedModel.get('number'),2);
+	                    	        var totalworth = selectedModel.get('totalworth');
+	                    	        selectedModel.set('totalworth', text);
+                    	            
+                    	            var  inStocktotalMF   = Ext.getCmp('inStocktotalM');
+	                      	          
+                    	            var totalM=0;
+                    	            if(Ext.isNumeric(inStocktotalMF.text)){
+                    	            	totalM = totalM+parseInt(inStocktotalMF.text);
+                    	            }
+                    	            
+                    	            if(Ext.isNumeric(totalworth)){
+                    	            	totalM = totalM-parseInt(totalworth);
+                    	            }
+                    	            
+                    	            if(Ext.isNumeric(text)){
+                    	            	totalM = totalM+parseInt(text);
+                    	            }
+                    	            
+                    	            inStocktotalMF.setText(totalM);
+	                    		 }
 	                    	    }
-	                    	}
 	                 }
 				},{
 				   	 xtype: 'gridcolumn',
@@ -196,31 +265,36 @@ Ext.define('MyApp.view.MyInStockGrid', {
 				     dataIndex: 'totalworth',
 				     text: '总金额',
 				     sortable: true,
-				     value:0,
 				     field: {
 	                     type: 'NumberField',
-	                     allowBlank:false, 
+	                   //  allowBlank:false, 
 	                     blankText:'该项不能为空!',
 	                     listeners : {
-	                    	 blur : function(field) {
-	                    	    	var selectedModel = Ext.getCmp("inStockGridId").getView().getSelectionModel().getSelection()[0];
-	                    	    	var worth = field.value/selectedModel.get('number');
-	                    	    	
-                    	            selectedModel.set('worth', worth);
-                    	            
-                    	            var  MyInStockAddStore   =  Ext.data.StoreManager.get('MyInStockAddStore');
-                    	            var totalM= 0;
-                    	            var totalC= 0;
-                    	            MyInStockAddStore.each(function(record) {
-                    	            	if(Ext.isNumeric(this.data.totalworth)){
-                    	            		totalM = totalM+parseInt(this.data.totalworth);
-                    	            	}
-                    	            	if(Ext.isNumeric(this.data.number)){
-                    	            		totalC = totalC+parseInt(this.data.number);
-                    	            	}
-                    	    	    });
-                    	            Ext.getCmp('inStocktotalM').setValue("总入库量："+totalC+"                                总金额："+totalM+"                             ");
-                    	    	}
+	                    	 change : function(field, newValue,oldValue ,e) {
+	                    		// 	if(Math.abs(oldValue-newValue)>0.001){
+	                    		 		var selectedModel = Ext.getCmp("inStockGridId").getView().getSelectionModel().getSelection()[0];
+		                    	    	var worth =  Ext.util.Format.round(field.value/selectedModel.get('number'),2);
+	                    	            selectedModel.set('worth', worth);
+	                    	            
+	                    	            
+	                    	            var  inStocktotalMF   = Ext.getCmp('inStocktotalM');
+	                      	          
+	                    	            var totalM=0;
+	                    	            if(Ext.isNumeric(inStocktotalMF.text)){
+	                    	            	totalM = totalM+parseInt(inStocktotalMF.text);
+	                    	            }
+	                    	            
+	                    	            if(Ext.isNumeric(oldValue)){
+	                    	            	totalM = totalM-parseInt(oldValue);
+	                    	            }
+	                    	            
+	                    	            if(Ext.isNumeric(newValue)){
+	                    	            	totalM = totalM+parseInt(newValue);
+	                    	            }
+	                    	            
+	                    	            inStocktotalMF.setText(totalM);
+	                    		 	}
+                    	    //	}
 	                    	}
 	                 }
 				}]
@@ -265,13 +339,13 @@ Ext.define('MyApp.view.MyInStockGrid', {
           	  'remainderNumber':'',
           	  'worth':'',
           	  'status':'in',
-          	  'totalworth':0
+          	  'totalworth':''
           }); 
     	  this.store.insert(this.store.getCount(), rec);
     	}
         edit.startEditByPosition({
             row: startRaw>1 ? startRaw-1 : 0,
-            column: 2
+            column: 3
         });
     }
 });

@@ -1,6 +1,7 @@
 package com.cao.stock.web.control;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cao.stock.domain.InStock;
 import com.cao.stock.domain.QueryParameter;
+import com.cao.stock.domain.Staff;
+import com.cao.stock.domain.StockOrder;
 import com.cao.stock.service.InStockService;
+import com.cao.stock.service.StaffService;
+import com.cao.stock.service.StockOrderService;
+import com.cao.stock.service.util.NumberFormatHelper;
 import com.cao.stock.web.domain.Result;
 import com.cao.stock.web.util.parseJson;
 
@@ -30,6 +37,10 @@ public class InStockController {
     private InStockService     inStockService;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private StaffService       staffService;
+    @Autowired
+    private StockOrderService  stockOrderService;
 
     @RequestMapping("/listAll")
     public @ResponseBody
@@ -45,75 +56,110 @@ public class InStockController {
 
     @RequestMapping("/add")
     public @ResponseBody
-    Result addInstocks(@RequestParam("instockWay") String instockWay,
-                       @RequestParam("inOutStockStaff") String inOutStockStaff,
-                       @RequestParam("inOutDepartment") String inOutDepartment) {
+    @Transactional
+    Result addInstocks(@RequestParam("instockWay") String instockWay, @RequestParam("inStockMark") String inStockMark,
+                       @RequestParam("createDate") String createDate, @RequestParam("staff") Integer staff,
+                       @RequestParam("method") String method) {
         try {
-            String parameter = request.getReader().readLine();
-            List<InStock> inStocks = parseJson.parse(parameter, InStock.class);
-
-            if (StringUtils.isNotBlank(instockWay) && instockWay.equals("2")) {
-                addInOutStocks(inStocks, inOutStockStaff, inOutDepartment);
-            } else {
-                String orderId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-                for (InStock inStock : inStocks) {
-                    if (inStock == null || inStock.getStock() == null) {
-                        continue;
-                    }
-                    inStock.setOrderId(orderId);
-                    inStockService.addInStock(inStock);
-                }
+            if (!"add".equals(method)) {
+                return Result.failureResult("add in stock parameter Error :" + method);
             }
-            return Result.successResult();
-        } catch (IOException e) {
+            return inStocks(instockWay, inStockMark, createDate, staff);
+        } catch (Exception e) {
             e.printStackTrace();
             return Result.failureResult(e.getMessage());
         }
     }
 
     @RequestMapping("/update")
+    @Transactional
     public @ResponseBody
-    Result updateinStocks(@RequestParam("instockWay") String instockWay,
-                          @RequestParam("inOutStockStaff") String inOutStockStaff,
-                          @RequestParam("inOutDepartment") String inOutDepartment) {
+    Result updateinStocks(@RequestParam(value = "instockWay", required = false) String instockWay,
+                          @RequestParam(value = "inStockMark", required = false) String inStockMark,
+                          @RequestParam(value = "createDate", required = false) String createDate,
+                          @RequestParam(value = "staff", required = false) Integer staff,
+                          @RequestParam(value = "method",required=false) String method) {
         try {
-            String parameter = request.getReader().readLine();
-            List<InStock> inStocks = parseJson.parse(parameter, InStock.class);
-
-            if (StringUtils.isNotBlank(instockWay) && instockWay.equals("2")) {
-                addInOutStocks(inStocks, inOutStockStaff, inOutDepartment);
+            if ("add".equals(method)) {
+                return inStocks(instockWay, inStockMark, createDate, staff);
             } else {
-                String orderId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                String parameter = request.getReader().readLine();
+                List<InStock> inStocks = parseJson.parse(parameter, InStock.class);
                 for (InStock inStock : inStocks) {
                     if (inStock == null || inStock.getStock() == null) {
                         continue;
                     }
-
                     InStock oldInStock = inStockService.queryInStockById(inStock.getId());
-                    if (oldInStock == null || oldInStock.getId() == null) {
-                        inStock.setOrderId(orderId);
-                        inStockService.addInStock(inStock);
-                    } else {
-                        inStockService.modifyInStock(oldInStock, inStock);
-                    }
+                    inStockService.modifyInStock(oldInStock, inStock);
                 }
             }
             return Result.successResult();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Result.failureResult(e.getMessage());
         }
     }
 
-    private void addInOutStocks(List<InStock> inStocks, String inOutStockStaff, String inOutDepartment) {
+    private Result inStocks(String instockWay, String inStockMark, String createDate, Integer staff)
+                                                                                                    throws IOException,
+                                                                                                    ParseException {
+
+        String parameter = request.getReader().readLine();
+        List<InStock> inStocks = parseJson.parse(parameter, InStock.class);
+
         String orderId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+
+        StockOrder stockOrder = new StockOrder();
+        stockOrder.setId(orderId);
+        stockOrder.setCreateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createDate));
+        stockOrder.setModifyDate(new Date());
+        stockOrder.setStaff(staff);
+        stockOrder.setMark(inStockMark);
+        if (StringUtils.isNotBlank(instockWay) && instockWay.equals("2")) {
+            stockOrder.setStatus("inout");
+            addInOutStocks(inStocks, stockOrder);
+        } else {
+            Double totalworth = 0D;
+            Integer totalNumber = 0;
+            for (InStock inStock : inStocks) {
+                if (inStock == null || inStock.getStock() == null) {
+                    continue;
+                }
+                inStock.setOrderId(orderId);
+                inStockService.addInStock(inStock);
+                totalNumber++;
+                totalworth += NumberFormatHelper.format(inStock.getWorth() * inStock.getNumber());
+            }
+            stockOrder.setStatus("in");
+            stockOrder.setTotalNumber(totalNumber);
+            stockOrder.setTotalWorth(totalworth);
+            stockOrderService.addStockOrder(stockOrder);
+        }
+        return Result.successResult();
+    }
+
+    private void addInOutStocks(List<InStock> inStocks, StockOrder stockOrder) {
+        if (inStocks == null || inStocks.isEmpty()) {
+            return;
+        }
+        Staff staff = staffService.queryStaffById(inStocks.get(0).getStaff());
+        Integer inOutStockStaff = staff.getId();
+        Integer inOutDepartment = staff.getDepartment();
+
+        Double totalworth = 0D;
+        Integer totalNumber = 0;
         for (InStock inStock : inStocks) {
             if (inStock == null || inStock.getStock() == null) {
                 continue;
             }
-            inStock.setOrderId(orderId);
+            inStock.setOrderId(stockOrder.getId());
             inStockService.addInOutStock(inStock, inOutStockStaff, inOutDepartment);
+            totalNumber++;
+            totalworth += NumberFormatHelper.format(inStock.getWorth() * inStock.getNumber());
         }
+        stockOrder.setTotalNumber(totalNumber);
+        stockOrder.setTotalWorth(totalworth);
+        stockOrderService.addStockOrder(stockOrder);
     }
 
     @RequestMapping("/delete")

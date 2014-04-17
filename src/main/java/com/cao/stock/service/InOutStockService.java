@@ -12,6 +12,7 @@ import com.cao.stock.domain.InStock;
 import com.cao.stock.domain.OutStock;
 import com.cao.stock.persistence.InOutStockMapper;
 import com.cao.stock.persistence.InStockMapper;
+import com.cao.stock.service.util.NumberFormatHelper;
 
 /**
  * TODO Comment of InOutStockService
@@ -50,7 +51,7 @@ public class InOutStockService {
                 if (inStock.getStatus().equals("in")) {
                     throw new RuntimeException("system error");
                 }
-                worth = worth + rnumber * inStock.getWorth();
+                worth = worth + NumberFormatHelper.format(rnumber * inStock.getWorth());
 
                 inStock.setModifyDate(new Date());
                 inStock.setRemainderNumber(inStock.getRemainderNumber() + rnumber);
@@ -68,7 +69,7 @@ public class InOutStockService {
                 inOutStock.setWorth(inOutStock.getNumber() * inStock.getWorth());
                 inOutStockMapper.modifyInOutStockById(inOutStock);
 
-                worth = worth + rnumber * inStock.getWorth();
+                worth = worth + NumberFormatHelper.format(rnumber * inStock.getWorth());
 
                 inStock.setModifyDate(new Date());
                 inStock.setRemainderNumber(inStock.getRemainderNumber() + rnumber);
@@ -84,7 +85,7 @@ public class InOutStockService {
                     throw new RuntimeException("system error");
                 }
 
-                worth = worth + inOutStock.getNumber() * inStock.getWorth();
+                worth = worth + NumberFormatHelper.format(inOutStock.getNumber() * inStock.getWorth());
                 rnumber = rnumber - inOutStock.getNumber();//
 
                 inStock.setModifyDate(new Date());
@@ -121,7 +122,7 @@ public class InOutStockService {
                     inOutStock.setInStock(inStock.getId());
                     inOutStock.setNumber(rnumber);
                     inOutStock.setOutStock(outStock.getId());
-                    inOutStock.setWorth(rnumber * inStock.getWorth());
+                    inOutStock.setWorth(NumberFormatHelper.format(rnumber * inStock.getWorth()));
                     inOutStockMapper.addInOutStock(inOutStock);
 
                     worth = worth + inOutStock.getWorth();
@@ -136,7 +137,7 @@ public class InOutStockService {
                     inOutStock.setInStock(inStock.getId());
                     inOutStock.setNumber(rnumber);
                     inOutStock.setOutStock(outStock.getId());
-                    inOutStock.setWorth(rnumber * inStock.getWorth());
+                    inOutStock.setWorth(NumberFormatHelper.format(rnumber * inStock.getWorth()));
                     inOutStockMapper.addInOutStock(inOutStock);
                     worth = worth + inOutStock.getWorth();
 
@@ -150,7 +151,7 @@ public class InOutStockService {
                     inOutStock.setInStock(inStock.getId());
                     inOutStock.setNumber(inStock.getRemainderNumber());
                     inOutStock.setOutStock(outStock.getId());
-                    inOutStock.setWorth(inStock.getRemainderNumber() * inStock.getWorth());
+                    inOutStock.setWorth(NumberFormatHelper.format(inStock.getRemainderNumber() * inStock.getWorth()));
                     inOutStockMapper.addInOutStock(inOutStock);
                     worth = worth + inOutStock.getWorth();
                     rnumber = rnumber - inStock.getRemainderNumber();// 先减去update之后变化了
@@ -183,7 +184,7 @@ public class InOutStockService {
             inOutStock.setInStock(inStock.getId());
             inOutStock.setNumber(rnumber);
             inOutStock.setOutStock(outStock.getId());
-            inOutStock.setWorth(rnumber * inStock.getWorth());
+            inOutStock.setWorth(NumberFormatHelper.format(rnumber * inStock.getWorth()));
             inOutStockMapper.addInOutStock(inOutStock);
 
             inStock.setModifyDate(new Date());

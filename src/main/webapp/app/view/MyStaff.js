@@ -99,7 +99,7 @@ Ext.define('MyApp.view.MyStaff', {
                  hidden: false
             },{
 	           	 header: "部门",
-	           	itemId:'staff_department',
+	           	 itemId:'staff_department',
 	             dataIndex: 'department',
 	             hidden: false,
 	             renderer:function(value,metadata,record,store){
@@ -119,7 +119,7 @@ Ext.define('MyApp.view.MyStaff', {
 	                 allowBlank: false,
 	                 editable: true,
 	                 mode: 'local',
-	                listeners: {
+	                 listeners: {
 	                	beforequery:function(e){
 	                        var combo = e.combo;
 	                        if(!e.forceAll){
@@ -150,6 +150,7 @@ Ext.define('MyApp.view.MyStaff', {
             }]
         });
         this.callParent();
+        Ext.data.StoreManager.get('MyDepartmentStore').load();
         this.getSelectionModel().on('selectionchange', this.onSelectChange, this);
     },
     

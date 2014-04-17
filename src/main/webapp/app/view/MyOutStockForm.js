@@ -140,5 +140,21 @@ Ext.define('MyApp.view.MyOutStockForm', {
    		                }
                 }]
             }]
+        },{
+        	xtype: 'container',
+            anchor: '100%',
+            layout: 'hbox',
+            items: [{
+            	xtype: 'container',
+            	flex: 1,
+                layout: 'anchor',
+                items:[{
+                		id:'outStockMark',
+                        xtype: 'textfield',
+                        fieldLabel: '备注',
+                        anchor: '100%',
+   		                allowBlank: true
+                }]
+            }]
         }]
 });

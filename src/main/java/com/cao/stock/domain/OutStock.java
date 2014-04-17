@@ -17,8 +17,8 @@ public class OutStock implements Serializable {
     private Date              modifyDate;
     private String            orderId;
     private Integer           stock;
-    private String            department;
-    private String            staff;
+    private Integer           department;
+    private Integer           staff;
     private Integer           number;
     private Double            worth;
 
@@ -62,24 +62,24 @@ public class OutStock implements Serializable {
         this.stock = stock;
     }
 
-    public String getDepartment() {
+    public Integer getNumber() {
+        return number;
+    }
+
+    public Integer getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Integer department) {
         this.department = department;
     }
 
-    public String getStaff() {
+    public Integer getStaff() {
         return staff;
     }
 
-    public void setStaff(String staff) {
+    public void setStaff(Integer staff) {
         this.staff = staff;
-    }
-
-    public Integer getNumber() {
-        return number;
     }
 
     public void setNumber(Integer number) {

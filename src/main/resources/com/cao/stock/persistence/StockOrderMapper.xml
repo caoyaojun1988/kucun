@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.StockOrderMapper">
+
+	<!-- cache / -->
+
+	<select id="listAllStockOrders" parameterType="com.cao.stock.domain.QueryParameter"  resultType="StockOrder">
+		SELECT
+			o.ID,o.create_date as createDate,o.modify_date as modifyDate,o.staff,o.total_number as totalNumber,o.total_worth as totalWorth,status,mark
+		FROM 
+			stock_order o
+		WHERE 
+		 	order by o.id
+	</select>
+
+	<select id="queryStockOrderById" parameterType="string" resultType="StockOrder">
+		SELECT
+			o.ID,o.create_date as createDate,o.modify_date as modifyDate,o.staff,o.total_number as totalNumber,o.total_worth as totalWorth,status,mark
+		FROM 
+			stock_order o
+		WHERE  
+			 and s.ID = #{id} 
+  	</select>
+
+	<insert id="addStockOrder" parameterType="StockOrder">
+		INSERT INTO 
+			stock_order(id,create_date,modify_date,staff,total_number,total_worth,status,mark)
+		VALUES (#{id}, #{createDate}, #{modifyDate},#{staff}, #{totalNumber}, #{totalWorth},#{status},#{mark}) 
+  	</insert>
+
+
+	<delete id="deleteStockByUid" parameterType="StockOrder">
+		UPDATE 
+			stock_order
+		SET 
+		    status='deleted'
+		WHERE UID=#{uid}
+  	</delete>
+
+	<update id="modifyStockOrderByid" parameterType="StockOrder">
+		UPDATE 
+			stock_order
+		<set>
+			<if test="modifyDate != null ">
+		 		modify_date=#{modifyDate},
+		 	</if>
+		 	<if test="staff != null ">
+		 		 staff = #{staff},
+		 	</if>
+		 	<if test="totalNumber != null ">
+		 		totalNumber = #{totalNumber},
+		 	</if>
+		 	<if test="totalWorth != null ">
+		 		totalWorth = #{totalWorth},
+		 	</if>
+		 	<if test="mark != null">
+		 		mark = #{mark},
+		 	</if>
+		 	
+		</set>    
+		WHERE ID=#{id}
+  	</update>
+</mapper>

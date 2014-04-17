@@ -13,6 +13,7 @@ import com.cao.stock.domain.OutStock;
 import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.Stock;
 import com.cao.stock.persistence.InStockMapper;
+import com.cao.stock.service.util.NumberFormatHelper;
 
 /**
  * TODO Comment of InStockService
@@ -38,12 +39,12 @@ public class InStockService {
         Stock stock = new Stock();
         stock.setId(inStock.getStock());
         stock.setNumber(inStock.getNumber());
-        stock.setWorth(inStock.getWorth() * inStock.getNumber());
+        stock.setWorth(NumberFormatHelper.format(inStock.getWorth() * inStock.getNumber()));
         stockService.inStock(stock);
     }
 
     @Transactional
-    public void addInOutStock(InStock inStock, String inOutStockStaff, String inOutDepartment) {
+    public void addInOutStock(InStock inStock, Integer inOutStockStaff, Integer inOutDepartment) {
         inStock = insertInStock(inStock);
 
         OutStock outStock = new OutStock();
@@ -51,11 +52,10 @@ public class InStockService {
         outStock.setDepartment(inOutDepartment);
         outStock.setModifyDate(new Date());
         outStock.setNumber(inStock.getNumber());
-        String orderId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-        outStock.setOrderId(orderId);
+        outStock.setOrderId(inStock.getOrderId());
         outStock.setStaff(inOutStockStaff);
         outStock.setStock(inStock.getStock());
-        outStock.setWorth(inStock.getNumber() * inStock.getWorth());
+        outStock.setWorth(NumberFormatHelper.format(inStock.getNumber() * inStock.getWorth()));
 
         outStockService.addInOutStock(outStock, inStock);
     }
@@ -88,7 +88,7 @@ public class InStockService {
                 Stock stock = new Stock();
                 stock.setId(newInStock.getStock());
                 stock.setNumber(deleteNumber);
-                stock.setWorth(deleteNumber * newInStock.getWorth());
+                stock.setWorth(NumberFormatHelper.format(deleteNumber * newInStock.getWorth()));
                 stockService.outStock(stock);
             } else {
                 // List<InOutStock> inOutStocks = inOutStockService.queryInOutStockByInStockId();
@@ -103,7 +103,7 @@ public class InStockService {
             Stock stock = new Stock();
             stock.setId(newInStock.getStock());
             stock.setNumber(newInStock.getNumber() - oldInStock.getNumber());
-            stock.setWorth(stock.getNumber() * newInStock.getWorth());
+            stock.setWorth(NumberFormatHelper.format(stock.getNumber() * newInStock.getWorth()));
             stockService.inStock(stock);
         } else {
             InStockMapper.modifyInStockById(newInStock);

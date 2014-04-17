@@ -7,6 +7,7 @@ drop table STOCK;
 drop table in_stock;
 drop table out_stock;
 drop table in_out_stock;
+drop table stock_order;
 
 create table account(USERNAME,PASSWORD); 
 create table unit (id integer primary key autoincrement,name text NOT NULL,pinyinForName text  ); 
@@ -17,3 +18,4 @@ create table STOCK (UID integer primary key autoincrement,ID integer NOT NULL UN
 create table in_stock (ID integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,number integer NOT NULL,remainder_number integer NOT NULL,worth REAL NOT NULL,staff integer NOT NULL,status text NOT NULL);
 create table out_stock (ID  integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,department integer NOT NULL,staff integer NOT NULL,number integer NOT NULL,worth  REAL );
 create table in_out_stock (ID integer primary key autoincrement,out_stock integer NOT NULL,in_stock integer NOT NULL,number integer NOT NULL,worth  REAL NOT NULL);
+create table stock_order (id text  primary key,create_date timestamp NOT NULL,modify_date timestamp NOT NULL,staff integer NOT NULL,total_number integer ,total_worth REAL,status text NOT NULL,mark text);

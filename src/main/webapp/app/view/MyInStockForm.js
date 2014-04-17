@@ -26,19 +26,6 @@ Ext.define('MyApp.view.MyInStockForm', {
                          allowBlank: false,
                          valueField: 'id',
                          displayField: 'name',
-                         listeners: {
-                        	 change: function (filed, newValue, oldValue, op) {
-     	                		if (newValue != oldValue) {
-     	                			if(newValue==="2"){
-     	                				Ext.getCmp("inOutStockStaff").setVisible(true);
-     	                				Ext.getCmp("inOutDepartment").setVisible(true);
-     	                			}else{
-     	                				Ext.getCmp("inOutStockStaff").setVisible(false);
-     	                				Ext.getCmp("inOutDepartment").setVisible(false);
-     	                			}
-     	                		}
-     	                	}
-                         }
                 	}]
             },{
             	xtype: 'container',
@@ -102,7 +89,7 @@ Ext.define('MyApp.view.MyInStockForm', {
                 items:[{
                 		id:'staff',
                         xtype: 'combo',
-                        fieldLabel: '入庫经办人',
+                        fieldLabel: '入库经办人',
                         anchor: '100%',
                         store: Ext.create('MyApp.store.MyStaffStore'),
    		                allowBlank: false,
@@ -134,78 +121,11 @@ Ext.define('MyApp.view.MyInStockForm', {
             	flex: 1,
                 layout: 'anchor',
                 items:[{
-                	id: 'inOutDepartment',
-                	xtype: 'combo',
-                	fieldLabel: "出库部门",
-    	            anchor: '100%',
-                    store:Ext.create('MyApp.store.MyDepartmentStore'),
-                    allowBlank: true,
-                    valueField: 'id',
-                    displayField: 'name',
-                    hidden: true,
-	                listeners: {
-	                	beforequery:function(e){
-	                        var combo = e.combo;
-	                        if(!e.forceAll){
-	                            var input = e.query;
-	                            var regExp = new RegExp(".*" + input + ".*");// 检索的正则
-	                            combo.store.filterBy(function(record,id){
-	                                var text = record.get("pinyinForName"); // 得到每个record的项目名称值
-	                                return regExp.test(text);
-	                            });
-	                            combo.expand();
-	                            return false;
-	                        }
-	                	},
-	                	change: function (filed, newValue, oldValue, op) {
-	                		if (newValue != oldValue) {
-	                			//清空原来的下拉框
-	                			var staff = Ext.getCmp('inOutStockStaff')
-	                			staff.clearValue();
-	                		}
-	                	}
-	                }
-                }]
-            },{
-            	xtype: 'container',
-            	flex: 1,
-                layout: 'anchor',
-                items:[{
-                		id:'inOutStockStaff',
-                        xtype: 'combo',
-                        fieldLabel: '出库经办人',
+                		id:'inStockMark',
+                        xtype: 'textfield',
+                        fieldLabel: '备注',
                         anchor: '100%',
-   		                store: Ext.create('MyApp.store.MyStaffStore'),
-   		                allowBlank: true,
-   		                valueField: 'id',
-   		                displayField: 'name',
-   		                hidden: true,
-   		                triggerAction: 'all',
-		                lastQuery: '',
-   		                listeners: {
-   		                	beforequery:function(e){
-   		                        var combo = e.combo;
-   		                        if(!e.forceAll){
-   		                            var input = e.query;
-   		                            var regExp = new RegExp(".*" + input + ".*");// 检索的正则
-   		                            combo.store.clearFilter();
-   		                            combo.store.filterBy(function(record,id){
-   		                                var text = record.get("pinyinForName"); // 得到每个record的项目名称值
-   		                                return regExp.test(text);
-   		                            });
-   		                            combo.expand();
-   		                            return false;
-   		                        }
-   		                	},
-   		                	expand: function(combo ,record,value) {
- 	                			//清空原来的下拉框
- 	                			var department = Ext.getCmp('inOutDepartment').getValue()
- 	                			//过滤控件的数据源
- 	                			combo.store.filterBy(function (item) {
- 	                				return item.get("department") == department;
- 	                			});
-   		                	}
-   		                }
+   		                allowBlank: true
                 }]
             }]
         }]

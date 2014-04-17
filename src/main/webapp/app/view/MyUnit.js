@@ -108,7 +108,7 @@ Ext.define('MyApp.view.MyUnit', {
                     allowBlank:false, 
                     blankText:'该项不能为空!',
                     validator:function(value){
-                     	var kvstore =  Ext.data.StoreManager.get('MyUnitStore');
+                     	var kvstore = Ext.data.StoreManager.get('MyUnitStore');
                       	var index = kvstore.findExact('name',value);
                      	if(index >= 0){
                      		return 'name 重复';

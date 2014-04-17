@@ -15,8 +15,12 @@ Ext.define('MyApp.view.MyInStock', {
     title: '入库明细',
     
     features: [{
-        ftype: 'summary'
+        ftype: 'summary',
+        dock: 'bottom'
     }],
+    
+
+    stockStore:Ext.create('MyApp.store.MyStockStore'),
     
     initComponent: function(){
 
@@ -165,7 +169,7 @@ Ext.define('MyApp.view.MyInStock', {
 		            hidden: false,
 		            width: 108,
 		            renderer:function(value,metadata,record,store){
-		            	var kvstore =  Ext.data.StoreManager.get('MyStockStore');
+		            	var kvstore =  this.stockStore;
 		            	var index = kvstore.find('id',value);
 		            	var record = kvstore.getAt(index).get('name');
 		            	return record; 
@@ -210,6 +214,8 @@ Ext.define('MyApp.view.MyInStock', {
     onSync: function(){
     	var me = this;
     
+    	me.store.getProxy().extraParams.method = 'update';
+		
     	me.store.sync({
             success: function(e, opt) {
             	if(opt.batch.proxy.reader.jsonData.success==true){

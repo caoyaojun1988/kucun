@@ -16,7 +16,8 @@ Ext.define('MyApp.view.MyStock', {
     title: '库存',
     
     features: [{
-        ftype: 'summary'
+        ftype: 'summary',
+        dock: 'bottom'
     }],
     
     initComponent: function(){
@@ -53,6 +54,33 @@ Ext.define('MyApp.view.MyStock', {
                 {
                     xtype: 'numberfield',
                     id: 'btnNumber',
+                },{
+                    xtype: 'label',
+                    text: '名称'
+                },
+                {
+                    id: 'btnStock',
+                 	xtype: 'combo',
+                    store:Ext.create('store.MyStockStore'),
+                    valueField: 'id',
+                    displayField: 'name',
+	                listeners: {
+	                	beforequery:function(e){
+	                        var combo = e.combo;
+	                        if(!e.forceAll){
+	                            var input = e.query;
+	                            var regExp = new RegExp(".*" + input + ".*");  // 检索的正则
+	                            combo.store.filterBy(function(record,id){
+	                                var text = record.get("pinyinForName");
+	                                return regExp.test(text);
+	                            });
+	                            combo.expand();
+	                            return false;
+	                        }
+	                	}
+	                }
+                
+                    
                 },{
                 	iconCls: 'icon-query',
                 	text: '查询',
@@ -320,8 +348,6 @@ Ext.define('MyApp.view.MyStock', {
 	            		var me = this;
 	                	me.store.commitChanges(); //commit 承诺。提交  
 	                	me.store.load();  
-	                	Ext.data.StoreManager.get('MyUnitStore').load();
-	                	Ext.data.StoreManager.get('MyCategoryStore').load();
 	                    Ext.Msg.alert('提示信息', "保存成功"); 
 	            	}else{
 	            		this.store.rejectChanges();  
@@ -377,13 +403,13 @@ Ext.define('MyApp.view.MyStock', {
     
     onQueryClick:function(){
     	var btnNumber = Ext.getCmp('btnNumber').getValue();
+    	var btnStock = Ext.getCmp('btnStock').getValue();
     	
     	var proxy = this.store.getProxy(); 
         proxy.extraParams['minNumber'] = btnNumber; 
-    	
+        proxy.extraParams['stock'] = btnStock;
+        
     	this.store.load();
-    	Ext.data.StoreManager.get('MyUnitStore').load();
-    	Ext.data.StoreManager.get('MyCategoryStore').load();
     },
     
     onCurrentExportClick: function (){

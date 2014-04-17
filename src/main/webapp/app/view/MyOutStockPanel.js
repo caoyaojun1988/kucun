@@ -51,6 +51,7 @@ Ext.define('MyApp.view.MyOutStockPanel', {
 		var createDate = this.form.findField('outStockCreateDate').value;
 		var department = this.form.findField('outDepartment').value;
 		var staff = this.form.findField('outStockStaff').value;
+		var outStockMark = this.form.findField('outStockMark').value;
 		
 		var girdStore=this.items.items[1].store;
 		
@@ -72,12 +73,17 @@ Ext.define('MyApp.view.MyOutStockPanel', {
 			record.set('staff',staff);
 	    });  
 		
+		girdStore.getProxy().extraParams.outStockMark = outStockMark;  
+		
+		girdStore.getProxy().extraParams.createDate = Ext.Date.format(new Date(createDate),'Y-m-d H:i:s');
+		girdStore.getProxy().extraParams.staff = staff;
+		girdStore.getProxy().extraParams.department = department;
+		girdStore.getProxy().extraParams.method = 'add';
+		
 		if(isNeedSync){
 			girdStore.sync({
 	            success: function(e, opt) {
 	            	if(opt.batch.proxy.reader.jsonData.success==true){
-	                // me.store.commitChanges(); //commit 承诺。提交
-	                // me.store.load();
 	                    Ext.Msg.alert('提示信息', "保存成功"); 
 	                    this.form.reset();
 	                    this.items.items[1].store.removeAll();
@@ -88,7 +94,6 @@ Ext.define('MyApp.view.MyOutStockPanel', {
 	            },  
 	            failure: function(e, opt) {
 	            	var me = this, msg = "";
-	            	// this.store.rejectChanges();
 	            	 Ext.Msg.alert("错误", e.exceptions[0].error.statusText);
 	            },
 	            scope: me

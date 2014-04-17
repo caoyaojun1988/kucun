@@ -14,7 +14,8 @@ Ext.define('MyApp.view.MyDepartmentOutStock', {
     },
     title: '部门汇总',
     features: [{
-        ftype: 'summary'
+        ftype: 'summary',
+        dock: 'bottom'
     }],
     initComponent: function(){
 
@@ -126,8 +127,6 @@ Ext.define('MyApp.view.MyDepartmentOutStock', {
     },
     
     onQueryClick:function(){
-    	var kvstore =  Ext.data.StoreManager.get('MyUnitStore');
-    	kvstore.load();
     	
     	var btnCreateTimeBegin = Ext.getCmp('btnDepartmentOutBegin').getValue();
     	var btnCreateTimeEnd = Ext.getCmp('btnDepartmentOutEnd').getValue();

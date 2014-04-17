@@ -14,7 +14,8 @@ Ext.define('MyApp.view.MyOutStockTotal', {
     },
     title: '出库汇总',
     features: [{
-        ftype: 'summary'
+        ftype: 'summary',
+        dock: 'bottom'
     }],
     initComponent: function(){
 
@@ -121,8 +122,6 @@ Ext.define('MyApp.view.MyOutStockTotal', {
     },
     
     onQueryClick:function(){
-    	var kvstore =  Ext.data.StoreManager.get('MyUnitStore');
-    	kvstore.load();
     	
     	var btnCreateTimeBegin = Ext.getCmp('btnQeryOutTotalBegin').getValue();
     	var btnCreateTimeEnd = Ext.getCmp('btnQeryOutTotalEnd').getValue();

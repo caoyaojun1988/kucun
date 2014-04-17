@@ -15,6 +15,9 @@ Ext.define('MyApp.view.MyOutStockGrid', {
     },
     title: '出库明细', 
     
+    stockStore:Ext.create('MyApp.store.MyStockStore'),
+    unitStore:Ext.create('MyApp.store.MyUnitStore'),
+    
     initComponent: function(){
     	Ext.QuickTips.init();
         this.editing = Ext.create('Ext.grid.plugin.CellEditing');
@@ -43,6 +46,18 @@ Ext.define('MyApp.view.MyOutStockGrid', {
                     scope: this,
                     handler: this.onDeleteClick
                 }]
+            },{
+                weight: 2,
+                xtype: 'toolbar',
+                dock: 'bottom',
+                items: [{
+	    	        	width: 200
+	                }, {
+	                	xtype: 'label',
+	    	        	id:'outStocktotalC',
+	    	        	width: 100,
+	    	            text: '0'
+	                }]
             }],
             
             columns: [new Ext.grid.RowNumberer({width: 50}),{
@@ -53,6 +68,12 @@ Ext.define('MyApp.view.MyOutStockGrid', {
                  text: '编号',
                  sortable: true
             }, {
+	            header: "物品编号",
+	            itemId:'outStock_stock_id',
+	            dataIndex: 'stock',
+	            hidden: false,
+	            width: 108,
+            },{
 	            header: "物品",
 	            itemId:'outStockGrid_stock',
 	            dataIndex: 'stock',
@@ -62,7 +83,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
 	            	if(value==0){
 	            		return "请选择";
 	            	}
-	            	var kvstore =  Ext.data.StoreManager.get('MyStockStore');
+	            	var kvstore =  this.stockStore;
 	            	var index = kvstore.find('id',value);
 	            	var record = kvstore.getAt(index).get('name');
 	            	return record; 
@@ -102,7 +123,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
 	                	},
 	                    select: function(field, value) {
 	                    	//过滤控件的数据源
-                			var myStockStore =  Ext.data.StoreManager.get('MyStockStore');
+                			var myStockStore =  this.store;
                 			var index = myStockStore.find('id',field.getValue());
     		            	var unit = myStockStore.getAt(index).get('unit');
     		            	var number = myStockStore.getAt(index).get('number');
@@ -113,7 +134,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
     		            		selection.set('totalNumber',number);
     		            	};
     		            	
-    		            	Ext.getCmp("outStockGridId").editing.startEdit(selection,3); 
+    		            	Ext.getCmp("outStockGridId").editing.startEdit(selection,4); 
 	                    }
 	                }
 	            })
@@ -129,12 +150,31 @@ Ext.define('MyApp.view.MyOutStockGrid', {
                      allowBlank:false, 
                      blankText:'该项不能为空!',
                      listeners: {
-                    	 blur: function (field ,record,value) {
-                    		 var selection =	Ext.getCmp("outStockGridId").getView().getSelectionModel().getSelection()[0];
-                    		 if(field.value>selection.data.totalNumber){
-                    			 Ext.MessageBox.alert("警告", "库存不足")
-                    			 field.setValue(0);
-                    		 }
+                    	 change : function(field, newValue,oldValue ,e) {
+                    		// if(Math.abs(oldValue-newValue)>0.001){
+	                    		 var selection =	Ext.getCmp("outStockGridId").getView().getSelectionModel().getSelection()[0];
+	                    		 if(newValue>selection.data.totalNumber){
+	                    			 Ext.MessageBox.alert("警告", "库存不足")
+	                    			 field.setValue(0);
+	                    		 }
+	                    		 
+	                    		var  outStocktotalCF   = Ext.getCmp('outStocktotalC');
+	               	          
+	             	            var totalC=0;
+	             	            if(Ext.isNumeric(outStocktotalCF.text)){
+	             	            	totalC = totalC+parseInt(outStocktotalCF.text);
+	             	            }
+	             	            
+	             	            if(Ext.isNumeric(oldValue)){
+	             	            	totalC = totalC-parseInt(oldValue);
+	             	            }
+	             	            
+	             	            if(Ext.isNumeric(newValue)){
+	             	            	totalC = totalC+parseInt(newValue);
+	             	            }
+	             	            
+	             	            outStocktotalCF.setText(totalC);
+                    	//	 }
                     	 }
                      }
                  }
@@ -149,7 +189,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
 		        	 	if(value==0 || value==undefined){
 		            		return "请选择";
 		            	}
-		            	var kvstore =  Ext.data.StoreManager.get('MyUnitStore');
+		            	var kvstore = this.unitStore;
 		            	kvstore.load();
 		            	var index = kvstore.find('id',value);
 		            	var record = kvstore.getAt(index).get('name');
@@ -205,7 +245,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
     	}
         edit.startEditByPosition({
         	row: startRaw>1 ? startRaw-1 : 0,
-            column: 2
+            column: 3
         });
     },
     

@@ -262,9 +262,9 @@ Ext.define('MyApp.view.MyInStockDetail', {
             'createDate':'',
             'modifyDate':'',
             'stock':'',
-            'number':'',
-            'worth':'',
-            'totalWorth':'',
+            'number':'0',
+            'worth':'0',
+            'totalWorth':'0',
             'status':'in'
         }), edit = this.editing;
       edit.cancelEdit();

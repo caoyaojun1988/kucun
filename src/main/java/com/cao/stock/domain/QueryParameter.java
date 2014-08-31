@@ -22,6 +22,7 @@ public class QueryParameter {
     private Integer stock;
     private Integer minNumber;
     private Integer maxNumber;
+    private String  orderId;
 
     // page
     private Integer start;
@@ -124,6 +125,14 @@ public class QueryParameter {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderId() {
+        return orderId;
     }
 
 }

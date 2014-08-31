@@ -30,11 +30,18 @@ Ext.define('MyApp.view.Viewport', {
         'MyApp.view.MyDepartment',
         'MyApp.view.MyStaff',
         'MyApp.view.MyCategory',
+        'MyApp.view.MyStockPanel',
         'MyApp.view.MyStock',
-        'MyApp.view.MyInStock',
+        'MyApp.view.MyStockDetail',
+        'MyApp.view.MyInStockDetailPanel',
+        'MyApp.view.MyInStockDetailOrder',
+        'MyApp.view.MyInStockDetail',
         'MyApp.view.MyInStockTotal',
-        'MyApp.view.MyOutStock',
+        'MyApp.view.MyOutStockDetailPanel',
+        'MyApp.view.MyOutStockDetailOrder',
+        'MyApp.view.MyOutStockDetail',
         'MyApp.view.MyOutStockTotal',
-        'MyApp.view.MyDepartmentOutStock'
+        'MyApp.view.MyDepartmentOutStock',
+        'MyApp.view.MyStockTotalByCategory'
     ]
 });

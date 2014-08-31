@@ -50,7 +50,7 @@ Ext.define('MyApp.view.MyUnit', {
                 xtype: 'toolbar',
                 dock: 'bottom',
                 items: [{
-                    text: 'autoSync',
+                    text: '自动同步',
                     enableToggle: true,
                     pressed: true,
                     tooltip: 'When enabled, Store will execute Ajax requests as soon as a Record becomes dirty.',
@@ -59,7 +59,7 @@ Ext.define('MyApp.view.MyUnit', {
                         this.store.autoSync = pressed;
                     }
                 }, {
-                    text: 'batch',
+                    text: '批量同步',
                     enableToggle: true,
                     pressed: true,
                     tooltip: 'When enabled, Store will batch all records for each type of CRUD verb into a single Ajax request.',
@@ -68,7 +68,7 @@ Ext.define('MyApp.view.MyUnit', {
                         this.store.getProxy().batchActions = pressed;
                     }
                 }, {
-                    text: 'writeAllFields',
+                    text: '同步所有字段',
                     enableToggle: true,
                     pressed: false,
                     tooltip: 'When enabled, Writer will write *all* fields to the server -- not just those that changed.',

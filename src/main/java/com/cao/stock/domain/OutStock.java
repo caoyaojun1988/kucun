@@ -13,12 +13,10 @@ public class OutStock implements Serializable {
     private static final long serialVersionUID = 8751282105532159742L;
 
     private Integer           id;
+    private String            orderId;
     private Date              createDate;
     private Date              modifyDate;
-    private String            orderId;
     private Integer           stock;
-    private Integer           department;
-    private Integer           staff;
     private Integer           number;
     private Double            worth;
 
@@ -64,22 +62,6 @@ public class OutStock implements Serializable {
 
     public Integer getNumber() {
         return number;
-    }
-
-    public Integer getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Integer department) {
-        this.department = department;
-    }
-
-    public Integer getStaff() {
-        return staff;
-    }
-
-    public void setStaff(Integer staff) {
-        this.staff = staff;
     }
 
     public void setNumber(Integer number) {

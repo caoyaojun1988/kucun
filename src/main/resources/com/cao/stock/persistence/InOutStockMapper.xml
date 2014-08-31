@@ -31,6 +31,15 @@
 			i.out_stock = #{outStock} 
   	</select>
 
+	<select id="queryInOutStockByInStockId" parameterType="integer" resultType="InOutStock">
+		SELECT
+			i.ID,i.out_stock as outStock,i.in_stock as inStock,i.number,i.worth
+		FROM 
+			IN_OUT_STOCK i
+		WHERE  
+			i.in_stock = #{inStock} 
+  	</select>  	
+
 
 	<insert id="addInOutStock" parameterType="InOutStock">
 		INSERT INTO 

@@ -28,7 +28,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
             plugins: [this.editing],
             dockedItems: [{
                 xtype: 'toolbar',
-                store: 'MyOutStockStore',
+                store: 'MyOutStockAddStore',
                 items: [{
                     xtype: 'numberfield',
                     id: 'btnAddOutStock',
@@ -66,6 +66,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
                  itemId:'outStockGrid_id',
                  dataIndex: 'id',
                  text: '编号',
+                 hidden: true,
                  sortable: true
             }, {
 	            header: "物品编号",
@@ -104,23 +105,18 @@ Ext.define('MyApp.view.MyOutStockGrid', {
 	                        if(!e.forceAll){
 	                            var input = e.query;
 	                            var regExp = new RegExp(".*" + input + ".*");// 检索的正则
+	                          //编辑之前，过滤下市的数据源
+	         	 				var category = Ext.getCmp("outStockPanelId").form.findField('outStockCategory').value;
 	                            combo.store.clearFilter();
 	                            combo.store.filterBy(function(record,id){
 	                                var text = record.get("pinyinForName"); // 得到每个record的项目名称值
-	                                return regExp.test(text);
+	                                return regExp.test(text) && record.get("category") == category;
 	                            });
 	                            combo.expand();
 	                            return false;
 	                        }
 	                	},
-	                        
-	                	expand: function (combo ,record,value) {
-         	 				//编辑之前，过滤下市的数据源
-         	 				var category = Ext.getCmp("outStockPanelId").form.findField('outStockCategory').value;
-         	 				combo.store.filterBy(function (item) {
-         	 					return item.get("category") == category;
-         	 				});
-	                	},
+	                  
 	                    select: function(field, value) {
 	                    	//过滤控件的数据源
                 			var myStockStore =  this.store;
@@ -134,7 +130,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
     		            		selection.set('totalNumber',number);
     		            	};
     		            	
-    		            	Ext.getCmp("outStockGridId").editing.startEdit(selection,4); 
+    		            	Ext.getCmp("outStockGridId").editing.startEdit(selection,3); 
 	                    }
 	                }
 	            })
@@ -245,7 +241,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
     	}
         edit.startEditByPosition({
         	row: startRaw>1 ? startRaw-1 : 0,
-            column: 3
+            column: 2
         });
     },
     

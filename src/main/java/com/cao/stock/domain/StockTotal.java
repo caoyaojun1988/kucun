@@ -19,6 +19,7 @@ public class StockTotal implements Serializable {
     private Double            stockWorth;
     private Integer           number;
     private Integer           department;
+    private String            departmentName;
 
     public Integer getStock() {
         return stock;
@@ -82,6 +83,14 @@ public class StockTotal implements Serializable {
 
     public Integer getDepartment() {
         return department;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
     }
 
 }

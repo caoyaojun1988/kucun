@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.Stock;
+import com.cao.stock.domain.StockDetail;
 
 /**
  * TODO Comment of StockMapper
@@ -28,4 +29,5 @@ public interface StockMapper {
 
     public void modifyStockById(Stock stock);
 
+    public List<StockDetail> listDetailById(Integer stockId);
 }

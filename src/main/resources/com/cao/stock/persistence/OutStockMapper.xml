@@ -9,7 +9,7 @@
 	<select id="listAllOutStocks" parameterType="com.cao.stock.domain.QueryParameter"  resultType="OutStock">
 		
 			SELECT
-				i.id,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.department,i.staff, i.number,i.worth
+				i.id,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.number,i.worth
 			FROM 
 				OUT_STOCK i
 			WHERE 
@@ -20,15 +20,12 @@
 			 	<if test="endTime!=null ">
 			 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
 			 	</if>
-			 	<if test="department!=null ">
-			 		  and i.department= #{department}  
-			 	</if>
-			 	<if test="staff!=null ">
-			 		  and i.staff=#{staff} 
-			 	</if>
 			 	<if test="stock!=null ">
 			 		  and i.stock=#{stock} 
 			 	</if>
+			 	<if test="orderId!=null ">
+		 		  and i.order_id=#{orderId} 
+		 		</if>
 	</select>
 	
 	<select id="countAllOutStocks" parameterType="com.cao.stock.domain.QueryParameter"  resultType="integer">
@@ -45,31 +42,36 @@
 			 	<if test="endTime!=null ">
 			 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
 			 	</if>
-			 	<if test="department!=null ">
-			 		  and i.department= #{department}  
-			 	</if>
-			 	<if test="staff!=null ">
-			 		  and i.staff=#{staff} 
-			 	</if>
 			 	<if test="stock!=null ">
 			 		  and i.stock=#{stock} 
 			 	</if>
+			 	<if test="orderId!=null ">
+		 		  and i.order_id=#{orderId} 
+		 		</if>
 	</select>
 	
 	<select id="queryOutStockById" parameterType="integer" resultType="OutStock">
 		SELECT
-			i.id,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.department,i.staff, i.number, i.worth
+			i.id,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock, i.number, i.worth
 		FROM
 			OUT_STOCK i 
 		Where 
 			i.number>0 and i.ID = #{id} 
   	</select>
 
-
+	<select id="sumInStockByOrderId" parameterType="string"  resultType="StockOrder">
+		SELECT
+			i.order_id as id, sum(case when number==0 then 0 else 1 end ) as totalNumber, sum(i.worth) as totalWorth
+		FROM
+			OUT_STOCK i 
+		Where 
+			order_id = #{orderId}  
+  	</select>
+  	
 	<insert id="addOutStock" parameterType="OutStock"  useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO 
-			OUT_STOCK(create_date,modify_date,order_id,stock,department,staff,number,worth)
-		VALUES (#{createDate}, #{modifyDate}, #{orderId}, #{stock}, #{department}, #{staff}, #{number},  #{worth} ) 
+			OUT_STOCK(create_date,modify_date,order_id,stock,number,worth)
+		VALUES (#{createDate}, #{modifyDate}, #{orderId}, #{stock},  #{number},  #{worth} ) 
   	</insert>
 
 
@@ -93,12 +95,6 @@
 		 	</if>
 		 	<if test="stock != null ">
 		 		STOCK = #{stock},
-		 	</if>
-		 	<if test="department != null ">
-		 		DEPARTMENT = #{department},
-		 	</if>
-		 	<if test="staff != null ">
-		 		STAFF =#{staff},
 		 	</if>
 		 	<if test="number != null ">
 		 		NUMBER=#{number},

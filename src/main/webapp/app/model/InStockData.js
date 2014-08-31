@@ -56,7 +56,7 @@ Ext.define('MyApp.model.InStockData', {
             name: 'status'
         },
         {
-            name: 'staff'
+            name: 'totalWorth'
         }
     ]
 });

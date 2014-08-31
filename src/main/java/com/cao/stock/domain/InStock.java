@@ -20,7 +20,7 @@ public class InStock implements Serializable {
     private Integer           number;
     private Integer           remainderNumber;
     private Double            worth;
-    private Integer           staff;
+    private Double            totalWorth;
     private String            status;
 
     public Integer getId() {
@@ -95,12 +95,11 @@ public class InStock implements Serializable {
         return orderId;
     }
 
-    public void setStaff(Integer staff) {
-        this.staff = staff;
+    public void setTotalWorth(Double totalWorth) {
+        this.totalWorth = totalWorth;
     }
 
-    public Integer getStaff() {
-        return staff;
+    public Double getTotalWorth() {
+        return totalWorth;
     }
-
 }

@@ -38,12 +38,6 @@ Ext.define('MyApp.model.OutStockData', {
             name: 'stock'
         },
         {
-            name: 'department'
-        },
-        {
-            name: 'staff'
-        },
-        {
             name: 'number'
         },
         {

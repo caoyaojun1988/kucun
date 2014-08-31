@@ -9,7 +9,7 @@
 	<select id="listAllInStocks" parameterType="com.cao.stock.domain.QueryParameter"  resultType="InStock">
 		SELECT
 			i.ID,i.order_id as orderId, i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.number,
-			i.remainder_number as remainderNumber,i.WORTH,i.status,i.staff
+			i.remainder_number as remainderNumber,i.WORTH,i.status,i.total_worth as totalWorth
 		FROM 
 			IN_STOCK i  
 		WHERE 
@@ -22,6 +22,9 @@
 		 	</if>
 		 	<if test="stock!=null ">
 		 		  and i.stock=#{stock} 
+		 	</if>
+		 	<if test="orderId!=null ">
+		 		  and i.order_id=#{orderId} 
 		 	</if>
 	</select>
 
@@ -41,12 +44,15 @@
 		 	<if test="stock!=null ">
 		 		  and i.stock=#{stock} 
 		 	</if>
+		 	<if test="orderId!=null ">
+		 		  and i.order_id=#{orderId} 
+		 	</if>
 	</select>
 	
 	<select id="listAllInStocksByStock" parameterType="integer"  resultType="InStock">
 		SELECT
 			i.ID,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.number,
-			i.remainder_number as remainderNumber,i.WORTH,i.status,i.staff
+			i.remainder_number as remainderNumber,i.WORTH,i.status,i.total_worth as totalWorth
 		FROM 
 			IN_STOCK i
 		WHERE 
@@ -57,7 +63,7 @@
 	<select id="queryInStockById" parameterType="integer" resultType="InStock">
 		SELECT
 			i.ID,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.number,
-			i.remainder_number as remainderNumber,i.WORTH,i.status,i.staff
+			i.remainder_number as remainderNumber,i.WORTH,i.status,i.total_worth as totalWorth
 		FROM 
 			IN_STOCK i 
 		WHERE 
@@ -65,10 +71,19 @@
   	</select>
 
 
+	<select id="sumInStockByOrderId" parameterType="string"  resultType="StockOrder">
+		SELECT
+			i.order_id as id, sum(case when i.status=='off' then 0 else 1 end ) as totalNumber,sum(i.total_worth) as totalWorth
+		FROM 
+			IN_STOCK i  
+		WHERE 
+			order_id = #{orderId}
+	</select>
+
 	<insert id="addInStock" parameterType="InStock" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO 
-			IN_STOCK(order_id, create_date,modify_date,stock,number,remainder_number,worth,status,staff)
-		VALUES (#{orderId}, #{createDate}, #{modifyDate},  #{stock}, #{number}, #{remainderNumber}, #{worth},#{status},#{staff}) 
+			IN_STOCK(order_id, create_date,modify_date,stock,number,remainder_number,worth,status,total_worth )
+		VALUES (#{orderId}, #{createDate}, #{modifyDate},  #{stock}, #{number}, #{remainderNumber}, #{worth},#{status},#{totalWorth}) 
   	</insert>
 
 
@@ -105,8 +120,8 @@
 		 	<if test="remainderNumber != null ">
 		 		remainder_number=#{remainderNumber},
 		 	</if>
-		 	<if test="staff != null ">
-		 		STAFF =#{staff},
+		 	<if test="totalWorth != null ">
+		 		total_worth =#{totalWorth},
 		 	</if>
 		 	<if test="number != null ">
 		 		NUMBER=#{number},

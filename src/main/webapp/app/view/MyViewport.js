@@ -85,8 +85,6 @@ Ext.define('MyApp.view.MyViewport', {
                             margin: 5,
                             width: 96,
                             enableToggle: true,
-                         //   iconAlign: 'top',
-                         //   iconCls: 'categoryQuery',
                             scale: 'large',
                             text: '库存管理',
                             toggleGroup: 'menu'
@@ -98,8 +96,6 @@ Ext.define('MyApp.view.MyViewport', {
                             margin: 5,
                             width: 96,
                             enableToggle: true,
-                         //   iconAlign: 'top',
-                         //   iconCls: 'categoryQuery',
                             scale: 'large',
                             text: '入库明细',
                             toggleGroup: 'menu'
@@ -111,8 +107,6 @@ Ext.define('MyApp.view.MyViewport', {
                             margin: 5,
                             width: 96,
                             enableToggle: true,
-                         //   iconAlign: 'top',
-                         //   iconCls: 'categoryQuery',
                             scale: 'large',
                             text: '出库明细',
                             toggleGroup: 'menu'
@@ -146,33 +140,27 @@ Ext.define('MyApp.view.MyViewport', {
                             scale: 'large',
                             text: '部门汇总',
                             toggleGroup: 'menu'
-                        },
-                        {
+                        },{
+                            xtype: 'button',
+                            height: 20,
+                            itemId: 'btnStockTotalByCategoryQuery',
+                            margin: 5,
+                            width: 96,
+                            enableToggle: true,
+                            scale: 'large',
+                            text: '类目汇总',
+                            toggleGroup: 'menu'
+                        },{
                             xtype: 'button',
                             height: 20,
                             itemId: 'btnCategoryQuery',
                             margin: 5,
                             width: 96,
                             enableToggle: true,
-                         //   iconAlign: 'top',
-                         //   iconCls: 'categoryQuery',
                             scale: 'large',
                             text: '物品类目',
                             toggleGroup: 'menu'
                         },
-//                        {
-//                            xtype: 'button',
-//                            height: 20,
-//                            itemId: 'btnTrend',
-//                            margin: 5,
-//                            width: 98,
-//                            enableToggle: true,
-//                          //  iconAlign: 'top',
-//                          //  iconCls: 'trendChart',
-//                            scale: 'large',
-//                            text: '图标',
-//                            toggleGroup: 'menu'
-//                        },
                         {
                             xtype: 'button',
                             height: 20,
@@ -180,8 +168,6 @@ Ext.define('MyApp.view.MyViewport', {
                             margin: 5,
                             width: 96,
                             enableToggle: true,
-                         //   iconAlign: 'top',
-                         //   iconCls: 'unitQuery',
                             scale: 'large',
                             text: '单位',
                             toggleGroup: 'menu'
@@ -193,8 +179,6 @@ Ext.define('MyApp.view.MyViewport', {
                             margin: 5,
                             width: 96,
                             enableToggle: true,
-                         //   iconAlign: 'top',
-                          //  iconCls: 'departmentQuery',
                             scale: 'large',
                             text: '部门',
                             toggleGroup: 'menu'
@@ -206,8 +190,6 @@ Ext.define('MyApp.view.MyViewport', {
                             margin: 5,
                             width: 96,
                             enableToggle: true,
-                        //    iconAlign: 'top',
-                        //    iconCls: 'staffQuery',
                             scale: 'large',
                             text: '人员',
                             toggleGroup: 'menu'

@@ -22,8 +22,23 @@ public class StockOrderService {
     private StockOrderMapper stockOrderMapper;
 
     @Transactional
-    public List<StockOrder> listAllStockOrders(QueryParameter queryParameter) {
-        return stockOrderMapper.listAllStockOrders(queryParameter);
+    public List<StockOrder> listAllInStockOrders(QueryParameter queryParameter) {
+        return stockOrderMapper.listAllInStockOrders(queryParameter);
+    }
+
+    @Transactional
+    public int countAllInStockOrders(QueryParameter queryParameter) {
+        return stockOrderMapper.countAllInStockOrders(queryParameter);
+    }
+
+    @Transactional
+    public List<StockOrder> listAllOutStockOrders(QueryParameter queryParameter) {
+        return stockOrderMapper.listAllOutStockOrders(queryParameter);
+    }
+
+    @Transactional
+    public int countAllOutStockOrders(QueryParameter queryParameter) {
+        return stockOrderMapper.countAllOutStockOrders(queryParameter);
     }
 
     @Transactional

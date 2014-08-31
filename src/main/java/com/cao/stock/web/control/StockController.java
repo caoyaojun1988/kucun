@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -18,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cao.stock.domain.Category;
 import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.Stock;
+import com.cao.stock.domain.StockDetail;
 import com.cao.stock.domain.Unit;
 import com.cao.stock.service.CategoryService;
 import com.cao.stock.service.StockService;
@@ -71,7 +74,7 @@ public class StockController {
                 stockService.addOrModifyStock(stock);
             }
             return Result.successResult();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Result.failureResult(e.getMessage());
         }
@@ -90,7 +93,7 @@ public class StockController {
                 stockService.deleteStockByUid(stock.getUid());
             }
             return Result.successResult();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Result.failureResult(e.getMessage());
         }
@@ -109,7 +112,28 @@ public class StockController {
                 stockService.addOrModifyStock(stock);
             }
             return Result.successResult();
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.failureResult(e.getMessage());
+        }
+    }
+
+    @RequestMapping("/listDetail")
+    public @ResponseBody
+    List<StockDetail> listDetail(@Param("stockId") Integer stockId) {
+        List<StockDetail> stockDetails = stockService.listDetail(stockId);
+        return stockDetails;
+    }
+
+    @RequestMapping("/replay")
+    @Transactional
+    public @ResponseBody
+    Result replayStocks(@Param("stockId") Integer stockId) {
+        try {
+            stockService.replayAll(stockId);
+            stockService.replayOrder();
+            return Result.successResult();
+        } catch (Exception e) {
             e.printStackTrace();
             return Result.failureResult(e.getMessage());
         }

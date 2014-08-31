@@ -72,6 +72,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	                 itemId:'inStockGrid_id',
 	                 dataIndex: 'id',
 	                 text: '编号',
+	                 hidden: true,
 	                 sortable: true
 	            },{
 		            header: "物品编号",
@@ -110,22 +111,16 @@ Ext.define('MyApp.view.MyInStockGrid', {
 		                        if(!e.forceAll){
 		                            var input = e.query;
 		                            var regExp = new RegExp(".*" + input + ".*");// 检索的正则
+		                          //编辑之前，过滤下市的数据源
+		         	 				var category = Ext.getCmp("inStockPanelId").form.findField('category').value;
 		                            combo.store.clearFilter();
 		                            combo.store.filterBy(function(record,id){
 		                                var text = record.get("pinyinForName"); // 得到每个record的项目名称值
-		                                return regExp.test(text);
+		                                return regExp.test(text) && record.get("category") == category;
 		                            });
 		                            combo.expand();
 		                            return false;
 		                        }
-		                	},
-		                	expand: function (combo ,record,value) {
-	         	 				//编辑之前，过滤下市的数据源
-	         	 				var category = Ext.getCmp("inStockPanelId").form.findField('category').value;
-	         	 				//过滤控件的数据源
-	                			combo.store.filterBy(function (item) {
-	         	 					return item.get("category") == category;
-	         	 				});
 		                	},
 		                    select: function(field, value) {
 		                    	//过滤控件的数据源
@@ -140,7 +135,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	    		            		selection.set('totalNumber',number);
 	    		            	};
 	    		            	
-	    		            	Ext.getCmp("inStockGridId").editing.startEdit(selection,6);
+	    		            	Ext.getCmp("inStockGridId").editing.startEdit(selection,5);
 		                    }
 		                }
 		            })
@@ -181,8 +176,8 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	                    	    change : function(field, newValue,oldValue ,e) {
 		                    	    	var selectedModel = Ext.getCmp("inStockGridId").getView().getSelectionModel().getSelection()[0];
 		                    	        var text =  Ext.util.Format.round(field.value*selectedModel.get('worth'),2);
-		                    	        var totalworth = selectedModel.get('totalworth');
-	                    	            selectedModel.set('totalworth', text);
+		                    	        var totalworth = selectedModel.get('totalWorth');
+	                    	            selectedModel.set('totalWorth', text);
 	                    	            
 	                    	            var  inStocktotalCF   = Ext.getCmp('inStocktotalC');
 	                    	          
@@ -206,18 +201,18 @@ Ext.define('MyApp.view.MyInStockGrid', {
 		                      	          
 	                    	            var totalM=0;
 	                    	            if(Ext.isNumeric(inStocktotalMF.text)){
-	                    	            	totalM = totalM+parseInt(inStocktotalMF.text);
+	                    	            	totalM = totalM+parseFloat(inStocktotalMF.text);
 	                    	            }
 	                    	            
 	                    	            if(Ext.isNumeric(totalworth)){
-	                    	            	totalM = totalM-parseInt(totalworth);
+	                    	            	totalM = totalM-parseFloat(totalworth);
 	                    	            }
 	                    	            
 	                    	            if(Ext.isNumeric(text)){
-	                    	            	totalM = totalM+parseInt(text);
+	                    	            	totalM = totalM+parseFloat(text);
 	                    	            }
 	                    	            
-	                    	            inStocktotalMF.setText(totalM);
+	                    	            inStocktotalMF.setText(totalM.toFixed(2));
 	                    	    }
 	                    	}
 	                 }
@@ -236,25 +231,25 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	                    	 change : function(field, newValue,oldValue ,e) {
 	                    	    	var selectedModel = Ext.getCmp("inStockGridId").getView().getSelectionModel().getSelection()[0];
 	                    	        var text = Ext.util.Format.round(field.value*selectedModel.get('number'),2);
-	                    	        var totalworth = selectedModel.get('totalworth');
-	                    	        selectedModel.set('totalworth', text);
+	                    	        var totalworth = selectedModel.get('totalWorth');
+	                    	        selectedModel.set('totalWorth', text);
                     	            
                     	            var  inStocktotalMF   = Ext.getCmp('inStocktotalM');
 	                      	          
                     	            var totalM=0;
                     	            if(Ext.isNumeric(inStocktotalMF.text)){
-                    	            	totalM = totalM+parseInt(inStocktotalMF.text);
+                    	            	totalM = totalM+parseFloat(inStocktotalMF.text);
                     	            }
                     	            
                     	            if(Ext.isNumeric(totalworth)){
-                    	            	totalM = totalM-parseInt(totalworth);
+                    	            	totalM = totalM-parseFloat(totalworth);
                     	            }
                     	            
                     	            if(Ext.isNumeric(text)){
-                    	            	totalM = totalM+parseInt(text);
+                    	            	totalM = totalM+parseFloat(text);
                     	            }
                     	            
-                    	            inStocktotalMF.setText(totalM);
+                    	            inStocktotalMF.setText(totalM.toFixed(2));
 	                    		 }
 	                    	    }
 	                 }
@@ -262,7 +257,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
 				   	 xtype: 'gridcolumn',
 				     width: 100,
 				     itemId:'inStock_totalworth',
-				     dataIndex: 'totalworth',
+				     dataIndex: 'totalWorth',
 				     text: '总金额',
 				     sortable: true,
 				     field: {
@@ -281,18 +276,18 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	                      	          
 	                    	            var totalM=0;
 	                    	            if(Ext.isNumeric(inStocktotalMF.text)){
-	                    	            	totalM = totalM+parseInt(inStocktotalMF.text);
+	                    	            	totalM = totalM+parseFloat(inStocktotalMF.text);
 	                    	            }
 	                    	            
 	                    	            if(Ext.isNumeric(oldValue)){
-	                    	            	totalM = totalM-parseInt(oldValue);
+	                    	            	totalM = totalM-parseFloat(oldValue);
 	                    	            }
 	                    	            
 	                    	            if(Ext.isNumeric(newValue)){
-	                    	            	totalM = totalM+parseInt(newValue);
+	                    	            	totalM = totalM+parseFloat(newValue);
 	                    	            }
 	                    	            
-	                    	            inStocktotalMF.setText(totalM);
+	                    	            inStocktotalMF.setText(totalM.toFixed(2));
 	                    		 	}
                     	    //	}
 	                    	}
@@ -345,7 +340,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
     	}
         edit.startEditByPosition({
             row: startRaw>1 ? startRaw-1 : 0,
-            column: 3
+            column: 2
         });
     }
 });

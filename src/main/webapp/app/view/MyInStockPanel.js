@@ -52,35 +52,36 @@ Ext.define('MyApp.view.MyInStockPanel', {
 		var instockWay = this.form.findField('instockWay').value;
 		var createDate = this.form.findField('createDate').value;
 		var inStockMark =  this.form.findField('inStockMark').value;
-		var staff = this.form.findField('staff').value;
+		var department = this.form.findField('inDepartment').value;
+		var staff = this.form.findField('inStockStaff').value;
 		
 		var girdStore=this.items.items[1].store;
 
 		var isNeedSync=true;
 		girdStore.each(function(record) {
-    		if(!Ext.isNumeric(this.data.stock) || this.data.stock<=0){
+    		if(!Ext.isNumeric(this.data.stock) || this.data.stock<0){
     			Ext.Msg.alert('提示信息', "请选择物品");
     			isNeedSync=false;
     			return false;
     		}
-    		if(!Ext.isNumeric(this.data.number) || this.data.number<=0){
+    		if(!Ext.isNumeric(this.data.number) || this.data.number<0){
     			Ext.Msg.alert('提示信息', "请填写数量");
     			isNeedSync=false;
     			return false;
     		}
-    		if(!Ext.isNumeric(this.data.worth) || this.data.worth<=0){
+    		if(!Ext.isNumeric(this.data.worth) || this.data.worth<0){
     			Ext.Msg.alert('提示信息', "请填写单价");
     			isNeedSync=false;
     			return false;
     		}
     		
 			record.set('createDate',createDate);
-			record.set('staff',staff);
 	    });  
 		
 		girdStore.getProxy().extraParams.instockWay = instockWay;
 		girdStore.getProxy().extraParams.inStockMark = inStockMark;
 		girdStore.getProxy().extraParams.createDate = Ext.Date.format(new Date(createDate),'Y-m-d H:i:s');
+		girdStore.getProxy().extraParams.department = department;
 		girdStore.getProxy().extraParams.staff = staff;
 		girdStore.getProxy().extraParams.method = 'add';
 		

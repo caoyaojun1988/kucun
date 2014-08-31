@@ -20,6 +20,9 @@ Ext.define('MyApp.view.MyStock', {
         dock: 'bottom'
     }],
     
+    categoryStore:Ext.create('MyApp.store.MyCategoryStore'),
+    unitStore:Ext.create('MyApp.store.MyUnitStore'), 
+    
     initComponent: function(){
     	Ext.QuickTips.init();
         this.editing = Ext.create('Ext.grid.plugin.CellEditing');
@@ -79,8 +82,6 @@ Ext.define('MyApp.view.MyStock', {
 	                        }
 	                	}
 	                }
-                
-                    
                 },{
                 	iconCls: 'icon-query',
                 	text: '查询',
@@ -102,13 +103,20 @@ Ext.define('MyApp.view.MyStock', {
                 	itemId: 'btnExport',
                 	scope: this,
                     handler: this.onExportClick
+                },{
+                	iconCls: 'icon-export',
+                	text: '重新计算',
+                	disabled: false,
+                	itemId: 'btnReplay',
+                	scope: this,
+                    handler: this.onReplayClick
                 }]
             },{
                 weight: 2,
                 xtype: 'toolbar',
                 dock: 'bottom',
                 items: [{
-                    text: 'autoSync',
+                    text: '自动同步',
                     enableToggle: true,
                     pressed: true,
                     tooltip: 'When enabled, Store will execute Ajax requests as soon as a Record becomes dirty.',
@@ -117,7 +125,7 @@ Ext.define('MyApp.view.MyStock', {
                         this.store.autoSync = pressed;
                     }
                 }, {
-                    text: 'batch',
+                    text: '批量同步',
                     enableToggle: true,
                     pressed: true,
                     tooltip: 'When enabled, Store will batch all records for each type of CRUD verb into a single Ajax request.',
@@ -126,7 +134,7 @@ Ext.define('MyApp.view.MyStock', {
                         this.store.getProxy().batchActions = pressed;
                     }
                 }, {
-                    text: 'writeAllFields',
+                    text: '同步所有字段',
                     enableToggle: true,
                     pressed: false,
                     tooltip: 'When enabled, Writer will write *all* fields to the server -- not just those that changed.',
@@ -159,7 +167,7 @@ Ext.define('MyApp.view.MyStock', {
                  width: 108,
                  itemId:'stock_id',
                  dataIndex: 'id',
-                 text: '编号',
+                 text: '物品编号',
                  sortable: true,
                  field: {
                      type: 'numberfield',
@@ -188,7 +196,7 @@ Ext.define('MyApp.view.MyStock', {
 	            	if(value==0){
 	            		return "请选择";
 	            	}
-	            	var kvstore =  Ext.data.StoreManager.get('MyCategoryStore');
+	            	var kvstore =  this.categoryStore;
 	            	var index = kvstore.find('id',value);
 	            	var record = kvstore.getAt(index).get('name');
 	            	return record; 
@@ -257,7 +265,7 @@ Ext.define('MyApp.view.MyStock', {
 	            	if(value==0){
 	            		return "请选择";
 	            	}
-	            	var kvstore =  Ext.data.StoreManager.get('MyUnitStore');
+	            	var kvstore =  this.unitStore;
 	            	var index = kvstore.find('id',value);
 	            	var record = kvstore.getAt(index).get('name');
 	            	return record; 
@@ -310,6 +318,15 @@ Ext.define('MyApp.view.MyStock', {
     
     onSelectChange: function(selModel, selections){
         this.down('#delete').setDisabled(selections.length === 0);
+        
+        if(selections && selections.length>0){
+    		var id = selections[0].get('id');
+    		
+    		var store = Ext.getCmp('stockPanelId').items.items[1].store;
+    		var proxy = store.getProxy(); 
+            proxy.extraParams['stockId'] = id; 
+        	store.load();
+    	};
     },
 
     onSync: function(){
@@ -346,7 +363,7 @@ Ext.define('MyApp.view.MyStock', {
 	            success: function(e, opt) { 
 	            	if(opt.batch.proxy.reader.jsonData.success==true){
 	            		var me = this;
-	                	me.store.commitChanges(); //commit 承诺。提交  
+	                	me.store.commitChanges(); // commit 承诺。提交
 	                	me.store.load();  
 	                    Ext.Msg.alert('提示信息', "保存成功"); 
 	            	}else{
@@ -372,6 +389,31 @@ Ext.define('MyApp.view.MyStock', {
         	Ext.Msg.alert("警告", '不能删除库存有剩余的物品');
         }
     },
+    
+    onReplayClick:	function(){
+        var selection = this.getView().getSelectionModel().getSelection()[0];
+        if (selection ) {
+        	Ext.Ajax.request( {
+	                url : '/kucun/stock/replay.do',  
+	                method : 'post',  
+	                params : {  
+	                	stockId : selection.get('id')
+	                },  
+	                success : function(response, options) {
+	                	var o = Ext.decode(response.responseText);  
+	                	if(o.success==true){
+		                    Ext.Msg.alert('提示信息', "保存成功"); 
+		            	}else{
+		               	 	Ext.Msg.alert("错误", o.msg);
+		            	}
+	                },  
+	                failure : function(response, options) {
+		            	 Ext.Msg.alert("错误","错误");
+	                }    
+                });
+        }
+      
+    },
 
     onAddClick: function(){
 
@@ -388,8 +430,8 @@ Ext.define('MyApp.view.MyStock', {
 	        	  'id':'',
 	        	  'category':'',
 	        	  'name':'',
-	        	  'number':'',
-	        	  'worth':'',
+	        	  'number':0,
+	        	  'worth':0,
 	        	  'specification':'',
 	        	  'unit':''
 	        	 });

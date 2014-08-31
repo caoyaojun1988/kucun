@@ -70,7 +70,7 @@ public class InitController {
 
         List<Stock> stocks = stockService.listAllStocks(new QueryParameter());
         for (Stock stock : stocks) {
-            stock.setPinyinForName(PinYinHelper.convert(stock.getName()));
+            stock.setPinyinForName(stock.getId() + "," + PinYinHelper.convert(stock.getName()));
             stockService.addOrModifyStock(stock);
         }
 

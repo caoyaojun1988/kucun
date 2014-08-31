@@ -1,6 +1,5 @@
 package com.cao.stock.service;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -8,11 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cao.stock.domain.InOutStock;
 import com.cao.stock.domain.InStock;
 import com.cao.stock.domain.OutStock;
 import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.Stock;
+import com.cao.stock.domain.StockOrder;
+import com.cao.stock.persistence.InOutStockMapper;
 import com.cao.stock.persistence.InStockMapper;
+import com.cao.stock.persistence.OutStockMapper;
+import com.cao.stock.persistence.StockOrderMapper;
 import com.cao.stock.service.util.NumberFormatHelper;
 
 /**
@@ -24,13 +28,17 @@ import com.cao.stock.service.util.NumberFormatHelper;
 public class InStockService {
 
     @Autowired
-    private InStockMapper     InStockMapper;
+    private InStockMapper    inStockMapper;
     @Autowired
-    private StockService      stockService;
+    private StockOrderMapper stockOrderMapper;
     @Autowired
-    private InOutStockService inOutStockService;
+    private InOutStockMapper inOutStockMapper;
     @Autowired
-    private OutStockService   outStockService;
+    private OutStockMapper   outStockMapper;
+    @Autowired
+    private StockService     stockService;
+    @Autowired
+    private OutStockService  outStockService;
 
     @Transactional
     public void addInStock(InStock inStock) {
@@ -49,11 +57,9 @@ public class InStockService {
 
         OutStock outStock = new OutStock();
         outStock.setCreateDate(inStock.getCreateDate());
-        outStock.setDepartment(inOutDepartment);
         outStock.setModifyDate(new Date());
         outStock.setNumber(inStock.getNumber());
         outStock.setOrderId(inStock.getOrderId());
-        outStock.setStaff(inOutStockStaff);
         outStock.setStock(inStock.getStock());
         outStock.setWorth(NumberFormatHelper.format(inStock.getNumber() * inStock.getWorth()));
 
@@ -61,29 +67,28 @@ public class InStockService {
     }
 
     private InStock insertInStock(InStock inStock) {
-        InStock oldInStock = InStockMapper.queryInStockById(inStock.getId());
+        InStock oldInStock = inStockMapper.queryInStockById(inStock.getId());
         if (oldInStock != null && oldInStock.getId() != null) {
             throw new RuntimeException("addInStock is exist");
         }
         inStock.setModifyDate(new Date());
         inStock.setRemainderNumber(inStock.getNumber());
         inStock.setStatus("in");
-        InStockMapper.addInStock(inStock);
+        inStockMapper.addInStock(inStock);
         return inStock;
     }
 
     @Transactional
     public void modifyInStock(InStock oldInStock, InStock newInStock) {
-        // TODO 价格变化
         newInStock.setModifyDate(new Date());
         if (oldInStock.getNumber() > newInStock.getNumber()) {// 撤銷
             int deleteNumber = oldInStock.getNumber() - newInStock.getNumber();
             if (deleteNumber <= oldInStock.getRemainderNumber()) { // 可撤销
                 if (newInStock.getNumber() == 0) {
-                    InStockMapper.logicDeleteInStockById(newInStock.getId());
+                    inStockMapper.logicDeleteInStockById(newInStock.getId());
                 } else {
                     newInStock.setRemainderNumber(newInStock.getRemainderNumber() - deleteNumber);
-                    InStockMapper.modifyInStockById(newInStock);
+                    inStockMapper.modifyInStockById(newInStock);
                 }
                 Stock stock = new Stock();
                 stock.setId(newInStock.getStock());
@@ -91,14 +96,12 @@ public class InStockService {
                 stock.setWorth(NumberFormatHelper.format(deleteNumber * newInStock.getWorth()));
                 stockService.outStock(stock);
             } else {
-                // List<InOutStock> inOutStocks = inOutStockService.queryInOutStockByInStockId();
-                // TODO 已经出库了
+                throw new RuntimeException("已经出库不能撤销"); // TODO 已经出库了
             }
-
         } else if (oldInStock.getNumber() < newInStock.getNumber()) {// 增加
             newInStock.setRemainderNumber(newInStock.getRemainderNumber()
                                           + (newInStock.getNumber() - oldInStock.getNumber()));
-            InStockMapper.modifyInStockById(newInStock);
+            inStockMapper.modifyInStockById(newInStock);
 
             Stock stock = new Stock();
             stock.setId(newInStock.getStock());
@@ -106,19 +109,35 @@ public class InStockService {
             stock.setWorth(NumberFormatHelper.format(stock.getNumber() * newInStock.getWorth()));
             stockService.inStock(stock);
         } else {
-            InStockMapper.modifyInStockById(newInStock);
+            inStockMapper.modifyInStockById(newInStock);
+        }
+        // 修改金额
+        stockService.replayAll(oldInStock.getStock());
+        // 修改订单
+        StockOrder newStockOrder = inStockMapper.sumInStockByOrderId(oldInStock.getOrderId());
+        stockOrderMapper.modifyStockOrderByid(newStockOrder);
+        // 出库
+        List<InOutStock> inOutStocks = inOutStockMapper.queryInOutStockByInStockId(oldInStock.getId());
+        for (InOutStock inOutStock : inOutStocks) {
+            OutStock outStock = outStockMapper.queryOutStockById(inOutStock.getOutStock());
+            newStockOrder = outStockMapper.sumInStockByOrderId(outStock.getOrderId());
+            stockOrderMapper.modifyStockOrderByid(newStockOrder);
         }
     }
 
     public List<InStock> listAllInStocks(QueryParameter queryParameter) {
-        return InStockMapper.listAllInStocks(queryParameter);
+        return inStockMapper.listAllInStocks(queryParameter);
     }
 
     public Integer countAllInStocks(QueryParameter queryParameter) {
-        return InStockMapper.countAllInStocks(queryParameter);
+        return inStockMapper.countAllInStocks(queryParameter);
     }
 
     public InStock queryInStockById(Integer id) {
-        return InStockMapper.queryInStockById(id);
+        return inStockMapper.queryInStockById(id);
+    }
+
+    public StockOrder sumInStockByOrderId(String orderId) {
+        return inStockMapper.sumInStockByOrderId(orderId);
     }
 }

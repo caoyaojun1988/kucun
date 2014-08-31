@@ -21,7 +21,17 @@
 		 	</if>
 		 	order by s.CATEGORY,s.ID
 	</select>
-
+	<select id="listDetailById" parameterType="integer"  resultType="StockDetail">
+		SELECT
+			 orderId,stockId,createDate,inOrOut, number, remainderNumber
+		FROM 
+			 (select order_id as orderId,stock as stockId, create_date as createDate,'1' as inOrOut, number,0 as remainderNumber from in_stock i where  stock=#{stockId}
+			  UNION ALL 
+			  select order_id as orderId,stock as stockId, create_date as createDate,'2' as inOrOut, number,0 as remainderNumber from out_stock i where  stock=#{stockId}
+			 ) s
+		order by createDate
+			 
+	</select>
 	<select id="countAllStocks" parameterType="com.cao.stock.domain.QueryParameter"  resultType="integer">
 		SELECT
 			count(*)

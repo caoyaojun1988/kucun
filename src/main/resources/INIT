@@ -15,7 +15,34 @@ create table department (id integer primary key autoincrement,name text NOT NULL
 create table staff (id integer primary key autoincrement,name text NOT NULL,pinyinForName text  ,department integer NOT NULL); 
 create table CATEGORY (uid integer primary key autoincrement, id integer  NOT NULL,name text  NOT NULL,pinyinForName text  ); 
 create table STOCK (UID integer primary key autoincrement,ID integer NOT NULL UNIQUE,NAME text NOT NULL,pinyinForName text  ,CATEGORY integer NOT NULL,specification text, unit integer NOT NULL,NUMBER integer NOT NULL,WORTH REAL NOT NULL,status text not null);
+
 create table in_stock (ID integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,number integer NOT NULL,remainder_number integer NOT NULL,worth REAL NOT NULL,staff integer NOT NULL,status text NOT NULL);
 create table out_stock (ID  integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,department integer NOT NULL,staff integer NOT NULL,number integer NOT NULL,worth  REAL );
+
 create table in_out_stock (ID integer primary key autoincrement,out_stock integer NOT NULL,in_stock integer NOT NULL,number integer NOT NULL,worth  REAL NOT NULL);
 create table stock_order (id text  primary key,create_date timestamp NOT NULL,modify_date timestamp NOT NULL,staff integer NOT NULL,total_number integer ,total_worth REAL,status text NOT NULL,mark text);
+
+
+ALTER TABLE in_stock ADD COLUMN total_worth REAL;
+
+ALTER TABLE stock_order ADD COLUMN department integer;
+
+update stock_order set department=(select department from staff where stock_order.staff=staff.id);
+
+create table in_stock_old (ID integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,number integer NOT NULL,remainder_number integer NOT NULL,worth REAL NOT NULL,staff integer NOT NULL,status text NOT NULL,total_worth real);
+create table out_stock_old (ID  integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,department integer NOT NULL,staff integer NOT NULL,number integer NOT NULL,worth  REAL );
+
+
+INSERT INTO in_stock_old SELECT * FROM in_stock;
+INSERT INTO out_stock_old SELECT * FROM out_stock;
+
+DROP TABLE in_stock;
+DROP TABLE out_stock;
+
+create table in_stock (ID integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,number integer NOT NULL,remainder_number integer NOT NULL,worth REAL NOT NULL,total_worth REAL NOT NULL ,status text NOT NULL);
+create table out_stock (ID  integer primary key autoincrement,order_id text NOT NULL, create_date timestamp NOT NULL,modify_date timestamp NOT NULL,stock integer NOT NULL,number integer NOT NULL,worth  REAL );
+
+
+INSERT INTO in_stock(id,order_id,create_date,modify_date,stock,number,remainder_number,worth,total_worth,status) SELECT id,order_id,create_date,modify_date,stock,number,remainder_number,worth,number*worth as total_worth,status FROM in_stock_old;    
+
+INSERT INTO out_stock(ID,order_id,create_date,modify_date,stock,number,worth) SELECT ID,order_id,create_date,modify_date,stock,number,worth FROM out_stock_old;  

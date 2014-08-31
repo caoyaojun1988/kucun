@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cao.stock.domain.CategoryTotal;
 import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.StockTotal;
 import com.cao.stock.persistence.StockTotalMapper;
@@ -44,12 +45,12 @@ public class StockTotalService {
         return stockTotalMapper.countOutStocksByDepartment(queryParameter);
     }
 
-    public void setStockTotalMapper(StockTotalMapper stockTotalMapper) {
-        this.stockTotalMapper = stockTotalMapper;
+    public List<CategoryTotal> listStocksByCategory(QueryParameter queryParameter) {
+        return stockTotalMapper.listStocksByCategory(queryParameter);
     }
 
-    public StockTotalMapper getStockTotalMapper() {
-        return stockTotalMapper;
+    public Integer countStocksByCategory(QueryParameter queryParameter) {
+        return stockTotalMapper.countStocksByCategory(queryParameter);
     }
 
 }

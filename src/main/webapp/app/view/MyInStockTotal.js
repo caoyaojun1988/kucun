@@ -35,7 +35,13 @@ Ext.define('MyApp.view.MyInStockTotal', {
                     xtype: 'datefield',
                     id: 'btnQeryInTotalBegin',
                     format: 'Y-m-d',
-                    value:new Date()
+                    value:new Date(),
+                    listeners: {
+	                	change: function (filed, newValue, oldValue, op) {
+                			var btnInOrderTime = Ext.getCmp('btnQueryInTotalTime');
+                			btnInOrderTime.setValue("0");
+	                	}
+	                }
                 },
                 {
                     xtype: 'label',
@@ -45,7 +51,22 @@ Ext.define('MyApp.view.MyInStockTotal', {
                     xtype: 'datefield',
                     id: 'btnQeryInTotalEnd',
                     format: 'Y-m-d',
-                    value:new Date()
+                    value:new Date(),
+                    listeners: {
+	                	change: function (filed, newValue, oldValue, op) {
+                			var btnInOrderTime = Ext.getCmp('btnQueryInTotalTime');
+                			btnInOrderTime.setValue("0");
+	                	}
+	                }
+                },{
+                	id:'btnQueryInTotalTime',
+                	xtype: 'combo',
+                    fieldLabel: '快捷时间',
+                    anchor: '100%',
+                    store:'MyQuictTimeStore',
+                    value:'0',
+                    valueField: 'id',
+                    displayField: 'name',
                 },{
                 	iconCls: 'icon-query',
                 	text: '查询',
@@ -124,7 +145,21 @@ Ext.define('MyApp.view.MyInStockTotal', {
     onQueryClick:function(){
     	var btnCreateTimeBegin = Ext.getCmp('btnQeryInTotalBegin').getValue();
     	var btnCreateTimeEnd = Ext.getCmp('btnQeryInTotalEnd').getValue();
-
+    	var btnQueryInTotalTime = Ext.getCmp('btnQueryInTotalTime').getValue();
+    	if(btnQueryInTotalTime==1){ //今日
+    		btnCreateTimeBegin = new Date();
+    		btnCreateTimeEnd =new Date();
+    	}else if(btnQueryInTotalTime==2){//昨日
+    		btnCreateTimeBegin = Ext.Date.add(new Date(), Ext.Date.DAY, -1);
+        	btnCreateTimeEnd = Ext.Date.add(new Date(), Ext.Date.DAY, -1);
+    	}else if(btnQueryInTotalTime==3){ //本月
+    		btnCreateTimeBegin = Ext.Date.getFirstDateOfMonth(new Date());
+        	btnCreateTimeEnd = Ext.Date.getLastDateOfMonth(new Date());
+    	}else if(btnQueryInTotalTime==4){//上月
+    		btnCreateTimeBegin = Ext.Date.add(Ext.Date.getFirstDateOfMonth(new Date()), Ext.Date.MONTH, -1);
+        	btnCreateTimeEnd = Ext.Date.getLastDateOfMonth(btnCreateTimeBegin);
+    	}
+    	
     	
     	var proxy = this.store.getProxy(); 
         proxy.extraParams['beginTimeStr'] = Ext.Date.format(btnCreateTimeBegin, 'Y-m-d'); 

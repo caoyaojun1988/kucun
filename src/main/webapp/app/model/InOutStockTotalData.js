@@ -20,6 +20,8 @@ Ext.define('MyApp.model.InOutStockTotalData', {
     fields: [
 		{
 		    name: 'department'
+		},{
+			name:'departmentName'
 		},
         {
             name: 'stock'

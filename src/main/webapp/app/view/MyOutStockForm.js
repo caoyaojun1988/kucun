@@ -155,6 +155,66 @@ Ext.define('MyApp.view.MyOutStockForm', {
                         anchor: '100%',
    		                allowBlank: true
                 }]
+            },{
+            	xtype: 'container',
+            	flex: 1,
+                layout: 'anchor',
+                items:[{
+                	id:'outStockFileUp',
+                	xtype: 'filefield',
+                	name: 'upfile',
+                	fieldLabel: 'File',
+                	labelWidth: 50,
+                	allowBlank: true,
+                	anchor: '100%',
+                	buttonText: 'Select a File...'
+                }]
+            },{
+            	xtype: 'container',
+            	flex: 1,
+                layout: 'anchor',
+                items:[{
+                	xtype: 'button',
+                    text:'上传',  
+                    handler:function(){
+                    	var panel=Ext.getCmp("outStockPanelId");
+                        if(Ext.getCmp("outStockFileUp").value!=""){
+                        	panel.form.submit({
+                                method:'post',  
+                                url:'/kucun/outStock/import.do?xwl=23PSMZ8URAE8',  
+                                waitMsg:'文件上传中...',  
+                                success: function(e, opt) {
+                                    Ext.Msg.alert("系统提示", "文件上传成功！");
+                                    
+                                    var girdStore=panel.items.items[1].store;
+                                    var startRaw = girdStore.getCount();
+                                    
+                                    var totalC=0;
+                                    for (var index = 0; index < opt.result.value.length; ++index) {
+                                		var rec = new MyApp.model.OutStockData(opt.result.value[index]); 
+                                		girdStore.insert(girdStore.getCount(), rec);
+                                		
+                                		if(Ext.isNumeric(rec.data.number)){
+  	                    	            	totalC = totalC+parseInt(rec.data.number);
+  	                    	            }
+                                	}
+                                    
+                                    var  outStocktotalCF   = Ext.getCmp('outStocktotalC');
+    	             	            if(Ext.isNumeric(outStocktotalCF.text)){
+    	             	            	totalC = totalC+parseInt(outStocktotalCF.text);
+    	             	            }
+    	             	            outStocktotalCF.setText(totalC);
+                                    
+                                },  
+                                failure: function(e, opt) {  
+                                    Ext.Msg.alert("系统提示", "文件上传失败！");  
+                                }  
+                            });  
+                        }else{
+                            Ext.Msg.alert("系统提示","请选择文件后再上传！");  
+                        }  
+                    }  
+                }]
             }]
         }]
 });

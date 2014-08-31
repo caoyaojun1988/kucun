@@ -14,7 +14,7 @@
  */
 
 Ext.define('MyApp.view.MyChart', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.tree.Panel',
     alias: 'widget.MyChart',
 
     itemId: 'trendChart',

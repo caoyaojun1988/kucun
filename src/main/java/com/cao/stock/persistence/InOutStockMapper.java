@@ -16,7 +16,9 @@ public interface InOutStockMapper {
     public InOutStock queryInOutStockById(Integer id);
 
     public List<InOutStock> queryInOutStockByOutStockId(Integer outStockId);
-
+    
+    public List<InOutStock> queryInOutStockByInStockId(Integer inStock);
+    
     public void addInOutStock(InOutStock inOutStock);
 
     public void deleteInOutStockById(Integer id);

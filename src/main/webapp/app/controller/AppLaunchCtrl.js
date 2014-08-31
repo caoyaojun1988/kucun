@@ -50,8 +50,8 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
             selector: '#stockQuery'
         },
         {
-            ref: 'inStockQuery',
-            selector: '#inStockQuery'
+            ref: 'inStockDetailOrderQuery',
+            selector: '#inStockDetailOrderQuery'
         },
         {
             ref: 'inStockTotalQuery',
@@ -62,8 +62,8 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
             selector: '#outStockTotalQuery'
         },
         {
-            ref: 'outStockQuery',
-            selector: '#outStockQuery'
+            ref: 'outStockDetailOrderQuery',
+            selector: '#outStockDetailOrderQuery'
         },
         {
         	ref:'departmentOutQuery',
@@ -121,19 +121,19 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
     
     onButtonStockClick: function(button, e, options) {
         this.unpressOtherBtns(button);
-        this.application.widget(this.getTabPanel(), 'StockCtrl', 'MyStock', '8');
+        this.application.widget(this.getTabPanel(), 'StockPanelCtrl', 'MyStockPanel', '8');
         //this.getTabPanel().setActiveTab(this.getTrendChart());
     },
  
     onButtonInStockQueryClick: function(button, e, options) {
         this.unpressOtherBtns(button);
-        this.application.widget(this.getTabPanel(), 'InStockCtrl', 'MyInStock', '9');
+        this.application.widget(this.getTabPanel(), 'InStockDetailPanelCtrl', 'MyInStockDetailPanel', '9');
         //this.getTabPanel().setActiveTab(this.getTrendChart());
     },
     
     onButtonOutStockQueryClick: function(button, e, options) {
         this.unpressOtherBtns(button);
-        this.application.widget(this.getTabPanel(), 'OutStockCtrl', 'MyOutStock', '10');
+        this.application.widget(this.getTabPanel(), 'OutStockDetailPanelCtrl', 'MyOutStockDetailPanel', '10');
         //this.getTabPanel().setActiveTab(this.getTrendChart());
     },
 
@@ -154,6 +154,14 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
         this.application.widget(this.getTabPanel(), 'DepartmentOutCtrl', 'MyDepartmentOutStock', '13');
         //this.getTabPanel().setActiveTab(this.getTrendChart());
     },
+    
+
+    onButtonStockTotalByCategoryQueryClick: function(button, e, options) {
+        this.unpressOtherBtns(button);
+        this.application.widget(this.getTabPanel(), 'StockTotalByCategoryCtrl', 'MyStockTotalByCategory', '14');
+        //this.getTabPanel().setActiveTab(this.getTrendChart());
+    },
+    
     
     unpressOtherBtns: function(exceptBtn) {
         var nextBtn = this.getBtns();
@@ -211,6 +219,9 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
             },
             "#btnDeparmentOutQuery":{
             	click: this.onButtonDepartmentOutQueryClick
+            },
+            '#btnStockTotalByCategoryQuery':{
+            	click: this.onButtonStockTotalByCategoryQueryClick
             }
         });
     }

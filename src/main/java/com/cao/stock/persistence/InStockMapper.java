@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cao.stock.domain.InStock;
 import com.cao.stock.domain.QueryParameter;
+import com.cao.stock.domain.StockOrder;
 
 /**
  * TODO Comment of StockMapper
@@ -19,6 +20,8 @@ public interface InStockMapper {
     public List<InStock> listAllInStocksByStock(Integer stockId);
 
     public InStock queryInStockById(Integer id);
+
+    public StockOrder sumInStockByOrderId(String orderId);
 
     public void addInStock(InStock InStock);
 

@@ -21,7 +21,7 @@ Ext.define('MyApp.store.MyOutStockStore', {
     ],
     model: 'MyApp.model.OutStockData',
     
-    autoLoad: true,
+    autoLoad: false,
  	proxy: {
         type: 'ajax',
         

@@ -12,7 +12,13 @@ import com.cao.stock.domain.StockOrder;
  */
 public interface StockOrderMapper {
 
-    public List<StockOrder> listAllStockOrders(QueryParameter queryParameter);
+    public List<StockOrder> listAllInStockOrders(QueryParameter queryParameter);
+
+    public int countAllInStockOrders(QueryParameter queryParameter);
+
+    public List<StockOrder> listAllOutStockOrders(QueryParameter queryParameter);
+
+    public int countAllOutStockOrders(QueryParameter queryParameter);
 
     public StockOrder queryStockOrderById(String id);
 

@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.cao.stock.domain.Unit;
 
 /**
  * TODO Comment of parseJson

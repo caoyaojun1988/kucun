@@ -18,6 +18,7 @@ public class StockOrder implements Serializable {
     private Integer           totalNumber;
     private Double            totalWorth;
     private String            mark;
+    private Integer           department;
     private Integer           staff;
     private String            status;
 
@@ -83,5 +84,13 @@ public class StockOrder implements Serializable {
 
     public String getMark() {
         return mark;
+    }
+
+    public void setDepartment(Integer department) {
+        this.department = department;
+    }
+
+    public Integer getDepartment() {
+        return department;
     }
 }

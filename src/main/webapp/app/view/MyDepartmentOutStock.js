@@ -14,9 +14,11 @@ Ext.define('MyApp.view.MyDepartmentOutStock', {
     },
     title: '部门汇总',
     features: [{
-        ftype: 'summary',
+    	groupHeaderTpl: '{name}',
+        ftype: 'groupingsummary',
         dock: 'bottom'
     }],
+    
     initComponent: function(){
 
         this.editing = Ext.create('Ext.grid.plugin.CellEditing');
@@ -35,7 +37,13 @@ Ext.define('MyApp.view.MyDepartmentOutStock', {
                     xtype: 'datefield',
                     id: 'btnDepartmentOutBegin',
                     format: 'Y-m-d',
-                    value:new Date()
+                    value:new Date(),
+                    listeners: {
+	                	change: function (filed, newValue, oldValue, op) {
+                			var btnInOrderTime = Ext.getCmp('btnDepartmentOutTime');
+                			btnInOrderTime.setValue("0");
+	                	}
+	                }
                 },
                 {
                     xtype: 'label',
@@ -45,7 +53,23 @@ Ext.define('MyApp.view.MyDepartmentOutStock', {
                     xtype: 'datefield',
                     id: 'btnDepartmentOutEnd',
                     format: 'Y-m-d',
-                    value:new Date()
+                    value:new Date(),
+                    listeners: {
+	                	change: function (filed, newValue, oldValue, op) {
+                			var btnInOrderTime = Ext.getCmp('btnDepartmentOutTime');
+                			btnInOrderTime.setValue("0");
+	                	}
+	                }
+                },{
+                	id:'btnDepartmentOutTime',
+                	xtype: 'combo',
+                    fieldLabel: '快捷时间',
+                    anchor: '100%',
+                    store:'MyQuictTimeStore',
+                    value:'0',
+                    valueField: 'id',
+                    displayField: 'name',
+           	
                 },{
                 	iconCls: 'icon-query',
                 	text: '查询',
@@ -58,15 +82,9 @@ Ext.define('MyApp.view.MyDepartmentOutStock', {
             columns: [new Ext.grid.RowNumberer({width: 50}),{
 		            header: "部门名称",
 		            itemId:'deparmntOutStock_department',
-		            dataIndex: 'department',
-		            hidden: false,
+		            dataIndex: 'departmentName',
+		            hidden: true,
 		            width: 108,
-		            renderer:function(value,metadata,record,store){
-		            	var kvstore =  Ext.data.StoreManager.get('MyDepartmentStore');
-		            	var index = kvstore.find('id',value);
-		            	var record = kvstore.getAt(index).get('name');
-		            	return record; 
-		            }
 			     },{
 		            header: "物品编号",
 		            itemId:'deparmntOutStock_stock',
@@ -105,21 +123,24 @@ Ext.define('MyApp.view.MyDepartmentOutStock', {
 			         itemId:'deparmntOutStock_stockNumber',
 			         dataIndex: 'stockNumber',
 			         text: '数量',
-			         sortable: true
+			         sortable: true,
+			         summaryType: 'sum'
 			    },{
 				   	 xtype: 'gridcolumn',
 				     width: 100,
 				     itemId:'deparmntOutStock_stockworth',
 				     dataIndex: 'stockWorth',
 				     text: '金额',
-				     sortable: true
+				     sortable: true,
+				     summaryType: 'sum'
 				},{
 				   	 xtype: 'gridcolumn',
 				     width: 100,
 				     itemId:'deparmntOutStock_number',
 				     dataIndex: 'number',
 				     text: '笔数',
-				     sortable: true
+				     sortable: true,
+				     summaryType: 'sum'
 				}]
         });
         this.callParent();
@@ -130,7 +151,23 @@ Ext.define('MyApp.view.MyDepartmentOutStock', {
     	
     	var btnCreateTimeBegin = Ext.getCmp('btnDepartmentOutBegin').getValue();
     	var btnCreateTimeEnd = Ext.getCmp('btnDepartmentOutEnd').getValue();
-
+    	var btnDepartmentOutTime = Ext.getCmp('btnDepartmentOutTime').getValue();
+    	if(btnDepartmentOutTime==1){ //今日
+    		btnCreateTimeBegin = new Date();
+    		btnCreateTimeEnd =new Date();
+    	}else if(btnDepartmentOutTime==2){//昨日
+    		btnCreateTimeBegin = Ext.Date.add(new Date(), Ext.Date.DAY, -1);
+        	btnCreateTimeEnd = Ext.Date.add(new Date(), Ext.Date.DAY, -1);
+    	}else if(btnDepartmentOutTime==3){ //本月
+    		btnCreateTimeBegin = Ext.Date.getFirstDateOfMonth(new Date());
+        	btnCreateTimeEnd = Ext.Date.getLastDateOfMonth(new Date());
+    	}else if(btnDepartmentOutTime==4){//上月
+    		btnCreateTimeBegin = Ext.Date.add(Ext.Date.getFirstDateOfMonth(new Date()), Ext.Date.MONTH, -1);
+        	btnCreateTimeEnd = Ext.Date.getLastDateOfMonth(btnCreateTimeBegin);
+    	}
+    	
+    	
+    	
     	
     	var proxy = this.store.getProxy(); 
         proxy.extraParams['beginTimeStr'] = Ext.Date.format(btnCreateTimeBegin, 'Y-m-d'); 

@@ -67,14 +67,10 @@ Ext.define('MyApp.view.MyOutStockPanel', {
     			isNeedSync=false;
     			return false;
     		}
-    		
 			record.set('createDate',createDate);
-			record.set('department',department);
-			record.set('staff',staff);
 	    });  
 		
 		girdStore.getProxy().extraParams.outStockMark = outStockMark;  
-		
 		girdStore.getProxy().extraParams.createDate = Ext.Date.format(new Date(createDate),'Y-m-d H:i:s');
 		girdStore.getProxy().extraParams.staff = staff;
 		girdStore.getProxy().extraParams.department = department;

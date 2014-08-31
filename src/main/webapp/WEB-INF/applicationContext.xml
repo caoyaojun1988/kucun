@@ -39,7 +39,11 @@
             </list>  
         </property>  
     </bean>  
-	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="maxUploadSize" value="10240000" />
+	    <property name="resolveLazily" value="true" />
+	    <property name="maxInMemorySize" value="4096" />
+	</bean>
 	<!-- 总错误处理-->  
 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
 	    <property name="defaultErrorView">    

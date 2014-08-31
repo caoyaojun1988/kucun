@@ -21,6 +21,8 @@ Ext.define('MyApp.store.MyDepartmentOutStockStore', {
     ],
     model: 'MyApp.model.InOutStockTotalData',
     
+    groupField: 'departmentName',
+    
     autoLoad: true,
  	proxy: {
         type: 'ajax',

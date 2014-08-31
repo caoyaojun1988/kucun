@@ -19,6 +19,7 @@ Ext.define('MyApp.controller.InStockTotalCtrl', {
     stores: [
         'MyInStockTotalStore',
         'MyUnitStore',
+        'MyQuictTimeStore'
     ],
 
     refs: [

@@ -11,6 +11,7 @@ import com.cao.stock.domain.InStock;
 import com.cao.stock.domain.OutStock;
 import com.cao.stock.domain.QueryParameter;
 import com.cao.stock.domain.Stock;
+import com.cao.stock.domain.StockOrder;
 import com.cao.stock.persistence.OutStockMapper;
 
 /**
@@ -109,8 +110,6 @@ public class OutStockService {
             OutStock diffOutStock = new OutStock();
             diffOutStock.setOrderId(oldOutStock.getOrderId());
             diffOutStock.setStock(oldOutStock.getStock());
-            diffOutStock.setDepartment(oldOutStock.getDepartment());
-            diffOutStock.setStaff(oldOutStock.getStaff());
             diffOutStock.setNumber(newOutStock.getNumber() - oldOutStock.getNumber());
             diffOutStock.setWorth(oldOutStock.getWorth());
             diffOutStock.setCreateDate(new Date());
@@ -128,6 +127,10 @@ public class OutStockService {
 
     public OutStock queryOutStockById(Integer id) {
         return OutStockMapper.queryOutStockById(id);
+    }
+
+    public StockOrder sumInStockByOrderId(String orderId) {
+        return OutStockMapper.sumInStockByOrderId(orderId);
     }
 
 }

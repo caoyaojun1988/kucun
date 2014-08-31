@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.cao.stock.domain.InStock;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -45,7 +46,8 @@ public class OutStockController {
     private HttpServletRequest request;
 
     @RequestMapping("/listAll")
-    public @ResponseBody
+    public
+    @ResponseBody
     HashMap<String, Object> listAllOutStocks(@ModelAttribute("pojo") QueryParameter queryParameter) {
         List<OutStock> stocks = outStockService.listAllOutStocks(queryParameter);
         int count = outStockService.countAllOutStocks(queryParameter);
@@ -58,15 +60,37 @@ public class OutStockController {
 
     @RequestMapping("/add")
     @Transactional
-    public @ResponseBody
-    Result addOutStocks(@RequestParam("outStockMark") String outStockMark,
-                        @RequestParam("createDate") String createDate, @RequestParam("staff") Integer staff,
-                        @RequestParam("department") Integer department, @RequestParam("method") String method) {
+    public
+    @ResponseBody
+    Result addOutStocks(@RequestParam(value = "outStockMark", required = false) String outStockMark,
+                        @RequestParam(value = "createDate", required = false) String createDate,
+                        @RequestParam(value = "staff", required = false) Integer staff,
+                        @RequestParam(value = "department", required = false) Integer department,
+                        @RequestParam(value = "method", required = false) String method,
+                        @RequestParam(value = "orderId", required = false) String orderId) {
         try {
-            if (!"add".equals(method)) {
-                return Result.failureResult("add in stock parameter Error :" + method);
+            if ("add".equals(method)) {
+                return outStocks(outStockMark, createDate, department, staff);
+            } else {
+                String parameter = request.getReader().readLine();
+                List<OutStock> outStocks = parseJson.parse(parameter, OutStock.class);
+                StockOrder stockOrder = stockOrderService.queryStockOrderById(orderId);
+                if (stockOrder != null) {
+                    for (OutStock outStock : outStocks) {
+                        if (outStock == null || outStock.getStock() == null || outStock.getId() != null) {
+                            continue;
+                        }
+                        outStock.setModifyDate(new Date());
+                        outStock.setCreateDate(stockOrder.getCreateDate());
+                        outStock.setOrderId(orderId);
+                        outStockService.addOutStock(outStock);
+                    }
+                    // 修改订单
+                    StockOrder newStockOrder = outStockService.sumInStockByOrderId(orderId);
+                    stockOrderService.modifyStockOrderByid(newStockOrder);
+                }
+                return  Result.successResult();
             }
-            return outStocks(outStockMark, createDate, department, staff);
         } catch (Exception e) {
             e.printStackTrace();
             return Result.failureResult(e.getMessage());
@@ -75,30 +99,33 @@ public class OutStockController {
 
     @RequestMapping("/update")
     @Transactional
-    public @ResponseBody
+    public
+    @ResponseBody
     Result updateOutStocks(@RequestParam(value = "outStockMark", required = false) String outStockMark,
                            @RequestParam(value = "createDate", required = false) String createDate,
                            @RequestParam(value = "staff", required = false) Integer staff,
                            @RequestParam(value = "department", required = false) Integer department,
-                           @RequestParam(value = "method", required = false) String method) {
+                           @RequestParam(value = "method", required = false) String method,
+                           @RequestParam(value = "orderId", required = false) String orderId) {
         try {
             if ("add".equals(method)) {
                 return outStocks(outStockMark, createDate, department, staff);
             } else {
                 String parameter = request.getReader().readLine();
                 List<OutStock> outStocks = parseJson.parse(parameter, OutStock.class);
-                String orderId = "";
-                for (OutStock outStock : outStocks) {
-                    if (outStocks == null || outStock.getStock() == null) {
-                        continue;
+                StockOrder stockOrder = stockOrderService.queryStockOrderById(orderId);
+                if (stockOrder != null) {
+                    for (OutStock outStock : outStocks) {
+                        if (outStocks == null || outStock.getStock() == null) {
+                            continue;
+                        }
+                        OutStock oldOutStock = outStockService.queryOutStockById(outStock.getId());
+                        outStockService.modifyOutStock(oldOutStock, outStock);
                     }
-                    OutStock oldOutStock = outStockService.queryOutStockById(outStock.getId());
-                    orderId = oldOutStock.getOrderId();
-                    outStockService.modifyOutStock(oldOutStock, outStock);
+                    // 修改订单
+                    StockOrder newStockOrder = outStockService.sumInStockByOrderId(orderId);
+                    stockOrderService.modifyStockOrderByid(newStockOrder);
                 }
-                // 修改订单
-                StockOrder stockOrder = outStockService.sumInStockByOrderId(orderId);
-                stockOrderService.modifyStockOrderByid(stockOrder);
             }
             return Result.successResult();
         } catch (Exception e) {
@@ -108,8 +135,8 @@ public class OutStockController {
     }
 
     private Result outStocks(String outStockMark, String createDate, Integer department, Integer staff)
-                                                                                                       throws IOException,
-                                                                                                       ParseException {
+      throws IOException,
+             ParseException {
         String parameter = request.getReader().readLine();
         List<OutStock> outStocks = parseJson.parse(parameter, OutStock.class);
         String orderId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
@@ -142,7 +169,8 @@ public class OutStockController {
 
     @RequestMapping("/delete")
     @Transactional
-    public @ResponseBody
+    public
+    @ResponseBody
     Result deleteOutStocks() {
         try {
             String parameter = request.getReader().readLine();
@@ -171,7 +199,8 @@ public class OutStockController {
     }
 
     @RequestMapping("/import")
-    public @ResponseBody
+    public
+    @ResponseBody
     Result importInStocks(@RequestParam("upfile") CommonsMultipartFile uploadExcel) throws Exception {
         try {
             List<OutStock> inStocks = this.importExcel(uploadExcel.getInputStream()); // 读取数据（读取数据的源Excel，读取数据忽略的行数）

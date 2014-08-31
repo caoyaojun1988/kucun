@@ -73,7 +73,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
 	            itemId:'outStock_stock_id',
 	            dataIndex: 'stock',
 	            hidden: false,
-	            width: 108,
+	            width: 108
             },{
 	            header: "物品",
 	            itemId:'outStockGrid_stock',

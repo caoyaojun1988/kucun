@@ -9,6 +9,7 @@ Ext.define('MyApp.view.MyOutStockDetail', {
     ],
 
     itemId: 'outStockDetailQuery',
+    id: 'outStockDetailQueryId',
     layout: {
         type: 'border'
     },
@@ -131,11 +132,46 @@ Ext.define('MyApp.view.MyOutStockDetail', {
 	            width:100,
 	            hidden: false,
 	            renderer:function(value,metadata,record,store){
+                    if(value==''){
+                        return "请选择";
+                    }
 	            	var kvstore =  this.stockStore;
 	            	var index = kvstore.find('id',value);
 	            	var record = kvstore.getAt(index).get('name');
 	            	return record; 
-	            }
+	            },
+                editor: new Ext.form.ComboBox({
+                    store: Ext.create('store.MyStockStore'),
+                    triggerAction: 'all',
+                    displayField: 'name',
+                    valueField: 'id',
+                    allowBlank: false,
+                    editable: true,
+                    mode: 'local',
+                    triggerAction: 'all',
+                    lastQuery: '',
+                    listeners: {
+                        beforequery:function(e){
+                            var combo = e.combo;
+                            if(!e.forceAll){
+                                var input = e.query;
+                                var regExp = new RegExp(".*" + input + ".*");// 检索的正则
+                                //编辑之前，过滤下市的数据源
+                                combo.store.clearFilter();
+                                combo.store.filterBy(function(record,id){
+                                    var text = record.get("pinyinForName"); // 得到每个record的项目名称值
+                                    return regExp.test(text);
+                                });
+                                combo.expand();
+                                return false;
+                            }
+                        },
+                        select: function(field, value) {
+                            var selection =	Ext.getCmp("outStockDetailQueryId").getView().getSelectionModel().getSelection()[0];
+                            Ext.getCmp("outStockDetailQueryId").editing.startEdit(selection,4);
+                        }
+                    }
+                })
 		     },{
 		       	 xtype: 'gridcolumn',
 		         width: 100,
@@ -201,7 +237,8 @@ Ext.define('MyApp.view.MyOutStockDetail', {
     onAddClick: function(){
         var rec = new MyApp.model.OutStockData({
 	      	  'id':'',
-	      	  'createDate':'',
+              'createDate':new Date(),
+              'modifyDate':new Date(),
 	    	  'stock':'',
 	    	  'number':'',
 	    	  'worth':''
@@ -211,7 +248,7 @@ Ext.define('MyApp.view.MyOutStockDetail', {
         this.store.insert(0, rec);
         edit.startEditByPosition({
             row: 0,
-            column: 1
+            column: 3
         });
     },
     

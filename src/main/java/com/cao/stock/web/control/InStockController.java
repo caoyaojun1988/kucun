@@ -58,7 +58,8 @@ public class InStockController {
     private CategoryService    categoryService;
 
     @RequestMapping("/listAll")
-    public @ResponseBody
+    public
+    @ResponseBody
     HashMap<String, Object> listAllInStocks(@ModelAttribute("pojo") QueryParameter queryParameter) {
         List<InStock> stocks = inStockService.listAllInStocks(queryParameter);
         int count = inStockService.countAllInStocks(queryParameter);
@@ -70,33 +71,16 @@ public class InStockController {
     }
 
     @RequestMapping("/add")
-    public @ResponseBody
+    public
+    @ResponseBody
     @Transactional
-    Result addInstocks(@RequestParam("instockWay") String instockWay, @RequestParam("inStockMark") String inStockMark,
-                       @RequestParam("createDate") String createDate, @RequestParam("department") Integer department,
-                       @RequestParam("staff") Integer staff, @RequestParam("method") String method) {
-        try {
-            if (!"add".equals(method)) {
-                return Result.failureResult("add in stock parameter Error :" + method);
-            }
-            String parameter = request.getReader().readLine();
-            List<InStock> inStocks = parseJson.parse(parameter, InStock.class);
-            return inStocks(inStocks, instockWay, inStockMark, createDate, department, staff);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Result.failureResult(e.getMessage());
-        }
-    }
-
-    @RequestMapping("/update")
-    @Transactional
-    public @ResponseBody
-    Result updateinStocks(@RequestParam(value = "instockWay", required = false) String instockWay,
-                          @RequestParam(value = "inStockMark", required = false) String inStockMark,
-                          @RequestParam(value = "createDate", required = false) String createDate,
-                          @RequestParam(value = "department", required = false) Integer department,
-                          @RequestParam(value = "staff", required = false) Integer staff,
-                          @RequestParam(value = "method", required = false) String method) {
+    Result addInstocks(@RequestParam(value = "instockWay", required = false) String instockWay,
+                       @RequestParam(value = "inStockMark", required = false) String inStockMark,
+                       @RequestParam(value = "createDate", required = false) String createDate,
+                       @RequestParam(value = "department", required = false) Integer department,
+                       @RequestParam(value = "staff", required = false) Integer staff,
+                       @RequestParam(value = "method", required = false) String method,
+                       @RequestParam(value = "orderId", required = false) String orderId) {
         try {
             if ("add".equals(method)) {
                 String parameter = request.getReader().readLine();
@@ -105,18 +89,62 @@ public class InStockController {
             } else {
                 String parameter = request.getReader().readLine();
                 List<InStock> inStocks = parseJson.parse(parameter, InStock.class);
-                String orderId = "";
-                for (InStock inStock : inStocks) {
-                    if (inStock == null || inStock.getStock() == null) {
-                        continue;
+                StockOrder stockOrder = stockOrderService.queryStockOrderById(orderId);
+                if (stockOrder != null) {
+                    for (InStock inStock : inStocks) {
+                        if (inStock == null || inStock.getStock() == null || inStock.getId() != null) {
+                            continue;
+                        }
+                        inStock.setModifyDate(new Date());
+                        inStock.setCreateDate(stockOrder.getCreateDate());
+                        inStock.setOrderId(orderId);
+                        inStock.setRemainderNumber(inStock.getNumber());
+                        inStockService.addInStock(inStock);
                     }
-                    InStock oldInStock = inStockService.queryInStockById(inStock.getId());
-                    orderId = oldInStock.getOrderId();
-                    inStockService.modifyInStock(oldInStock, inStock);
+                    // 修改订单
+                    StockOrder newStockOrder = inStockService.sumInStockByOrderId(orderId);
+                    stockOrderService.modifyStockOrderByid(newStockOrder);
                 }
-                // 修改订单
-                StockOrder stockOrder = inStockService.sumInStockByOrderId(orderId);
-                stockOrderService.modifyStockOrderByid(stockOrder);
+                return  Result.successResult();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.failureResult(e.getMessage());
+        }
+    }
+
+    @RequestMapping("/update")
+    @Transactional
+    public
+    @ResponseBody
+    Result updateinStocks(@RequestParam(value = "instockWay", required = false) String instockWay,
+                          @RequestParam(value = "inStockMark", required = false) String inStockMark,
+                          @RequestParam(value = "createDate", required = false) String createDate,
+                          @RequestParam(value = "department", required = false) Integer department,
+                          @RequestParam(value = "staff", required = false) Integer staff,
+                          @RequestParam(value = "method", required = false) String method,
+                          @RequestParam(value = "orderId", required = false) String orderId) {
+        try {
+            if ("add".equals(method)) {
+                String parameter = request.getReader().readLine();
+                List<InStock> inStocks = parseJson.parse(parameter, InStock.class);
+                return inStocks(inStocks, instockWay, inStockMark, createDate, department, staff);
+            } else {
+                String parameter = request.getReader().readLine();
+                List<InStock> inStocks = parseJson.parse(parameter, InStock.class);
+                StockOrder stockOrder = stockOrderService.queryStockOrderById(orderId);
+                if (stockOrder != null) {
+                    for (InStock inStock : inStocks) {
+                        if (inStock == null || inStock.getStock() == null) {
+                            continue;
+                        }
+                        InStock oldInStock = inStockService.queryInStockById(inStock.getId());
+                        inStockService.modifyInStock(oldInStock, inStock);
+                    }
+                    // 修改订单
+                    StockOrder newStockOrder = inStockService.sumInStockByOrderId(orderId);
+                    stockOrderService.modifyStockOrderByid(newStockOrder);
+                }
             }
             return Result.successResult();
         } catch (Exception e) {
@@ -175,7 +203,8 @@ public class InStockController {
 
     @RequestMapping("/delete")
     @Transactional
-    public @ResponseBody
+    public
+    @ResponseBody
     Result deleteinStocks() {
         try {
             String parameter = request.getReader().readLine();
@@ -202,7 +231,8 @@ public class InStockController {
     }
 
     @RequestMapping("/import")
-    public @ResponseBody
+    public
+    @ResponseBody
     Result importInStocks(@RequestParam("upfile") CommonsMultipartFile uploadExcel) throws Exception {
         try {
             List<Stock> stocks = stockService.listAllStocks(new QueryParameter());
@@ -282,7 +312,7 @@ public class InStockController {
                     stock.setId(inStock.getStock());
                     stock.setNumber(0);
                     stock.setWorth(0.0);
-                    
+
                     cell = row.getCell(2);
                     tempResult = ExcelUtil.getString(cell);
                     stock.setName(tempResult);

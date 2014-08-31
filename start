@@ -8,7 +8,7 @@ sleep  2s;
 mv target/kucun.war /usr/alibaba/apache-tomcat-7.0.52/webapps/;
 sleep 2s;
 /usr/alibaba/apache-tomcat-7.0.52/bin/shutdown.sh;
-sleep 2s;
+sleep 5s;
 /usr/alibaba/apache-tomcat-7.0.52/bin/catalina.sh jpda start;
 
 

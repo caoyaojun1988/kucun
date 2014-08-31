@@ -1,80 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1ca343d4-cb94-4f37-8e3b-e783a0ea0459" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/cao/stock/domain/CategoryTotal.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/cao/stock/web/util/ExcelUtil.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/controller/InStockDetailPanelCtrl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__aopalliance_aopalliance_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__asm_asm_3_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cglib_cglib_2_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_1_1_15.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_belerweb_pinyin4j_2_5_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_dbcp_commons_dbcp_1_2_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_1_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_pool_commons_pool_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_jsp_api_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_jstl_1_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_2_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_16.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_3_10_FINAL.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_9_13.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_9_13.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_0_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_1_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_asm_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_3_0_5_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_sqlite_jdbc_3_7_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetail.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetailOrder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetailPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/store/MyInStockOrderStore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetail.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetailOrder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetailPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/store/MyOutStockOrderStore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/store/MyQuictTimeStore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyStockDetail.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/store/MyStockDetailStore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyStockPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyStockTotalByCategory.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/store/MyStockTotalStore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/controller/OutStockDetailPanelCtrl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/cao/stock/domain/StockDetail.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/model/StockDetailData.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/StockOrderController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/model/StockOrderData.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/controller/StockPanelCtrl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/controller/StockTotalByCategoryCtrl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/app/model/StockTotalData.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/kun-web.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/kun_web_war.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/kun_web_war_exploded.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/data/quicTime.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list default="true" id="1ca343d4-cb94-4f37-8e3b-e783a0ea0459" name="Default" comment="rm&#10;">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.db" afterPath="$PROJECT_DIR$/test.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/InStockController.java" afterPath="$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/InStockController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetail.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetail.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockGrid.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockGrid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetail.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetail.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockGrid.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockGrid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/OutStockController.java" afterPath="$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/OutStockController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/com/cao/stock/persistence/StockOrderMapper.xml" afterPath="$PROJECT_DIR$/src/main/resources/com/cao/stock/persistence/StockOrderMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/start" afterPath="$PROJECT_DIR$/start" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="kun-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -130,7 +67,22 @@
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/cao/stock/service/StockService.java" line="122" class="com.cao.stock.service.StockService" package="com.cao.stock.service">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/InStockController.java" line="84" class="com.cao.stock.web.control.InStockController" package="com.cao.stock.web.control">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/InStockController.java" line="127" class="com.cao.stock.web.control.InStockController" package="com.cao.stock.web.control">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -155,37 +107,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MyOutStockDetail.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetail.js">
+      <file leaf-file-name="MyOutStockGrid.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockGrid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="213" column="21" selection-start="7054" selection-end="7054" vertical-scroll-proportion="0.0" vertical-offset="3138" max-vertical-offset="4086">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MyInStockDetail.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetail.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="265" column="24" selection-start="9404" selection-end="9404" vertical-scroll-proportion="0.6" vertical-offset="4212" max-vertical-offset="5166">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MyUnit.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyUnit.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="179" column="32" selection-start="5883" selection-end="5902" vertical-scroll-proportion="0.0" vertical-offset="2562" max-vertical-offset="3492">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MyInStockGrid.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockGrid.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="338" column="56" selection-start="13177" selection-end="13530" vertical-scroll-proportion="0.0" vertical-offset="5388" max-vertical-offset="6318">
+            <state line="132" column="54" selection-start="4800" selection-end="4814" vertical-scroll-proportion="-0.5356322" vertical-offset="2842" max-vertical-offset="4626">
               <folding />
             </state>
           </provider>
@@ -211,11 +136,16 @@
         <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetailOrder.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetailOrder.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetailPanel.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetail.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyStockDetail.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyStockPanel.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyStockTotalByCategory.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockGrid.js" />
+        <option value="$PROJECT_DIR$/src/main/resources/com/cao/stock/persistence/StockOrderMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetail.js" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/InStockController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/OutStockController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetail.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockGrid.js" />
       </list>
     </option>
   </component>
@@ -395,6 +325,122 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kun-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kun-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kun-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kun-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="persistence" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kun-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kun-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kun-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kun-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -667,7 +713,7 @@
       <workItem from="1405935844750" duration="687000" />
       <workItem from="1405941694067" duration="1909000" />
       <workItem from="1406275308880" duration="2044000" />
-      <workItem from="1409461475296" duration="2399000" />
+      <workItem from="1409461475296" duration="10445000" />
     </task>
     <task id="LOCAL-00001" summary="order&#10;">
       <created>1409463298491</created>
@@ -677,7 +723,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23808000" />
+    <option name="totallyTimeSpent" value="31854000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1431" y="24" width="1855" height="1056" extended-state="6" />
@@ -688,6 +734,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46354166" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -704,12 +751,11 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25815368" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21890548" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46450618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -736,36 +782,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/domain/Result.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="564" selection-end="564" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/StockOrderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="38" selection-start="1708" selection-end="1719" vertical-scroll-proportion="0.0" vertical-offset="163" max-vertical-offset="2538" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/AccountController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="14" selection-start="949" selection-end="955" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="702" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="35" selection-start="3077" selection-end="3077" vertical-scroll-proportion="0.0" vertical-offset="1836" max-vertical-offset="2538" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/util/parseJson.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="3" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/controller/StockPanelCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="39" selection-start="553" selection-end="553" vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="684" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/app/controller/StockTotalByCategoryCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="648" />
@@ -776,41 +792,14 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1872" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockGrid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="29" selection-start="2305" selection-end="2305" vertical-scroll-proportion="0.0" vertical-offset="813" max-vertical-offset="4608" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyStock.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8460" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/persistence/InStockMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="47" selection-start="448" selection-end="470" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/service/InOutStockService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="134" column="68" selection-start="5197" selection-end="5197" vertical-scroll-proportion="0.0" vertical-offset="1769" max-vertical-offset="3456" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/service/OutStockService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="48" selection-start="917" selection-end="917" vertical-scroll-proportion="0.0" vertical-offset="276" max-vertical-offset="2340" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/persistence/OutStockMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="16" selection-start="556" selection-end="556" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="558" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/service/StockService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="63" selection-start="5413" selection-end="5431" vertical-scroll-proportion="0.0" vertical-offset="1914" max-vertical-offset="3168">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/applicationContext.xml">
@@ -855,16 +844,6 @@
         <state line="13" column="19" selection-start="221" selection-end="221" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="558" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/com/cao/stock/persistence/InStockMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="97" selection-start="2770" selection-end="2785" vertical-scroll-proportion="0.0" vertical-offset="648" max-vertical-offset="2610" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2034" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockTotal.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3150" />
@@ -878,11 +857,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/DepartmentController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="13" selection-start="644" selection-end="644" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1512" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/InStockController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="13" selection-start="1671" selection-end="1671" vertical-scroll-proportion="0.0" vertical-offset="792" max-vertical-offset="5094" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/StockController.java">
@@ -914,16 +888,6 @@
         <state line="129116" column="30" selection-start="3370507" selection-end="3370507" vertical-scroll-proportion="-0.56033057" vertical-offset="2324427" max-vertical-offset="2350332" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/INIT">
-      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="24" selection-start="184" selection-end="184" vertical-scroll-proportion="0.067567565" vertical-offset="84" max-vertical-offset="972">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/initData">
       <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
         <state />
@@ -948,37 +912,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="185" column="18" selection-start="7145" selection-end="7145" vertical-scroll-proportion="0.0" vertical-offset="2724" max-vertical-offset="4590">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetailPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="4" selection-start="401" selection-end="401" vertical-scroll-proportion="0.36774194" vertical-offset="0" max-vertical-offset="930">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetailOrder.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="81" column="40" selection-start="2633" selection-end="2633" vertical-scroll-proportion="0.33333334" vertical-offset="1148" max-vertical-offset="6912">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetailPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="33" selection-start="394" selection-end="394" vertical-scroll-proportion="0.32903227" vertical-offset="0" max-vertical-offset="594">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetailOrder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="40" selection-start="2576" selection-end="2576" vertical-scroll-proportion="0.0" vertical-offset="1112" max-vertical-offset="6930">
           <folding />
         </state>
       </provider>
@@ -1004,39 +940,189 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="213" column="21" selection-start="7054" selection-end="7054" vertical-scroll-proportion="0.0" vertical-offset="3138" max-vertical-offset="4086">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/app/model/InStockData.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="24" selection-start="1064" selection-end="1064" vertical-scroll-proportion="0.0" vertical-offset="276" max-vertical-offset="1206">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockGrid.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyStock.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="338" column="56" selection-start="13177" selection-end="13530" vertical-scroll-proportion="0.0" vertical-offset="5388" max-vertical-offset="6318">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.5548387" vertical-offset="2376" max-vertical-offset="8460">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyUnit.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="32" selection-start="5883" selection-end="5902" vertical-scroll-proportion="0.0" vertical-offset="2562" max-vertical-offset="3492">
+        <state line="105" column="17" selection-start="3643" selection-end="4174" vertical-scroll-proportion="0.0" vertical-offset="1482" max-vertical-offset="3492">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="41" selection-start="1308" selection-end="1318" vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="4590">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="56" selection-start="1073" selection-end="1083" vertical-scroll-proportion="0.3326087" vertical-offset="765" max-vertical-offset="2034">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/domain/InStock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="13" selection-start="157" selection-end="157" vertical-scroll-proportion="0.17900552" vertical-offset="0" max-vertical-offset="1296">
+          <folding>
+            <element signature="e#688#689#0" expanded="true" />
+            <element signature="e#713#714#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/INIT">
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="94" selection-start="1785" selection-end="1785" vertical-scroll-proportion="-4.449438" vertical-offset="0" max-vertical-offset="972">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/persistence/InStockMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="33" selection-start="763" selection-end="780" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockGrid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="137" column="57" selection-start="4949" selection-end="4962" vertical-scroll-proportion="-41.1" vertical-offset="0" max-vertical-offset="6336">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/service/StockService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="122" column="0" selection-start="4185" selection-end="4185" vertical-scroll-proportion="0.33217993" vertical-offset="1662" max-vertical-offset="3168">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/service/InStockService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="17" selection-start="1295" selection-end="1295" vertical-scroll-proportion="0.3633218" vertical-offset="276" max-vertical-offset="2376">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/domain/StockOrder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="13" selection-start="157" selection-end="157" vertical-scroll-proportion="0.2802768" vertical-offset="0" max-vertical-offset="1170">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/service/StockOrderService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="51" selection-start="1341" selection-end="1360" vertical-scroll-proportion="0.34948096" vertical-offset="464" max-vertical-offset="1098">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/com/cao/stock/persistence/InStockMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="127" selection-start="2404" selection-end="2414" vertical-scroll-proportion="0.31660232" vertical-offset="1186" max-vertical-offset="2610">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/com/cao/stock/persistence/StockOrderMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="101" column="13" selection-start="3229" selection-end="3229" vertical-scroll-proportion="0.5907336" vertical-offset="1512" max-vertical-offset="2790">
+          <folding>
+            <marker date="1409469372351" expanded="true" signature="-1:-1" placeholder="SELECT o.ID,..stock_order..." />
+            <marker date="1409469372351" expanded="true" signature="-1:-1" placeholder="SELECT count..stock_order..." />
+            <marker date="1409469372351" expanded="true" signature="-1:-1" placeholder="SELECT o.ID,..stock_order..." />
+            <marker date="1409469372351" expanded="true" signature="-1:-1" placeholder="SELECT count..stock_order..." />
+            <marker date="1409469372351" expanded="true" signature="-1:-1" placeholder="SELECT o.ID,..stock_order..." />
+            <marker date="1409469372351" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1409469372351" expanded="true" signature="-1:-1" placeholder="UPDATE stock..." />
+            <marker date="1409469372351" expanded="true" signature="-1:-1" placeholder="UPDATE stock..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetailPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="37" selection-start="350" selection-end="350" vertical-scroll-proportion="0.43944636" vertical-offset="16" max-vertical-offset="594">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetailPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="29" selection-start="170" selection-end="191" vertical-scroll-proportion="0.09677419" vertical-offset="0" max-vertical-offset="930">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetailOrder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="295" column="35" selection-start="11223" selection-end="11223" vertical-scroll-proportion="2.986207" vertical-offset="2712" max-vertical-offset="6930">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/InStockController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="17" selection-start="3887" selection-end="4691" vertical-scroll-proportion="0.7376344" vertical-offset="538" max-vertical-offset="5634">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/service/OutStockService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="16" selection-start="885" selection-end="885" vertical-scroll-proportion="0.33333334" vertical-offset="140" max-vertical-offset="2340">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cao/stock/web/control/OutStockController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="101" column="10" selection-start="4220" selection-end="4220" vertical-scroll-proportion="1.1195402" vertical-offset="268" max-vertical-offset="4176">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyInStockDetail.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="265" column="24" selection-start="9404" selection-end="9404" vertical-scroll-proportion="0.6" vertical-offset="4212" max-vertical-offset="5166">
+        <state line="144" column="25" selection-start="4840" selection-end="4922" vertical-scroll-proportion="-2.8" vertical-offset="2424" max-vertical-offset="5778">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="142" column="47" selection-start="5004" selection-end="5004" vertical-scroll-proportion="2.7586207" vertical-offset="156" max-vertical-offset="4752">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/view/MyOutStockGrid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="54" selection-start="4800" selection-end="4814" vertical-scroll-proportion="-0.5356322" vertical-offset="2842" max-vertical-offset="4626">
           <folding />
         </state>
       </provider>

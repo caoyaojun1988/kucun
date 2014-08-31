@@ -102,7 +102,7 @@
 		FROM 
 			stock_order o
 		WHERE  
-			 and s.ID = #{id} 
+			  o.ID = #{id}
   	</select>
 
 	<insert id="addStockOrder" parameterType="StockOrder">

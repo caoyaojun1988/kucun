@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.DepartmentMapper">
+
+	<!-- cache / -->
+
+	<select id="listAllDepartments" resultType="Department">
+		SELECT
+			ID,NAME,pinyinForName
+		FROM 
+			DEPARTMENT
+	</select>
+
+	<select id="queryDepartmentById" parameterType="integer" resultType="Department">
+		SELECT
+			ID,NAME,pinyinForName
+		FROM 
+			DEPARTMENT
+		WHERE 
+			ID = #{id} 
+  	</select>
+
+
+	<insert id="addDepartment" parameterType="Department">
+		INSERT INTO 
+			DEPARTMENT (name,pinyinForName)
+		VALUES 
+			(#{name},#{pinyinForName}) 
+  	</insert>
+
+
+	<delete id="deleteDepartmentById" parameterType="Department">
+		DELETE  FROM 
+			DEPARTMENT
+		WHERE 
+			ID=#{id} 
+  	</delete>
+
+
+	<update id="modifyDepartmentById" parameterType="Department">
+		UPDATE 
+			DEPARTMENT
+		<set>
+			<if test="name!=null ">
+		 		NAME = #{name},
+		 	</if>
+		 	<if test="pinyinForName!=null ">
+		 		pinyinForName = #{pinyinForName}
+		 	</if>
+		</set>
+		WHERE 
+			ID=#{id}
+  	</update>
+
+</mapper>

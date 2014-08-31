@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.StaffMapper">
+
+	<!-- cache / -->
+
+	<select id="listAllStaffs" resultType="Staff">
+		SELECT
+			s.ID,s.NAME,pinyinForName,s.DEPARTMENT
+		FROM 
+			STAFF s 
+	</select>
+
+	<select id="queryStaffById" parameterType="integer" resultType="Staff">
+		SELECT
+			s.ID,s.NAME,pinyinForName,s.DEPARTMENT
+		FROM 
+			STAFF s 
+		WHERE  
+			s.ID = #{id} 
+  	</select>
+
+
+	<insert id="addStaff" parameterType="Staff">
+		INSERT INTO 
+			STAFF (name,pinyinForName,department)
+		VALUES (#{name},#{pinyinForName},#{department}) 
+  	</insert>
+
+
+	<delete id="deleteStaffById" parameterType="Staff">
+		DELETE  FROM 
+			STAFF
+		WHERE 
+			ID=#{id} 
+  	</delete>
+
+
+	<update id="modifyStaffById" parameterType="Staff">
+		UPDATE 
+			STAFF
+		<set>
+			<if test="name != null ">
+		 		NAME = #{name},
+		 	</if>
+		 	<if test="pinyinForName!=null ">
+		 		pinyinForName = #{pinyinForName},
+		 	</if>
+			<if test="department != null ">
+		 		DEPARTMENT=#{department}
+		 	</if>
+		</set> 
+		WHERE ID=#{id}
+  	</update>
+
+</mapper>

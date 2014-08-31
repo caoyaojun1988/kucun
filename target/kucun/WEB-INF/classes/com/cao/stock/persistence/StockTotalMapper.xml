@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.StockTotalMapper">
+
+	<!-- cache / -->
+
+	<select id="listInStocks" parameterType="com.cao.stock.domain.QueryParameter" resultType="StockTotal">
+		SELECT
+			s.id as stock, s.name as stockName,s.specification as stockSpecification,s.unit as stockUnit,sum(i.number) as stockNumber,i.total_worth as stockWorth, count(*) as number
+		FROM
+			in_stock i, stock s 
+		WHERE
+			i.stock=s.id 
+		<if test="beginTime!=null ">
+	 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+	 	</if>
+	 	<if test="endTime!=null ">
+	 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+	 	</if>
+	 	 group by s.id
+	</select>
+
+	<select id="countInStocks" parameterType="com.cao.stock.domain.QueryParameter" resultType="integer">
+		select count(*)
+		from (
+			SELECT
+				s.id
+			FROM
+				in_stock i, stock s 
+			WHERE
+				i.stock=s.id
+			<if test="beginTime!=null ">
+			 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+		 	</if>
+		 	group by s.id
+			)
+	</select>
+	
+	<select id="listOutStocks" parameterType="com.cao.stock.domain.QueryParameter" resultType="StockTotal">
+		SELECT
+			s.id as stock, s.name as stockName,s.specification as stockSpecification,s.unit as stockUnit,sum(i.number) as stockNumber,sum(i.worth) as stockWorth, count(*) as number
+		FROM
+			out_stock i, stock s 
+		WHERE
+			i.stock=s.id 
+		<if test="beginTime!=null ">
+	 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+	 	</if>
+	 	<if test="endTime!=null ">
+	 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+	 	</if>
+	 	 group by s.id
+	</select>
+
+	<select id="countOutStocks" parameterType="com.cao.stock.domain.QueryParameter" resultType="integer">
+		select count(*)
+		from (
+			SELECT
+				s.id
+			FROM
+				out_stock i, stock s 
+			WHERE
+				i.stock=s.id
+			<if test="beginTime!=null ">
+			 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+		 	</if>
+		 	group by s.id
+			)
+	</select>
+	
+	<select id="listOutStocksByDepartment" parameterType="com.cao.stock.domain.QueryParameter" resultType="StockTotal">
+		SELECT
+			o.department as department,d.name as departmentName, s.id as stock, s.name as stockName,s.specification as stockSpecification,s.unit as stockUnit,sum(i.number) as stockNumber,sum(i.worth) as stockWorth, count(*) as number
+		FROM
+			out_stock i,stock_order o, stock s ,DEPARTMENT D
+		WHERE
+			i.stock=s.id and o.id=i.order_id AND D.ID=O.department
+		<if test="beginTime!=null ">
+	 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+	 	</if>
+	 	<if test="endTime!=null ">
+	 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+	 	</if>
+	 	 group by o.department,d.name, s.id
+	</select>
+
+	<select id="countOutStocksByDepartment" parameterType="com.cao.stock.domain.QueryParameter" resultType="integer">
+		select count(*)
+		from (
+			SELECT
+				s.id
+			FROM
+				out_stock i,stock_order o, stock s 
+			WHERE
+				i.stock=s.id and o.id=i.order_id
+			<if test="beginTime!=null ">
+			 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+		 	</if>
+		 	group by o.department, s.id
+			)
+	</select>
+	
+	<select id="listOutStocksByCategory" parameterType="com.cao.stock.domain.QueryParameter" resultType="StockTotal">
+		SELECT
+			o.department as department, s.id as stock, s.name as stockName,s.specification as stockSpecification,s.unit as stockUnit,sum(i.number) as stockNumber,sum(i.worth) as stockWorth, count(*) as number
+		FROM
+			out_stock i,stock_order o, stock s 
+		WHERE
+			i.stock=s.id and o.id=i.order_id
+		<if test="beginTime!=null ">
+	 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+	 	</if>
+	 	<if test="endTime!=null ">
+	 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+	 	</if>
+	 	 group by o.department, s.id
+	</select>
+
+	<select id="countOutStocksByCategory" parameterType="com.cao.stock.domain.QueryParameter" resultType="integer">
+		select count(*)
+		from (
+			SELECT
+				s.id
+			FROM
+				out_stock i,stock_order o, stock s 
+			WHERE
+				i.stock=s.id and o.id=i.order_id
+			<if test="beginTime!=null ">
+			 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+		 	</if>
+		 	group by o.department, s.id
+			)
+	</select>
+	
+	<select id="listStocksByCategory" parameterType="com.cao.stock.domain.QueryParameter" resultType="CategoryTotal">
+		select category,count(distinct id) as stockNumber,
+				count(distinct inOrderId) as inStockNumber,sum(inTotalWorth) as inStockWorth,
+				count(distinct outOrderId) as outStockNumber,sum(outTotalWorh) as outStockWorth 
+		from (
+		select s.category,s.id,ins.order_id as inOrderId,ins.total_worth as inTotalWorth,null as outOrderId,0 as outTotalWorh 		
+		FROM
+			 stock s, in_stock ins 
+		WHERE 
+			s.id = ins.stock 
+			<if test="beginTime!=null ">
+		 		<![CDATA[  and  ins.create_date>= #{beginTime}  ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  ins.create_date<= #{endTime}  ]]>
+		 	</if>
+	 	UNION ALL
+	 	
+	 	select s.category,s.id,null as inOrderId,0 as inTotalWorth,os.order_id as outOrderId,os.worth as outTotalWorh 	 
+		FROM
+			 stock s, out_stock os 
+		WHERE 
+			s.id = os.stock 
+			
+		<if test="beginTime!=null ">
+	 		<![CDATA[  and os.create_date>= #{beginTime} ]]>
+	 	</if>
+	 	<if test="endTime!=null ">
+	 		<![CDATA[  and os.create_date<= #{endTime} ]]>
+	 	</if>
+	 	) 	group by category
+	 	
+	</select>
+
+	<select id="countStocksByCategory" parameterType="com.cao.stock.domain.QueryParameter" resultType="integer">
+		select count(*)
+		from ( 
+		select category,count(distinct id) as stockNumber,
+				count(inOrderId) as inStockNumber,sum(inTotalWorth) as inStockWorth,
+				count(outOrderId) as outStockNumber,sum(outTotalWorh) as outStockWorth 
+		from (
+		select s.category,s.id,ins.order_id as inOrderId,ins.total_worth as inTotalWorth,null as outOrderId,0 as outTotalWorh 		
+		FROM
+			 stock s, in_stock ins 
+		WHERE 
+			s.id = ins.stock 
+			<if test="beginTime!=null ">
+		 		<![CDATA[  and  ins.create_date>= #{beginTime}  ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  ins.create_date<= #{endTime}  ]]>
+		 	</if>
+	 	UNION ALL
+	 	
+	 	select s.category,s.id,null as inOrderId,0 as inTotalWorth,os.order_id as outOrderId,os.worth as outTotalWorh 	 
+		FROM
+			 stock s,   out_stock os 
+		WHERE 
+			  s.id = os.stock 
+			
+		<if test="beginTime!=null ">
+	 		<![CDATA[  and os.create_date>= #{beginTime} ]]>
+	 	</if>
+	 	<if test="endTime!=null ">
+	 		<![CDATA[  and os.create_date<= #{endTime} ]]>
+	 	</if>
+	 	) 	group by category
+			)
+	</select>
+</mapper>

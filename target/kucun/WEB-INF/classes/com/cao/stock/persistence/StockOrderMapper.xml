@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.StockOrderMapper">
+
+	<!-- cache / -->
+	
+	<select id="listAllInStockOrders" parameterType="com.cao.stock.domain.QueryParameter"  resultType="StockOrder">
+		SELECT
+			o.ID,o.create_date as createDate,o.modify_date as modifyDate,o.department,o.staff,o.total_number as totalNumber,o.total_worth as totalWorth,status,mark
+		FROM 
+			stock_order o
+		WHERE 
+			o.total_number>0 and 
+			status like '%in%'  
+			<if test="beginTime!=null ">
+		 		<![CDATA[  and o.create_date>= #{beginTime} ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  o.create_date<= #{endTime}  ]]>
+		 	</if>
+		 	<if test="department!=null ">
+		 		<![CDATA[  and  o.department<= #{department}  ]]>
+		 	</if>
+		 	<if test="orderId!=null ">
+		 		<![CDATA[  and  o.id= #{orderId}  ]]>
+		 	</if>
+		 	order by o.id desc
+	</select>
+
+	<select id="countAllInStockOrders" parameterType="com.cao.stock.domain.QueryParameter"  resultType="integer">
+		SELECT
+			count(*)
+		FROM 
+			stock_order o
+		WHERE 
+			o.total_number>0 and 
+			status like '%in%'  
+		 	<if test="beginTime!=null ">
+		 		<![CDATA[  and o.create_date>= #{beginTime} ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  o.create_date<= #{endTime}  ]]>
+		 	</if>
+		 	<if test="department!=null ">
+		 		<![CDATA[  and  o.department<= #{department}  ]]>
+		 	</if>
+		 	<if test="orderId!=null ">
+		 		<![CDATA[  and  o.id= #{orderId}  ]]>
+		 	</if>
+	</select>
+	
+	<select id="listAllOutStockOrders" parameterType="com.cao.stock.domain.QueryParameter"  resultType="StockOrder">
+		SELECT
+			o.ID,o.create_date as createDate,o.modify_date as modifyDate,o.department,o.staff,o.total_number as totalNumber,o.total_worth as totalWorth,status,mark
+		FROM 
+			stock_order o
+		WHERE 
+		 	o.total_number>0 and 
+			status like '%out%'  
+			<if test="beginTime!=null ">
+		 		<![CDATA[  and o.create_date>= #{beginTime} ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  o.create_date<= #{endTime}  ]]>
+		 	</if>
+		 	<if test="department!=null ">
+		 		<![CDATA[  and  o.department<= #{department}  ]]>
+		 	</if>
+		 	<if test="orderId!=null ">
+		 		<![CDATA[  and  o.id= #{orderId}  ]]>
+		 	</if>
+		 	order by o.id desc
+	</select>
+
+	<select id="countAllOutStockOrders" parameterType="com.cao.stock.domain.QueryParameter"  resultType="integer">
+		SELECT
+			count(*)
+		FROM 
+			stock_order o
+		WHERE 
+			o.total_number>0 and 
+			status like '%out%'  
+		 	<if test="beginTime!=null ">
+		 		<![CDATA[  and o.create_date>= #{beginTime} ]]>
+		 	</if>
+		 	<if test="endTime!=null ">
+		 		<![CDATA[  and  o.create_date<= #{endTime}  ]]>
+		 	</if>
+		 	<if test="department!=null ">
+		 		<![CDATA[  and  o.department<= #{department}  ]]>
+		 	</if>
+		 	<if test="orderId!=null ">
+		 		<![CDATA[  and  o.id= #{orderId}  ]]>
+		 	</if>
+	</select>
+		
+	<select id="queryStockOrderById" parameterType="string" resultType="StockOrder">
+		SELECT
+			o.ID,o.create_date as createDate,o.modify_date as modifyDate,o.department,o.staff,o.total_number as totalNumber,o.total_worth as totalWorth,status,mark
+		FROM 
+			stock_order o
+		WHERE  
+			 and s.ID = #{id} 
+  	</select>
+
+	<insert id="addStockOrder" parameterType="StockOrder">
+		INSERT INTO 
+			stock_order(id,create_date,modify_date,department,staff,total_number,total_worth,status,mark)
+		VALUES (#{id}, #{createDate}, #{modifyDate},#{department},#{staff}, #{totalNumber}, #{totalWorth},#{status},#{mark}) 
+  	</insert>
+
+
+	<delete id="deleteStockByUid" parameterType="StockOrder">
+		UPDATE 
+			stock_order
+		SET 
+		    status='deleted'
+		WHERE ID = #{id} 
+  	</delete>
+
+	<update id="modifyStockOrderByid" parameterType="StockOrder">
+		UPDATE 
+			stock_order
+		<set>
+			<if test="modifyDate != null ">
+		 		modify_date=#{modifyDate},
+		 	</if>
+		 	<if test="department != null ">
+		 		 department = #{department},
+		 	</if>
+		 	<if test="staff != null ">
+		 		 staff = #{staff},
+		 	</if>
+		 	<if test="totalNumber != null ">
+		 		total_number = #{totalNumber},
+		 	</if>
+		 	<if test="totalWorth != null ">
+		 		total_worth = #{totalWorth},
+		 	</if>
+		 	<if test="mark != null">
+		 		mark = #{mark},
+		 	</if>
+		 	
+		</set>    
+		WHERE ID=#{id}
+  	</update>
+</mapper>

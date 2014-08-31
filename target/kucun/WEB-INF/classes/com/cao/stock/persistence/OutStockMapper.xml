@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cao.stock.persistence.OutStockMapper">
+
+	<!-- cache / -->
+
+	<select id="listAllOutStocks" parameterType="com.cao.stock.domain.QueryParameter"  resultType="OutStock">
+		
+			SELECT
+				i.id,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock,i.number,i.worth
+			FROM 
+				OUT_STOCK i
+			WHERE 
+			 	i.number>0
+			 	<if test="beginTime!=null ">
+			 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+			 	</if>
+			 	<if test="endTime!=null ">
+			 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+			 	</if>
+			 	<if test="stock!=null ">
+			 		  and i.stock=#{stock} 
+			 	</if>
+			 	<if test="orderId!=null ">
+		 		  and i.order_id=#{orderId} 
+		 		</if>
+	</select>
+	
+	<select id="countAllOutStocks" parameterType="com.cao.stock.domain.QueryParameter"  resultType="integer">
+		
+			SELECT
+				count(*)
+			FROM 
+				OUT_STOCK i
+			WHERE 
+			 	i.number>0
+			 	<if test="beginTime!=null ">
+			 		<![CDATA[  and i.create_date>= #{beginTime} ]]>
+			 	</if>
+			 	<if test="endTime!=null ">
+			 		<![CDATA[  and  i.create_date<= #{endTime}  ]]>
+			 	</if>
+			 	<if test="stock!=null ">
+			 		  and i.stock=#{stock} 
+			 	</if>
+			 	<if test="orderId!=null ">
+		 		  and i.order_id=#{orderId} 
+		 		</if>
+	</select>
+	
+	<select id="queryOutStockById" parameterType="integer" resultType="OutStock">
+		SELECT
+			i.id,i.order_id as orderId,i.create_date as createDate, i.modify_date as modifyDate, i.stock, i.number, i.worth
+		FROM
+			OUT_STOCK i 
+		Where 
+			i.number>0 and i.ID = #{id} 
+  	</select>
+
+	<select id="sumInStockByOrderId" parameterType="string"  resultType="StockOrder">
+		SELECT
+			i.order_id as id, sum(case when number==0 then 0 else 1 end ) as totalNumber, sum(i.worth) as totalWorth
+		FROM
+			OUT_STOCK i 
+		Where 
+			order_id = #{orderId}  
+  	</select>
+  	
+	<insert id="addOutStock" parameterType="OutStock"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO 
+			OUT_STOCK(create_date,modify_date,order_id,stock,number,worth)
+		VALUES (#{createDate}, #{modifyDate}, #{orderId}, #{stock},  #{number},  #{worth} ) 
+  	</insert>
+
+
+	<delete id="deleteOutStockById" parameterType="OutStock">
+		DELETE FROM 
+			OUT_STOCK
+		WHERE 
+			ID=#{id} 
+  	</delete>
+
+
+	<update id="modifyOutStockById" parameterType="OutStock">
+		UPDATE 
+			OUT_STOCK
+		<set>
+			<if test="orderId != null ">
+		 		order_id=#{orderId},
+		 	</if>
+			<if test="modifyDate != null ">
+		 		modify_date=#{modifyDate},
+		 	</if>
+		 	<if test="stock != null ">
+		 		STOCK = #{stock},
+		 	</if>
+		 	<if test="number != null ">
+		 		NUMBER=#{number},
+		 	</if>
+		 	<if test="worth != null ">
+		 		WORTH=#{worth}
+		 	</if>
+		</set>  
+		WHERE 
+			ID=#{id}
+  	</update>
+</mapper>

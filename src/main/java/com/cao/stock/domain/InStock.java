@@ -5,23 +5,24 @@ import java.util.Date;
 
 /**
  * TODO Comment of Account
- * 
+ *
  * @author caoyaojun
  */
 public class InStock implements Serializable {
 
     private static final long serialVersionUID = 8751282105532159742L;
 
-    private Integer           id;
-    private String            orderId;
-    private Date              createDate;
-    private Date              modifyDate;
-    private Integer           stock;
-    private Integer           number;
-    private Integer           remainderNumber;
-    private Double            worth;
-    private Double            totalWorth;
-    private String            status;
+    private Integer id;
+    private String  name;
+    private String  orderId;
+    private Date    createDate;
+    private Date    modifyDate;
+    private Integer stock;
+    private Integer number;
+    private Integer remainderNumber;
+    private Double  worth;
+    private Double  totalWorth;
+    private String  status;
 
     public Integer getId() {
         return id;
@@ -101,5 +102,13 @@ public class InStock implements Serializable {
 
     public Double getTotalWorth() {
         return totalWorth;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -83,6 +83,7 @@ Ext.define('MyApp.view.MyOutStockPanel', {
 	                    Ext.Msg.alert('提示信息', "保存成功"); 
 	                    this.form.reset();
 	                    this.items.items[1].store.removeAll();
+                        this.items.items[1].store.loadData([],false);
 	            	}else{
 	            		this.store.rejectChanges();  
 	               	 	Ext.Msg.alert("错误", opt.batch.proxy.reader.jsonData.msg);

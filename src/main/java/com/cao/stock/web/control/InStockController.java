@@ -105,7 +105,7 @@ public class InStockController {
                     StockOrder newStockOrder = inStockService.sumInStockByOrderId(orderId);
                     stockOrderService.modifyStockOrderByid(newStockOrder);
                 }
-                return  Result.successResult();
+                return Result.successResult();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -237,10 +237,12 @@ public class InStockController {
         try {
             List<Stock> stocks = stockService.listAllStocks(new QueryParameter());
             List<Integer> stockIds = new ArrayList<Integer>();
+            HashMap<Integer, Stock> stockMap = new HashMap<Integer, Stock>();
             for (Stock stock : stocks) {
                 stockIds.add(stock.getId());
+                stockMap.put(stock.getId(), stock);
             }
-            List<InStock> inStocks = this.importExcel(uploadExcel.getInputStream(), stockIds); // 读取数据（读取数据的源Excel，读取数据忽略的行数）
+            List<InStock> inStocks = this.importExcel(uploadExcel.getInputStream(), stockIds, stockMap); // 读取数据（读取数据的源Excel，读取数据忽略的行数）
             Result result = Result.successResult();
             result.setValue(inStocks);
             return result;
@@ -250,7 +252,7 @@ public class InStockController {
         }
     }
 
-    private List<InStock> importExcel(InputStream inputStream, List<Integer> stockIds) throws Exception {
+    private List<InStock> importExcel(InputStream inputStream, List<Integer> stockIds, HashMap<Integer, Stock> stockMap) throws Exception {
         List<Unit> units = unitService.listAllUnits();
         HashMap<String, Integer> unitMap = new HashMap<String, Integer>();
         for (Unit unit : units) {
@@ -289,10 +291,14 @@ public class InStockController {
                 if (row == null) {
                     continue;
                 }
-
+                //ID
                 HSSFCell cell = row.getCell(1);
                 String tempResult = ExcelUtil.getString(cell);
                 inStock.setStock(Double.valueOf(tempResult).intValue());
+                //NAME
+                HSSFCell nameCell = row.getCell(2);
+                tempResult = ExcelUtil.getString(nameCell);
+                inStock.setName(tempResult);
 
                 cell = row.getCell(5);
                 tempResult = ExcelUtil.getString(cell);
@@ -337,6 +343,11 @@ public class InStockController {
                         throw new IllegalArgumentException("新增物品请添加填写类目：" + stock.getId());
                     }
                     stockService.addOrModifyStock(stock);
+                } else {
+                    Stock stock = stockMap.get(inStock.getStock());
+                    if (!stock.getName().equals(inStock.getName())) {
+                        throw new IllegalArgumentException("ID 重复： ID=" + stock.getId() + ",老的名称=" + stock.getName() + ",新的名称=" + inStock.getName());
+                    }
                 }
             }
         }

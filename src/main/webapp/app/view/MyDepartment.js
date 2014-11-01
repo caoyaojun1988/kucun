@@ -179,7 +179,7 @@ Ext.define('MyApp.view.MyDepartment', {
         this.store.insert(0, rec);
         edit.startEditByPosition({
             row: 0,
-            column: 1,
+            column: 1
         });
     },
     

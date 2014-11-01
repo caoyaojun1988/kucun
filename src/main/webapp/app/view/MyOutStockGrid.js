@@ -130,7 +130,7 @@ Ext.define('MyApp.view.MyOutStockGrid', {
     		            		selection.set('totalNumber',number);
     		            	};
     		            	
-    		            	Ext.getCmp("outStockGridId").editing.startEdit(selection,3); 
+    		            	Ext.getCmp("outStockGridId").editing.startEdit(selection,3);
 	                    }
 	                }
 	            })

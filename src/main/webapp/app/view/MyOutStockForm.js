@@ -57,6 +57,7 @@ Ext.define('MyApp.view.MyOutStockForm', {
 		                						return false;
 		                					}else{
 		                						store.removeAll();
+                                                store.loadData([],false);
 		                						return true;
 		                					}
 		                				});

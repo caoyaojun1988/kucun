@@ -21,6 +21,7 @@ Ext.define('MyApp.view.MyInStockGrid', {
     
     initComponent: function(){
     	Ext.QuickTips.init();
+        //Ext.FocusManager.enable(true);
         this.editing = Ext.create('Ext.grid.plugin.CellEditing');
 
         Ext.apply(this, {
@@ -134,7 +135,6 @@ Ext.define('MyApp.view.MyInStockGrid', {
 	    		            		selection.set('unit',unit);
 	    		            		selection.set('totalNumber',number);
 	    		            	};
-	    		            	
 	    		            	Ext.getCmp("inStockGridId").editing.startEdit(selection,5);
 		                    }
 		                }

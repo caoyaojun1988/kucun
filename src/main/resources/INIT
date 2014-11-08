@@ -8,6 +8,7 @@ drop table in_stock;
 drop table out_stock;
 drop table in_out_stock;
 drop table stock_order;
+//drop table financial;
 
 create table account(USERNAME,PASSWORD); 
 create table unit (id integer primary key autoincrement,name text NOT NULL,pinyinForName text  ); 

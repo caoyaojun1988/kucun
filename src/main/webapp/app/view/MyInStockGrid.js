@@ -310,7 +310,6 @@ Ext.define('MyApp.view.MyInStockGrid', {
     },
 
     onAddClick: function(){
-    	
     	var category = Ext.getCmp("inStockPanelId").form.findField('category').value;
     	if(category==0 || category ==null || category=='null'){
     		Ext.MessageBox.alert('提示', '请先选择物品类目');

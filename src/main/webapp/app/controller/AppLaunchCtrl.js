@@ -161,7 +161,12 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
         this.application.widget(this.getTabPanel(), 'StockTotalByCategoryCtrl', 'MyStockTotalByCategory', '14');
         //this.getTabPanel().setActiveTab(this.getTrendChart());
     },
-    
+
+    onButtonFinancialCreate: function(button, e, options) {
+        this.unpressOtherBtns(button);
+        this.application.widget(this.getTabPanel(), 'FinancailCreateCtrl', 'MyFinancialCreate', '15');
+        //this.getTabPanel().setActiveTab(this.getTrendChart());
+    },
     
     unpressOtherBtns: function(exceptBtn) {
         var nextBtn = this.getBtns();
@@ -222,6 +227,9 @@ Ext.define('MyApp.controller.AppLaunchCtrl', {
             },
             '#btnStockTotalByCategoryQuery':{
             	click: this.onButtonStockTotalByCategoryQueryClick
+            },
+            '#btnFinancialCreate':{
+                click: this.onButtonFinancialCreate
             }
         });
     }

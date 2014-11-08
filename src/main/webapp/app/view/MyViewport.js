@@ -5,7 +5,7 @@ Ext.define('MyApp.view.MyViewport', {
         type: 'border'
     },
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         Ext.applyIf(me, {
@@ -31,12 +31,13 @@ Ext.define('MyApp.view.MyViewport', {
                         },
                         {
                             xtype: 'label',
-                            height: 73,
-                            html: '<h1>演示</h1>',
-                            padding: '40 auto 20 30',
+                            height: 70,
+                            html: '<h1>库存 & 财务系统</h1>',
+                           // padding: '40 auto 20 30',
                             text: '',
                             flex: 1,
                             dock: 'top',
+                            //top:-30,
                             weight: 10
                         }
                     ]
@@ -78,7 +79,8 @@ Ext.define('MyApp.view.MyViewport', {
                             scale: 'large',
                             text: '出库单',
                             toggleGroup: 'menu'
-                        },{
+                        },
+                        {
                             xtype: 'button',
                             height: 20,
                             itemId: 'btnStockQuery',
@@ -110,7 +112,8 @@ Ext.define('MyApp.view.MyViewport', {
                             scale: 'large',
                             text: '出库明细',
                             toggleGroup: 'menu'
-                        },{
+                        },
+                        {
                             xtype: 'button',
                             height: 20,
                             itemId: 'btnInStockTotalQuery',
@@ -120,7 +123,8 @@ Ext.define('MyApp.view.MyViewport', {
                             scale: 'large',
                             text: '入库汇总',
                             toggleGroup: 'menu'
-                        },{
+                        },
+                        {
                             xtype: 'button',
                             height: 20,
                             itemId: 'btnOutStockTotalQuery',
@@ -130,7 +134,8 @@ Ext.define('MyApp.view.MyViewport', {
                             scale: 'large',
                             text: '出库汇总',
                             toggleGroup: 'menu'
-                        },{
+                        },
+                        {
                             xtype: 'button',
                             height: 20,
                             itemId: 'btnDeparmentOutQuery',
@@ -140,7 +145,8 @@ Ext.define('MyApp.view.MyViewport', {
                             scale: 'large',
                             text: '部门汇总',
                             toggleGroup: 'menu'
-                        },{
+                        },
+                        {
                             xtype: 'button',
                             height: 20,
                             itemId: 'btnStockTotalByCategoryQuery',
@@ -150,7 +156,8 @@ Ext.define('MyApp.view.MyViewport', {
                             scale: 'large',
                             text: '类目汇总',
                             toggleGroup: 'menu'
-                        },{
+                        },
+                        {
                             xtype: 'button',
                             height: 20,
                             itemId: 'btnCategoryQuery',
@@ -192,6 +199,17 @@ Ext.define('MyApp.view.MyViewport', {
                             enableToggle: true,
                             scale: 'large',
                             text: '人员',
+                            toggleGroup: 'menu'
+                        },
+                        {
+                            xtype: 'button',
+                            height: 20,
+                            itemId: 'btnFinancialCreate',
+                            margin: 5,
+                            width: 96,
+                            enableToggle: true,
+                            scale: 'large',
+                            text: '财务报表',
                             toggleGroup: 'menu'
                         }
                     ]

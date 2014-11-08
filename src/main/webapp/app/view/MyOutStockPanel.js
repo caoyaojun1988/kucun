@@ -43,10 +43,10 @@ Ext.define('MyApp.view.MyOutStockPanel', {
 	onSync: function(){
 	    var me = this;
     	
-		if(!this.form.isValid()){
-			alert('请填写必填信息');
-			return false;
-		}
+	//	if(!this.form.isValid()){
+	//		alert('请填写必填信息');
+	//		return false;
+	//	}
 		
 		var createDate = this.form.findField('outStockCreateDate').value;
 		var department = this.form.findField('outDepartment').value;
